@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./scripts/db.js" defer> </script>
     <script src="./scripts/template.js" defer> </script>
     <script src="./script.js" defer> </script>
-    <link rel="stylesheet" href="./styles/standard.css">
+    <link rel="stylesheet" href="./standard.css">
     <title>Pokedex</title>
 </head>
-<body>
-    
+
+<body onload="getPokeName()">
+    <header>
+        <div class="imgAndH1">
+            <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
+            <h1>Pokedex</h1>
+        </div>
+        <input type="text">
+
+    </header>
+
+    <section id="renderContent">
+       
+    </section>
+
+    <footer>
+        <footer>
+            <img src="./assets/img/pixaba-1987080_1280.png" alt="">
+            <p>2025 | Arne Robert Klimmt</p>
+        </footer>
+    </footer>
 </body>
+
 </html>

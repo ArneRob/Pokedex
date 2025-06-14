@@ -1,0 +1,122 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+
+/* ----------------------------------------- header ---------------------------------------------------------------- */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #08202a;
+}
+
+header input {
+    margin: 50px 35px;
+    width: 250px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.imgAndH1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 50px 35px;
+    gap: 5px;
+}
+
+.imgAndH1 img {
+    width: 60px;
+}
+
+.imgAndH1 h1 {
+    font-size: 50px;
+}
+
+
+/* -------------------------------------------- renderContent------------------------------------------------------- */
+
+#renderContent {
+    background-color: #06141d;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 50px;
+    gap: 30px;
+    min-height: calc(100vh - 127px)
+}
+
+#renderContent .singlePokedexCard {
+    background-color: #1d3642;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-height: fit-content;
+}
+
+.pokemonImgClass {
+    width: 200px;
+}
+
+.pokeCardTypes {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.pokeCardTypes img {
+    width: 50px;
+    background-color: green;
+    padding: 9px;
+    border-radius: 50%;
+}
+
+
+.singlePokedexCard h3 {
+    color: white;
+}
+
+.pokemonBackground {
+    background-color: #04c904;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokeCardHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+/* ------------------------------------------ Footer-------------------------------------------------------- */
+
+
+footer {
+    background-color: #08202a;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-size: 15px;
+    padding-bottom: 15px;
+    margin-top: auto;
+}
+
+footer img {
+    margin: 15px 0 15px 0;
+    width: 50px;
+    height: 50px;
+}

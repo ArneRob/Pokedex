@@ -11,7 +11,7 @@
     <title>Pokedex</title>
 </head>
 
-<body onload="getPokeName()">
+<body onload="onload()">
     <header>
         <div class="imgAndH1">
             <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
@@ -20,9 +20,12 @@
         <input type="text">
 
     </header>
-
+    <section id="buttonSection">
+        <button onclick="getLastPokeStack()">Letzte Pokemon Stapel</button>
+        <button onclick="getNextPokeStack()">Nächste Pokemon Stapel</button>
+    </section>
     <section id="renderContent">
-       
+
     </section>
 
     <footer>

@@ -15,7 +15,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #08202a;
+    background-color: #285ed9;
 }
 
 header input {
@@ -46,7 +46,7 @@ header input {
 /* -------------------------------------------- renderContent------------------------------------------------------- */
 
 #renderContent {
-    background-color: #06141d;
+    background: linear-gradient(to bottom right, #6EE7B7, #A78BFA);
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -100,12 +100,46 @@ header input {
     width: 100%;
 }
 
+/* -------------------------------------------between render content and header -------------------------- */
+
+#buttonSection {
+    display: flex;
+    background-color: #285ed9;
+    gap: 8px;
+    padding-left: 20px;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 19px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px #999;
+    margin: 20px 0;
+}
+
+button:hover {
+    background-color: #3e8e41
+}
+
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
 
 /* ------------------------------------------ Footer-------------------------------------------------------- */
 
 
 footer {
-    background-color: #08202a;
+    background-color: #285ed9;
     display: flex;
     align-items: center;
     flex-direction: column;

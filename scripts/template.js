@@ -7,7 +7,7 @@ function getPokedexCardTemplate(index, pokemonName) {
                     <h3></h3>
                 </div>
                 <div class="pokemonBackground">
-                    <img  class"pokemonImgClass" id="pokemonImg${index}" src="#" alt="pokemonBild">
+                    <img  class="pokemonImgClass" id="pokemonImg${index}" src="#" alt="pokemonBild">
                 </div>
                 <div class="pokeCardTypes">
                     <img id="typ1" src="./assets/icons/dragon.svg" alt="">

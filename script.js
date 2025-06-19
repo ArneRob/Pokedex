@@ -25,9 +25,11 @@ async function getPokeCard() {
 async function getPokeImg(SPECIFIC_POKE_URL, index) {
     let imgResponse = await fetch(SPECIFIC_POKE_URL);
     imgResponseToJson = await imgResponse.json();
+    let pokeType = imgResponseToJson.types
     // console.log(SPECIFIC_POKE_URL)
-    //  console.log(imgResponseToJson)
+    console.log(imgResponseToJson)
     let pokeImg = imgResponseToJson.sprites.other.home.front_default
+    setTypeOfPokemon(pokeType, imgResponseToJson, index);
     setPokeImg(pokeImg, index)
 }
 
@@ -61,7 +63,7 @@ async function getLastPokeStack() {
     let lastResponseToJson = await lastResponse.json();
 
     console.log(lastResponseToJson.previous)
-     last_URL_Array = lastResponseToJson.previous
+    last_URL_Array = lastResponseToJson.previous
     next_URL_Array = lastResponseToJson.next
     document.getElementById('renderContent').innerHTML = "";
 
@@ -74,4 +76,24 @@ async function getLastPokeStack() {
 
     }
 
+}
+
+function setTypeOfPokemon(pokeType, imgResponseToJson ,index) {
+    for (let typeIndex = 0; typeIndex < pokeType.length; typeIndex++) {
+        console.log(imgResponseToJson.name)
+        console.log(pokeType[typeIndex].type.name)
+
+        if (pokeType.lenght == 1) {
+            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeOneIMGTemplate(index);
+        }
+          if (pokeType.lenght == 2) {
+            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeOneIMGTemplate(index);
+            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeTwoIMGTemplate(index);
+        }
+
+       
+            // document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
+            // document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
+    
+    }
 }

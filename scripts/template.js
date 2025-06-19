@@ -9,10 +9,21 @@ function getPokedexCardTemplate(index, pokemonName) {
                 <div class="pokemonBackground">
                     <img  class="pokemonImgClass" id="pokemonImg${index}" src="#" alt="pokemonBild">
                 </div>
-                <div class="pokeCardTypes">
-                    <img id="typ1" src="./assets/icons/dragon.svg" alt="">
-                    <img id="typ2" src="./assets/icons/electric.svg" alt="">
+                <div id="pokeTypes${index}" class="pokeCardTypes">
+                    
                 </div>
             </div>
+            `
+}
+
+function getPokeTypeOneIMGTemplate(index) {
+    return `
+                <img id="typ1-${index}" src="./assets/icons/dragon.svg" alt=""></img>
+            `
+}
+
+function getPokeTypeTwoIMGTemplate(index) {
+    return `
+            <img id="typ2-${index}" src="./assets/icons/electric.svg" alt="">
             `
 }

@@ -20,26 +20,24 @@ async function getPokeCard() {
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         console.log("pokeObject", pokeObject)
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
-        getSinglePokeData(SPECIFIC_POKE_URL, index);
+        getSinglePokeData(pokeObject, index);
     }
 
 }
 
-async function getSinglePokeData(SPECIFIC_POKE_URL, index) {
-    let pokeDataResponse = await fetch(SPECIFIC_POKE_URL);
-    let pokeDataResponseToJson = await pokeDataResponse.json();
-    let pokeType = pokeDataResponseToJson.types
+function getSinglePokeData(pokeObject, index) {
+    let pokeTypes = pokeObject.types
     // console.log(SPECIFIC_POKE_URL)
     // console.log(pokeDataResponseToJson)
-    let pokeImg = pokeDataResponseToJson.sprites.other.home.front_default
-    let secondPokeImg = pokeDataResponseToJson.sprites.front_default
+    let pokeImg = pokeObject.sprites.other.home.front_default
+    let secondPokeImg = pokeObject.sprites.front_default
     if (pokeImg) {
         setPokeImg(pokeImg, index)
     } else {
         setPokeImg(secondPokeImg, index)
     }
 
-    setTypeOfPokemon(pokeType, index);
+    setTypeOfPokemon(pokeTypes, index);
 
 }
 
@@ -75,7 +73,7 @@ async function getNextPokeStack() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
-        getSinglePokeData(SPECIFIC_POKE_URL, index);
+        getSinglePokeData(pokeObject, index);
 
     }
     setTimeout(enableButtons, 150)
@@ -108,28 +106,28 @@ async function getLastPokeStack() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
-        getSinglePokeData(SPECIFIC_POKE_URL, index);
+        getSinglePokeData(pokeObject, index);
 
     }
 
 }
-function setTypeOfPokemon(pokeType, index) {
+function setTypeOfPokemon(pokeTypes, index) {
 
-    console.log("poketype",pokeType);
+    console.log("poketype",pokeTypes);
     
-    for (let typeIndex = 0; typeIndex < pokeType.length; typeIndex++) {
+    for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
 
-        if (pokeType.length == 1) {
+        if (pokeTypes.length == 1) {
             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
-            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
+            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeTypes[typeIndex].type.name + ".svg"
         }
-        if (pokeType.length == 2) {
+        if (pokeTypes.length == 2) {
             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeTwoIMGTemplate(index);
-            document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeType[0].type.name + ".svg"
+            document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
 
             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
-            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[1].type.name + ".svg"
+            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
             { break; }
         }
 

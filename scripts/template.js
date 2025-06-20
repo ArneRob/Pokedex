@@ -7,24 +7,24 @@ function getPokedexCardTemplate(index, pokeObject) {
                     <h3></h3>
                 </div>
                 <div class="pokemonBackground">
-                    <img  class="pokemonImgClass" id="pokemonImg${index}" src="#" alt="pokemonBild">
+                    <img  class="pokemonImgClass" id="pokemonImg${pokeObject.id}" src="#" alt="pokemonBild">
                 </div>
-                <div id="pokeTypes${index}" class="pokeCardTypes">
+                <div id="pokeTypes${pokeObject.id}" class="pokeCardTypes">
                     
                 </div>
             </div>
             `
 }
 
-function getPokeTypeOneIMGTemplate(index) {
+function getPokeTypeOneIMGTemplate(pokeObject) {
     return `
-                <img id="typ1-${index}" src="./assets/icons/dragon.svg" alt=""></img>
+                <img id="typ1-${pokeObject.id}" src="./assets/icons/dragon.svg" alt=""></img>
             `
 }
 
-function getPokeTypeTwoIMGTemplate(index) {
+function getPokeTypeTwoIMGTemplate(pokeObject) {
     return `
             
-            <img id="typ2-${index}" src="./assets/icons/electric.svg" alt="">
+            <img id="typ2-${pokeObject.id}" src="./assets/icons/electric.svg" alt="">
             `
 }

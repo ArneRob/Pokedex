@@ -1,9 +1,9 @@
 
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0."
-
+const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=22&offset=0."
 
 function onload() {
     getPokeCard();
+
 }
 
 async function getPokeCard() {
@@ -17,20 +17,26 @@ async function getPokeCard() {
         let SPECIFIC_POKE_URL = responseToJson.results[index].url
 
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
-        getPokeImg(SPECIFIC_POKE_URL, index);
-
+        getSinglePokeData(SPECIFIC_POKE_URL, index);
     }
+
 }
 
-async function getPokeImg(SPECIFIC_POKE_URL, index) {
-    let imgResponse = await fetch(SPECIFIC_POKE_URL);
-    imgResponseToJson = await imgResponse.json();
-    let pokeType = imgResponseToJson.types
+async function getSinglePokeData(SPECIFIC_POKE_URL, index) {
+    let pokeDataResponse = await fetch(SPECIFIC_POKE_URL);
+    let pokeDataResponseToJson = await pokeDataResponse.json();
+    let pokeType = pokeDataResponseToJson.types
     // console.log(SPECIFIC_POKE_URL)
-    console.log(imgResponseToJson)
-    let pokeImg = imgResponseToJson.sprites.other.home.front_default
-    setTypeOfPokemon(pokeType, imgResponseToJson, index);
-    setPokeImg(pokeImg, index)
+    let pokeImg = pokeDataResponseToJson.sprites.other.home.front_default
+    let secondPokeImg = pokeDataResponseToJson.sprites.front_default
+    if (pokeImg) {
+        setPokeImg(pokeImg, index)
+    } else {
+        setPokeImg(secondPokeImg, index)
+    }
+
+    setTypeOfPokemon(pokeType, index);
+
 }
 
 
@@ -40,8 +46,10 @@ function setPokeImg(pokeImg, index) {
 }
 
 async function getNextPokeStack() {
+    disableButtons()
     let nextResponse = await fetch(next_URL_Array + ".json");
     let nextResponseToJson = await nextResponse.json();
+    console.log(nextResponseToJson)
 
     last_URL_Array = nextResponseToJson.previous
     next_URL_Array = nextResponseToJson.next
@@ -52,10 +60,22 @@ async function getNextPokeStack() {
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
-        getPokeImg(SPECIFIC_POKE_URL, index);
+        getSinglePokeData(SPECIFIC_POKE_URL, index);
 
     }
+    setTimeout(enableButtons, 150)
+}
 
+
+
+function disableButtons() {
+    document.getElementById('nextButton').disabled = true
+    document.getElementById('getLastButton').disabled = true
+}
+
+function enableButtons() {
+    document.getElementById('nextButton').disabled = false
+    document.getElementById('getLastButton').disabled = false
 }
 
 async function getLastPokeStack() {
@@ -72,28 +92,28 @@ async function getLastPokeStack() {
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
-        getPokeImg(SPECIFIC_POKE_URL, index);
+        getSinglePokeData(SPECIFIC_POKE_URL, index);
 
     }
 
 }
 
-function setTypeOfPokemon(pokeType, imgResponseToJson ,index) {
+async function setTypeOfPokemon(pokeType, index) {
     for (let typeIndex = 0; typeIndex < pokeType.length; typeIndex++) {
-        console.log(imgResponseToJson.name)
-        console.log(pokeType[typeIndex].type.name)
 
-        if (pokeType.lenght == 1) {
-            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeOneIMGTemplate(index);
+
+        if (pokeType.length == 1) {
+            document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
+            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
         }
-          if (pokeType.lenght == 2) {
-            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeOneIMGTemplate(index);
-            document.getElementById(`pokeTypes${index}`).innerHTML +=  getPokeTypeTwoIMGTemplate(index);
+        if (pokeType.length == 2) {
+            document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeTwoIMGTemplate(index);
+            document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeType[0].type.name + ".svg"
+
+            document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
+            document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[1].type.name + ".svg"
+            { break; }
         }
 
-       
-            // document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
-            // document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
-    
     }
 }

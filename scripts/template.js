@@ -24,6 +24,7 @@ function getPokeTypeOneIMGTemplate(index) {
 
 function getPokeTypeTwoIMGTemplate(index) {
     return `
+            
             <img id="typ2-${index}" src="./assets/icons/electric.svg" alt="">
             `
 }

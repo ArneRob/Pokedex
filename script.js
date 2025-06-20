@@ -1,9 +1,8 @@
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=22&offset=0."
-
+const INDEX_URL = "https://pokeapi.co/api/v2/pokedex/"
 function onload() {
     getPokeCard();
-
 }
 
 async function getPokeCard() {
@@ -15,8 +14,12 @@ async function getPokeCard() {
     for (let index = 0; index < responseToJson.results.length; index++) {
         let pokemonName = responseToJson.results[index].name;
         let SPECIFIC_POKE_URL = responseToJson.results[index].url
+        // let SPECIFIC_POKE_URLToJSON = await SPECIFIC_POKE_URL.json();
+        // console.log("json format: ", SPECIFIC_POKE_URL);
 
-        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
+        let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+        console.log("pokeObject", pokeObject)
+        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(SPECIFIC_POKE_URL, index);
     }
 
@@ -27,6 +30,7 @@ async function getSinglePokeData(SPECIFIC_POKE_URL, index) {
     let pokeDataResponseToJson = await pokeDataResponse.json();
     let pokeType = pokeDataResponseToJson.types
     // console.log(SPECIFIC_POKE_URL)
+    // console.log(pokeDataResponseToJson)
     let pokeImg = pokeDataResponseToJson.sprites.other.home.front_default
     let secondPokeImg = pokeDataResponseToJson.sprites.front_default
     if (pokeImg) {
@@ -36,6 +40,16 @@ async function getSinglePokeData(SPECIFIC_POKE_URL, index) {
     }
 
     setTypeOfPokemon(pokeType, index);
+
+}
+
+async function getSinglePokeObject(SPECIFIC_POKE_URL) {
+    let objectResponse = await fetch(SPECIFIC_POKE_URL);
+    let objectResponseToJson = await objectResponse.json();
+    let singlePokeObject = objectResponseToJson
+    // console.log("das soll die id werden: ", singlePokeObject)
+
+    return singlePokeObject
 
 }
 
@@ -59,7 +73,8 @@ async function getNextPokeStack() {
         let pokemonName = nextResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
-        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
+        let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(SPECIFIC_POKE_URL, index);
 
     }
@@ -91,14 +106,17 @@ async function getLastPokeStack() {
         let pokemonName = lastResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
-        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokemonName);
+        let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(SPECIFIC_POKE_URL, index);
 
     }
 
 }
+function setTypeOfPokemon(pokeType, index) {
 
-async function setTypeOfPokemon(pokeType, index) {
+    console.log("poketype",pokeType);
+    
     for (let typeIndex = 0; typeIndex < pokeType.length; typeIndex++) {
 
 
@@ -117,3 +135,32 @@ async function setTypeOfPokemon(pokeType, index) {
 
     }
 }
+
+
+// function setColorTypeOfPokemon(pokeObject, index) {
+//     for (let typeIndex = 0; typeIndex < pokeType.length; typeIndex++) {
+
+
+//         if (pokeObject.types.length == 1) {
+//             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
+//             document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[typeIndex].type.name + ".svg"
+//             if (pokeObject.types[index] == "grass") {
+//                 mach das
+//             }
+//              if (pokeObject.types[index] == "fire") {
+//                 mach das
+//             }
+//         }
+//         if (pokeType.length == 2) {
+//             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeTwoIMGTemplate(index);
+//             document.getElementById(`typ2-${index}`).src = "./assets/icons/" + pokeType[0].type.name + ".svg"
+
+//             document.getElementById(`pokeTypes${index}`).innerHTML += getPokeTypeOneIMGTemplate(index);
+//             document.getElementById(`typ1-${index}`).src = "./assets/icons/" + pokeType[1].type.name + ".svg"
+//             { break; }
+//         }
+
+//     }
+// }
+
+// function setColorTypeOfPokemon(pokeObject, index) 

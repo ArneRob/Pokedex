@@ -1,9 +1,9 @@
-function getPokedexCardTemplate(index, pokemonName) {
+function getPokedexCardTemplate(index, pokeObject) {
     return `
             <div id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
-                    <h3 id="number">#${index}</h3>
-                    <h3 id="pokeName">${pokemonName}</h3>
+                    <h3 id="number">#${pokeObject.id}</h3>
+                    <h3 id="pokeName">${pokeObject.name}</h3>
                     <h3></h3>
                 </div>
                 <div class="pokemonBackground">

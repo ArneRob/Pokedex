@@ -1,6 +1,8 @@
 let next_URL_Array = [];
 let last_URL_Array = [];
 
+let indexOfAllPokemon = [];
+
 
 let pokeTypesArray = { 
     bug: './assets/icons/bug.svg',

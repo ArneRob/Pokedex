@@ -136,61 +136,6 @@ function setTypeOfPokemon(pokeObject, index) {
     }
 }
 
-// function setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex) {
-//     if (pokeTypes[typeIndex].type.name == "normal") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(168, 167, 122)";
-//     }
-
-//     if (pokeTypes[typeIndex].type.name == "water") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(99, 144, 240)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "grass") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(122, 199, 76)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "electric") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(247, 208, 44)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "ice") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(150, 217, 214)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "fighting") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(194, 46, 40)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "poison") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(163, 62, 161)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "ground") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(226, 191, 101)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "flying") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(169, 143, 243)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "psychic") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(249, 85, 135)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "bug") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(166, 185, 26)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "rock") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(182, 161, 54)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "ghost") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(115, 87, 151)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "dragon") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(111, 53, 252)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "dark") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(112, 87, 70)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "steel") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(183, 183, 206)";
-//     }
-//     if (pokeTypes[typeIndex].type.name == "fairy") {
-//         document.getElementById(`pokemonImg${pokeObject.id}`).style.backgroundColor = "rgb(214, 133, 173)";
-//     }
-
-// }
 
 function addTypColorClass(pokeObject, typeIndex) {
     document.getElementById(`pokemonImg${pokeObject.id}`).classList.add(`${pokeObject.types[typeIndex].type.name}`)

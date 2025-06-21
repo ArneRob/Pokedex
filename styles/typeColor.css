@@ -1,7 +1,7 @@
 
 
 .fire {
-   background-color: red;
+   background-color: rgb(252, 108, 108);
 }
 .normal {
     background-color: rgb(168, 167, 122);
@@ -10,7 +10,7 @@
     background-color: rgb(99, 144, 240);
 }
 .grass {
-    background-color: green;
+    background-color: rgb(73, 208, 176);
 }
 .electric {
     background-color: rgb(247, 208, 44);

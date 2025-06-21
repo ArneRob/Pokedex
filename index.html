@@ -9,17 +9,71 @@
     <script src="./script.js" defer> </script>
     <link rel="stylesheet" href="./standard.css">
     <link rel="stylesheet" href="./styles/typeColor.css">
+    <link rel="stylesheet" href="./styles/overlay.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <title>Pokedex</title>
 </head>
 
-<body onload="onload()">
+<body id="body" onload="onload()">
+    <div id="overlay">
+        <div id="pokemonCard">
+            <div id="arrowForwardBackward">
+                <img src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Forward">
+                <img src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
+                <img src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    alt="Arrow Backward">
+            </div>
+            <div id="overlayPokeIntroductionParent">
+                <div id="overlayPokeIntroductionParentChild">
+                    <h2>Bullbasaur</h2>
+                    <div id="renderTypesOverlay">
+                        <p>Grass</p>
+                        <p>Poisen</p>
+                    </div>
+                </div>
+                <h3>#002</h3>
+            </div>
+            <img id="overlayPokeImg"
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png"
+                alt="Pokemonpicture">
+            <div id="cardCategorieSection">
+                <div id="cardCategories">
+                    <h4>About</h4>
+                    <h4>Base Stats</h4>
+                    <h4>Evolution</h4>
+                    <h4>Moves</h4>
+                </div>
+                <div id="renderCategorieContent">
+                    <table>
+                        <tr>
+                            <td>Species</td>
+                            <td>seed</td>
+                        </tr>
+                        <tr>
+                            <td>Height</td>
+                            <td>5m</td>
+                        </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td>500kg</td>
+                        </tr>
+                        <tr>
+                            <td>Abilities</td>
+                            <td>Overgrown, Chlorophyll</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="imgAndH1">
             <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
             <h1>Pokedex</h1>
         </div>
         <input type="text">
-
     </header>
     <section id="buttonSection">
         <button id="getLastButton" onclick="getLastPokeStack()" disabled>Letzte Pokemon Stapel</button>
@@ -35,6 +89,7 @@
             <p>2025 | Arne Robert Klimmt</p>
         </footer>
     </footer>
+    <img src="./vorlagen/Screenshot 2025-06-20 144102.png" alt="">
 </body>
 
 </html>

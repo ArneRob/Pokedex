@@ -104,6 +104,7 @@ async function getLastPokeStack() {
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+       
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(pokeObject, index);
 
@@ -125,9 +126,9 @@ function setTypeOfPokemon(pokeObject, index) {
         }
         if (pokeTypes.length == 2) {
             document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
-            document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
+            document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
             document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeTwoIMGTemplate(pokeObject);
-            document.getElementById(`typ2-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
+            document.getElementById(`typ2-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
             addTypColorClass(pokeObject, typeIndex)
             // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
             { break; }
@@ -143,4 +144,23 @@ function addTypColorClass(pokeObject, typeIndex) {
     if (pokeObject.types.length > 1) {
         document.getElementById(`typ2-${pokeObject.id}`).classList.add(`${pokeObject.types[1].type.name}`)
     }
+}
+
+
+// ------------------------------------------Overlay---------------------------------------------------
+
+
+function closeOverlay() {
+    let overlayDiv = document.getElementById('overlay')
+
+    overlayDiv.innerHTML = "";
+    overlayDiv.classList.add('display_none')
+}
+
+function openOverlayPokeCard(pokeID,) {
+
+    let overlayDiv = document.getElementById('overlay')
+    
+    overlayDiv.classList.remove('display_none')
+    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeID,)
 }

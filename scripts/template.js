@@ -1,6 +1,6 @@
 function getPokedexCardTemplate(index, pokeObject) {
     return `
-            <div id="singlePokedexCard" class="singlePokedexCard">
+            <div onclick="openOverlayPokeCard(${pokeObject.id})" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
                     <h3 id="pokeName">${pokeObject.name}</h3>
@@ -26,5 +26,59 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
     return `
             
             <img id="typ2-${pokeObject.id}" src="./assets/icons/electric.svg" alt="">
+            `
+}
+
+function getPokeOverlayTemplate(pokeID, pokeName) {
+    return `
+            <div id="pokemonCard">
+                <div id="arrowForwardBackwardClose">
+                    <img onclick="getLastOverlayPokemon()" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                    <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
+                    <img onclick="getNextOverlayPokemon()" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                        alt="Arrow Forward">
+                </div>
+                <div id="overlayPokeIntroductionParent">
+                    <div id="overlayPokeIntroductionParentChild">
+                        <h2>${pokeName}</h2>
+                        <div id="renderTypesOverlay">
+                            <p>Grass</p>
+                            <p>Poisen</p>
+                        </div>
+                    </div>
+                    <h3>#${pokeID}</h3>
+                </div>
+                <img id="overlayPokeImg"
+                    src="#"
+                    alt="Pokemonpicture">
+                <div id="cardCategorieSection">
+                    <div id="cardCategories">
+                        <h4>About</h4>
+                        <h4>Base Stats</h4>
+                        <h4>Evolution</h4>
+                        <h4>Moves</h4>
+                    </div>
+                    <div id="renderCategorieContent">
+                        <table>
+                            <tr>
+                                <td>Species</td>
+                                <td>seed</td>
+                            </tr>
+                            <tr>
+                                <td>Height</td>
+                                <td>5m</td>
+                            </tr>
+                            <tr>
+                                <td>Weight</td>
+                                <td>500kg</td>
+                            </tr>
+                            <tr>
+                                <td>Abilities</td>
+                                <td>Overgrown, Chlorophyll</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             `
 }

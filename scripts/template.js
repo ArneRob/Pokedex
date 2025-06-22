@@ -29,26 +29,25 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(pokeObjectInArray) {
+function getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray) {
     return `
-            <div id="pokemonCard">
+            <div class="pokemonCard" id="pokemonCard${pokeObjectInArray.id}">
                 <div id="arrowForwardBackwardClose">
-                    <img onclick="getLastOverlayPokemon()" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                    <img onclick="getLastOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                    <img onclick="getNextOverlayPokemon()" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    <img onclick="getNextOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
                 </div>
                 <div id="overlayPokeIntroductionParent">
                     <div id="overlayPokeIntroductionParentChild">
-                        <h2>${pokeObjectInArray.name}</h2>
-                        <div id="renderTypesOverlay">
-                            <p>Grass</p>
-                            <p>Poisen</p>
+                        <h2>${capitalizedPokeName}</h2>
+                        <div class="renderTypesOverlay" id="pokeTypesOverlay${pokeObjectInArray.id}">
+                    
                         </div>
                     </div>
                     <h3>#${pokeObjectInArray.id}</h3>
                 </div>
-                <img id="overlayPokeImg"
+                <img class="overlayPokeImg" id="overlayPokeImg${pokeObjectInArray.id}"
                     src="${pokeObjectInArray.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
@@ -66,19 +65,35 @@ function getPokeOverlayTemplate(pokeObjectInArray) {
                             </tr>
                             <tr>
                                 <td>Height</td>
-                                <td>${pokeObjectInArray.height}m</td>
+                                <td>${pokeObjectInArray.height/10}m</td>
                             </tr>
                             <tr>
                                 <td>Weight</td>
-                                <td>${pokeObjectInArray.weight}lbs</td>
+                                <td>${pokeObjectInArray.weight/10}kg</td>
                             </tr>
                             <tr>
                                 <td>Abilities</td>
-                                <td>${pokeObjectInArray.abilities[0].ability.name}, ${pokeObjectInArray.abilities[1].ability.name}</td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </div>
+            `
+}
+
+
+
+function getPokeTypeOneOverlayTemplate(pokeObjectInArray) {
+    return `
+                     <p id="typ1-Overlay${pokeObjectInArray.id}">${pokeObjectInArray.types[0].type.name}</p>
+                        
+            `
+}
+
+function getPokeTypeTwoOverlayTemplate(pokeObjectInArray) {
+    return `
+            
+              <p id="typ2-Overlay${pokeObjectInArray.id}">${pokeObjectInArray.types[1].type.name}</p>
             `
 }

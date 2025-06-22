@@ -19,7 +19,6 @@ async function getPokeCard() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         console.log("pokeObject", pokeObject)
-
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
@@ -132,7 +131,7 @@ async function getLastPokeStack() {
     console.log(ObjectsOfAllPokemon)
 
 }
-function setTypeOfPokemon(pokeObject, index) {
+function setTypeOfPokemon(pokeObject) {
     let pokeTypes = pokeObject.types
     // console.log("poketype", pokeTypes);
 
@@ -179,9 +178,78 @@ function closeOverlay() {
 }
 
 function openOverlayPokeCard(pokeID) {
-    let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/ 
+    let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/
     let overlayDiv = document.getElementById('overlay')
+    let pokeIDInArray = pokeID;
     console.log(pokeID, pokeObjectInArray)
     overlayDiv.classList.remove('display_none')
-    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray)
+    let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray)
+    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
+    setTypeOfPokemonInOverlay(pokeObjectInArray)
+}
+
+function capitalizeFirstLetter(pokeObjectInArray) {
+    return String(pokeObjectInArray.name).charAt(0).toUpperCase() + String(pokeObjectInArray.name).slice(1);
+}
+
+
+function setTypeOfPokemonInOverlay(pokeObjectInArray) {
+    let pokeTypes = pokeObjectInArray.types
+    // console.log("poketype", pokeTypes);
+
+    for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
+
+        // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
+
+        if (pokeTypes.length == 1) {
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
+            // document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[typeIndex].type.name + ".svg"
+            addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
+        }
+        if (pokeTypes.length == 2) {
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
+            // document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeTwoOverlayTemplate(pokeObjectInArray);
+            // document.getElementById(`typ2-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
+            addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
+            // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
+            { break; }
+        }
+
+    }
+}
+
+function addTypColorClassInOverlay(pokeObjectInArray, typeIndex) {
+    document.getElementById(`pokemonCard${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[typeIndex].type.name}`)
+    document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[0].type.name}`)
+    if (pokeObjectInArray.types.length > 1) {
+        document.getElementById(`typ2-Overlay${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[1].type.name}`)
+    }
+}
+
+function getNextOverlayPokemon(pokeIDInArray) {
+
+    if (ObjectsOfAllPokemon.length > pokeIDInArray) {
+        let nextPokeID = pokeIDInArray + 1
+        let overlayDiv = document.getElementById('overlay')
+
+        overlayDiv.innerHTML = "";
+        openOverlayPokeCard(nextPokeID)
+    } else {
+        getNextPokeStack()
+
+    }
+}
+
+function getLastOverlayPokemon(pokeIDInArray) {
+
+    if (0 < pokeIDInArray) {
+        let nextPokeID = pokeIDInArray - 1
+        let overlayDiv = document.getElementById('overlay')
+
+        overlayDiv.innerHTML = "";
+        openOverlayPokeCard(nextPokeID)
+    } else {
+        getLastPokeStack()
+    }
 }

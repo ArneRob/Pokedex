@@ -1,6 +1,6 @@
 function getPokedexCardTemplate(index, pokeObject) {
     return `
-            <div onclick="openOverlayPokeCard(${pokeObject.id})" id="singlePokedexCard" class="singlePokedexCard">
+            <div onclick="openOverlayPokeCard()" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
                     <h3 id="pokeName">${pokeObject.name}</h3>
@@ -29,7 +29,7 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(pokeID, pokeName) {
+function getPokeOverlayTemplate(pokeID) {
     return `
             <div id="pokemonCard">
                 <div id="arrowForwardBackwardClose">
@@ -40,7 +40,7 @@ function getPokeOverlayTemplate(pokeID, pokeName) {
                 </div>
                 <div id="overlayPokeIntroductionParent">
                     <div id="overlayPokeIntroductionParentChild">
-                        <h2>${pokeName}</h2>
+                        <h2>Name</h2>
                         <div id="renderTypesOverlay">
                             <p>Grass</p>
                             <p>Poisen</p>
@@ -49,7 +49,7 @@ function getPokeOverlayTemplate(pokeID, pokeName) {
                     <h3>#${pokeID}</h3>
                 </div>
                 <img id="overlayPokeImg"
-                    src="#"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png"
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">

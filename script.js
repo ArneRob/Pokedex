@@ -19,11 +19,29 @@ async function getPokeCard() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         console.log("pokeObject", pokeObject)
+
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
+        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
     }
-
+    console.log(ObjectsOfAllPokemon)
 }
+
+function addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon) {
+    const doesAlreadyExist = ObjectsOfAllPokemon.find((item) => item.id === pokeObject.id);
+
+
+    // Ignore the process
+    if (doesAlreadyExist) return ObjectsOfAllPokemon;
+
+    // Or push the new value
+    ObjectsOfAllPokemon.push(pokeObject);
+
+    return ObjectsOfAllPokemon;
+}
+
+
+
 
 function getSinglePokeData(pokeObject, index) {
     // console.log(SPECIFIC_POKE_URL)
@@ -71,10 +89,12 @@ async function getNextPokeStack() {
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(pokeObject, index);
 
     }
+    console.log(ObjectsOfAllPokemon)
     setTimeout(enableButtons, 150)
 }
 
@@ -94,7 +114,7 @@ async function getLastPokeStack() {
     let lastResponse = await fetch(last_URL_Array + ".json");
     let lastResponseToJson = await lastResponse.json();
 
-    console.log(lastResponseToJson.previous)
+    // console.log(lastResponseToJson.previous)
     last_URL_Array = lastResponseToJson.previous
     next_URL_Array = lastResponseToJson.next
     document.getElementById('renderContent').innerHTML = "";
@@ -104,16 +124,17 @@ async function getLastPokeStack() {
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-       
+        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(index, pokeObject);
         getSinglePokeData(pokeObject, index);
 
     }
+    console.log(ObjectsOfAllPokemon)
 
 }
 function setTypeOfPokemon(pokeObject, index) {
     let pokeTypes = pokeObject.types
-    console.log("poketype", pokeTypes);
+    // console.log("poketype", pokeTypes);
 
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
@@ -157,10 +178,12 @@ function closeOverlay() {
     overlayDiv.classList.add('display_none')
 }
 
-function openOverlayPokeCard(pokeID,) {
+function openOverlayPokeCard() {
+
 
     let overlayDiv = document.getElementById('overlay')
-    
+
+
     overlayDiv.classList.remove('display_none')
-    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeID,)
+    overlayDiv.innerHTML += getPokeOverlayTemplate()
 }

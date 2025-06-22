@@ -178,12 +178,10 @@ function closeOverlay() {
     overlayDiv.classList.add('display_none')
 }
 
-function openOverlayPokeCard() {
-
-
+function openOverlayPokeCard(pokeID) {
+    let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/ 
     let overlayDiv = document.getElementById('overlay')
-
-
+    console.log(pokeID, pokeObjectInArray)
     overlayDiv.classList.remove('display_none')
-    overlayDiv.innerHTML += getPokeOverlayTemplate()
+    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray)
 }

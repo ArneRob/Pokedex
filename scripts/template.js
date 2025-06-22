@@ -1,6 +1,6 @@
 function getPokedexCardTemplate(index, pokeObject) {
     return `
-            <div onclick="openOverlayPokeCard()" id="singlePokedexCard" class="singlePokedexCard">
+            <div onclick="openOverlayPokeCard(${pokeObject.id})" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
                     <h3 id="pokeName">${pokeObject.name}</h3>
@@ -29,7 +29,7 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(pokeID) {
+function getPokeOverlayTemplate(pokeObjectInArray) {
     return `
             <div id="pokemonCard">
                 <div id="arrowForwardBackwardClose">
@@ -40,16 +40,16 @@ function getPokeOverlayTemplate(pokeID) {
                 </div>
                 <div id="overlayPokeIntroductionParent">
                     <div id="overlayPokeIntroductionParentChild">
-                        <h2>Name</h2>
+                        <h2>${pokeObjectInArray.name}</h2>
                         <div id="renderTypesOverlay">
                             <p>Grass</p>
                             <p>Poisen</p>
                         </div>
                     </div>
-                    <h3>#${pokeID}</h3>
+                    <h3>#${pokeObjectInArray.id}</h3>
                 </div>
                 <img id="overlayPokeImg"
-                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png"
+                    src="${pokeObjectInArray.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
@@ -66,15 +66,15 @@ function getPokeOverlayTemplate(pokeID) {
                             </tr>
                             <tr>
                                 <td>Height</td>
-                                <td>5m</td>
+                                <td>${pokeObjectInArray.height}m</td>
                             </tr>
                             <tr>
                                 <td>Weight</td>
-                                <td>500kg</td>
+                                <td>${pokeObjectInArray.weight}lbs</td>
                             </tr>
                             <tr>
                                 <td>Abilities</td>
-                                <td>Overgrown, Chlorophyll</td>
+                                <td>${pokeObjectInArray.abilities[0].ability.name}, ${pokeObjectInArray.abilities[1].ability.name}</td>
                             </tr>
                         </table>
                     </div>

@@ -172,7 +172,8 @@ function addTypColorClass(pokeObject, typeIndex) {
 
 function closeOverlay() {
     let overlayDiv = document.getElementById('overlay')
-
+     let body = document.getElementById('body')
+    body.style.overflow = "scroll";
     overlayDiv.innerHTML = "";
     overlayDiv.classList.add('display_none')
 }
@@ -181,6 +182,8 @@ function openOverlayPokeCard(pokeID) {
     let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/
     let overlayDiv = document.getElementById('overlay')
     let pokeIDInArray = pokeID;
+    let body = document.getElementById('body')
+    body.style.overflow = "hidden";
     console.log(pokeID, pokeObjectInArray)
     overlayDiv.classList.remove('display_none')
     let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray)

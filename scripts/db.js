@@ -2,7 +2,8 @@ let next_URL_Array = [];
 let last_URL_Array = [];
 
 let ObjectsOfAllPokemon = [];
-
+let fetchedNamesArray = []; 
+let fetchedPokemons = [];
 
 // let pokeTypesArray = { 
 //     bug: './assets/icons/bug.svg',

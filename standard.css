@@ -37,6 +37,7 @@ header input {
     color: white;
     padding: 50px 35px;
     gap: 5px;
+    cursor: pointer;
 }
 
 .imgAndH1 img {

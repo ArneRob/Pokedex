@@ -1,9 +1,9 @@
-function getPokedexCardTemplate(index, pokeObject) {
+function getPokedexCardTemplate(pokeObject, capitalizedPokeName) {
     return `
             <div onclick="openOverlayPokeCard(${pokeObject.id})" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
-                    <h3 id="pokeName">${pokeObject.name}</h3>
+                    <h3 id="pokeName">${capitalizedPokeName}</h3>
                     <h3></h3>
                 </div>
                 <div class="pokemonBackground">

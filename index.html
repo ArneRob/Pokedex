@@ -23,11 +23,11 @@
 
     </div>
     <header>
-        <div class="imgAndH1">
+        <div onclick=" reFresh()" class="imgAndH1">
             <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
             <h1>Pokedex</h1>
         </div>
-        <input type="text">
+        <input id="pokemoSearchInput" oninput="findPokemon()" type="text">
     </header>
     <section id="buttonSection">
         <button id="getLastButton" onclick="getLastPokeStack()" disabled>Letzte Pokemon Stapel</button>

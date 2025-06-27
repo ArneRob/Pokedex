@@ -3,7 +3,7 @@ let last_URL_Array = [];
 
 let ObjectsOfAllPokemon = [];
 let fetchedNamesArray = []; 
-let fetchedPokemons = [];
+let fetchedPokemonsNAME_URL = [];
 
 // let pokeTypesArray = { 
 //     bug: './assets/icons/bug.svg',

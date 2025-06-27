@@ -98,8 +98,8 @@ function getPokeTypeTwoOverlayTemplate(pokeObjectInArray) {
             `
 }
 
-function getLoadingSpinnerTemplate() {
+function getLoadingSpinnerForButtonTemplate() {
     return `
-            <img id="loadSpinner" class="loadingSpinner" src="./assets/img/pokemon-1536849_640.png" alt="">   
+              <img id="loadSpinner" class="loadingSpinnerInButton" src="./assets/img/pokemon-6046746_640.png" alt="">
             `
 }

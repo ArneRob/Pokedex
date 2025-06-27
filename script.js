@@ -6,7 +6,7 @@ const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
 function onload() {
     showloadingSpinner();
     getPokeCard();
-    fetchAllNames()
+    fetchAllNamesAndURL()
 }
 
 function reFresh() {
@@ -14,13 +14,13 @@ function reFresh() {
     document.pokemoSearchInput.focus();
 }
 
-async function fetchAllNames() {
+async function fetchAllNamesAndURL() {
     let pokeNameResponse = await fetch(ALL_URL + "json")
     let pokeNameResponseToJSON = await pokeNameResponse.json();
     let fetchedPokeObjects = pokeNameResponseToJSON.results
-    fetchedPokemons = pokeNameResponseToJSON.results
+    fetchedPokemonsNAME_URL = pokeNameResponseToJSON.results
     pushNamesToArray(fetchedPokeObjects)
-    console.log(pokeNameResponseToJSON);
+    console.log(fetchedPokemonsNAME_URL);
 
 }
 
@@ -66,7 +66,7 @@ async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
-    disableLoadingSpinner();
+
     console.log(responseToJson)
     document.getElementById('renderContent').innerHTML = "";
 
@@ -79,16 +79,17 @@ async function getPokeCard() {
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
     }
+    setTimeout(disableLoadingSpinner, 500);
 }
 
 function showloadingSpinner() {
-    document.getElementById('overlay').classList.remove('display_none')
-    document.getElementById('overlay').innerHTML += getLoadingSpinnerTemplate();
+    document.getElementById('loadingSpinner').classList.remove('display_none')
+    document.getElementById('renderContent').classList.add('display_none')
 }
 
 function disableLoadingSpinner() {
-    document.getElementById('overlay').classList.add('display_none')
-    document.getElementById('overlay').innerHTML += "";
+    document.getElementById('loadingSpinner').classList.add('display_none')
+    document.getElementById('renderContent').classList.remove('display_none')
 }
 
 function capitalizeFirstLetter(pokeObject) {
@@ -143,14 +144,16 @@ function setPokeImg(pokeImg, pokeObject) {
 }
 
 async function getNextPokeStack() {
-    disableButtons()
+    let nextPokeStack = true;
+    let lastPokeStack = false;
+    disableButtons(nextPokeStack, lastPokeStack)
+    document.getElementById('renderContent').innerHTML = "";
+    showloadingSpinner();
     let nextResponse = await fetch(next_URL_Array + ".json");
     let nextResponseToJson = await nextResponse.json();
     // console.log(nextResponseToJson)
     last_URL_Array = nextResponseToJson.previous
     next_URL_Array = nextResponseToJson.next
-    document.getElementById('renderContent').innerHTML = "";
-
     for (let index = 0; index < nextResponseToJson.results.length; index++) {
         let pokemonName = nextResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
@@ -163,25 +166,73 @@ async function getNextPokeStack() {
 
     }
     // console.log(ObjectsOfAllPokemon)
-    setTimeout(enableButtons, 150)
+    setTimeout(disableLoadingSpinner, 500);
+    setTimeout(enableButtons, 500)
 }
 
+// --------------------------------GetNext/GetLast pokeStack Buttons------------------------------------------------
 
-
-function disableButtons() {
-    document.getElementById('nextButton').disabled = true
-    document.getElementById('getLastButton').disabled = true
+function disableButtons(nextPokeStack, lastPokeStack) {
+    let nextButton = document.getElementById('nextButton')
+    let lastButton = document.getElementById('getLastButton')
+    if (nextPokeStack) {
+        changeAttributesOfNextButton(nextButton, lastButton)
+        getLoadingSpinnerInButton(nextButton)
+    }
+    if (lastPokeStack) {
+        changeAttributesOfLastButton(nextButton, lastButton)
+        getLoadingSpinnerInButton(lastButton)
+    }
 }
 
 function enableButtons() {
-    document.getElementById('nextButton').disabled = false
-    document.getElementById('getLastButton').disabled = false
+    let nextButton = document.getElementById('nextButton')
+    let lastButton = document.getElementById('getLastButton')
+    nextButton.disabled = false
+    lastButton.disabled = false
+    resetButtonsAttributes(nextButton, lastButton)
+}
+
+function resetButtonsAttributes(nextButton, lastButton) {
+    nextButton.style.transform = "translateY(0px)"
+    lastButton.style.transform = "translateY(0px)"
+    lastButton.style.backgroundColor = "rgb(4, 169, 109)"
+    nextButton.style.backgroundColor = "rgb(4, 169, 109)"
+
+    nextButton.innerHTML = "Nächste Pokemon Stapel"
+    lastButton.innerHTML = "Letzte Pokemon Stapel"
+}
+
+function getLoadingSpinnerInButton(rightButton) {
+    let width = rightButton.clientWidth
+    console.log(width);
+    rightButton.innerHTML = "";
+
+    rightButton.style.width = `${width}` + "px"
+    rightButton.innerHTML += "Loading" + getLoadingSpinnerForButtonTemplate();
+}
+
+function changeAttributesOfNextButton(nextButton, lastButton) {
+    nextButton.disabled = true
+    lastButton.disabled = true
+    nextButton.style.transform = "translateY(4px)"
+    nextButton.style.backgroundColor = "rgb(13, 136, 143)"
+}
+
+function changeAttributesOfLastButton(nextButton, lastButton) {
+    nextButton.disabled = true
+    lastButton.disabled = true
+    lastButton.style.transform = "translateY(4px)"
+    lastButton.style.backgroundColor = "rgb(13, 136, 143)"
 }
 
 async function getLastPokeStack() {
     let lastResponse = await fetch(last_URL_Array + ".json");
     let lastResponseToJson = await lastResponse.json();
-
+    let nextPokeStack = false;
+    let lastPokeStack = true;
+    disableButtons(nextPokeStack, lastPokeStack)
+    showloadingSpinner();
     // console.log(lastResponseToJson.previous)
     last_URL_Array = lastResponseToJson.previous
     next_URL_Array = lastResponseToJson.next
@@ -198,8 +249,8 @@ async function getLastPokeStack() {
         getSinglePokeData(pokeObject, index);
 
     }
-    // console.log(ObjectsOfAllPokemon)
-
+    setTimeout(disableLoadingSpinner, 500);
+    setTimeout(enableButtons, 500)
 }
 function setTypeOfPokemon(pokeObject) {
     let pokeTypes = pokeObject.types

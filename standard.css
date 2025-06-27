@@ -23,11 +23,23 @@
     }
 }
 
+/* -----------------------------loadingSpinner------------------------------------------------------------- */
+
 .loadingSpinner {
     animation: spin 2s linear infinite;
-    width: 300px;
+    width: 200px;
+    height: 200px;
 }
 
+.grey {
+    background-color: #1d3642 !important;
+}
+
+.loadingSpinnerInButton {
+    animation: spin 0.5s linear infinite;
+    width: 25px;
+    height: 25px;
+}
 
 /* ----------------------------------------- header ---------------------------------------------------------------- */
 
@@ -65,17 +77,18 @@ header input {
 
 /* -------------------------------------------- renderContent------------------------------------------------------- */
 
-#renderContent {
+.renderContent {
     background: linear-gradient(to bottom right, #6EE7B7, #A78BFA);
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     padding: 50px;
     gap: 30px;
     min-height: calc(100vh - 127px)
 }
 
-#renderContent .singlePokedexCard {
+.singlePokedexCard {
     background-color: #1d3642;
     border-radius: 10px;
     display: flex;
@@ -83,14 +96,15 @@ header input {
     flex-direction: column;
     max-height: fit-content;
     cursor: pointer;
-    transition: 0.4s;
+    transition: 0.3s;
+    filter: drop-shadow(10px 10px 5px  #3e807f);
 }
 
 .singlePokedexCard:hover {
     transform-style: preserve-3d;
-    transition: 0.4s;
-    transform:  scale(1.1);
-    filter: drop-shadow(10px 10px 5px #000000);
+    transition: 0.3s;
+    transform: scale(1.1);
+    filter: drop-shadow(13px 13px 5px #3e807f);
 }
 
 .pokemonImgClass {
@@ -143,7 +157,11 @@ button {
     padding: 10px 15px;
     font-size: 19px;
     cursor: pointer;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 15px;
     text-decoration: none;
     outline: none;
     color: #fff;
@@ -152,6 +170,7 @@ button {
     border-radius: 10px;
     box-shadow: 0 5px #999;
     margin: 20px 0;
+    transition: 0.2s;
 }
 
 button:hover {

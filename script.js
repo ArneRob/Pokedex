@@ -125,8 +125,6 @@ function addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon) {
 
 
 function getSinglePokeData(pokeObject, index) {
-    // console.log(SPECIFIC_POKE_URL)
-    // console.log(pokeDataResponseToJson)
     let pokeImg = pokeObject.sprites.other.home.front_default
     let secondPokeImg = pokeObject.sprites.front_default
     if (pokeImg) {
@@ -143,7 +141,6 @@ async function getSinglePokeObject(SPECIFIC_POKE_URL) {
     let objectResponse = await fetch(SPECIFIC_POKE_URL);
     let objectResponseToJson = await objectResponse.json();
     let singlePokeObject = objectResponseToJson
-    // console.log("das soll die id werden: ", singlePokeObject)
 
     return singlePokeObject
 
@@ -158,14 +155,17 @@ function setPokeImg(pokeImg, pokeObject) {
 async function getNextPokeStack() {
     let nextPokeStack = true;
     let lastPokeStack = false;
+
     document.getElementById('renderContent').innerHTML = "";
     disableButtons(nextPokeStack, lastPokeStack)
     showloadingSpinner();
+
     let nextResponse = await fetch(next_URL_Array + ".json");
     let nextResponseToJson = await nextResponse.json();
-    // console.log(nextResponseToJson)
+
     last_URL_Array = nextResponseToJson.previous
     next_URL_Array = nextResponseToJson.next
+    
     for (let index = 0; index < nextResponseToJson.results.length; index++) {
         let pokemonName = nextResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
@@ -177,7 +177,6 @@ async function getNextPokeStack() {
         getSinglePokeData(pokeObject, index);
 
     }
-    // console.log(ObjectsOfAllPokemon)
     setTimeout(disableLoadingSpinner, 500);
     setTimeout(enableButtons, 500)
 }

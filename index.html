@@ -23,21 +23,27 @@
 
     </div>
     <header>
-        <div onclick=" reFresh()" class="imgAndH1">
-            <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
-            <h1>Pokedex</h1>
+        <div class="standardContainer headerDiv">
+            <div onclick=" reFresh()" class="imgAndH1">
+                <img src="./assets/img/pokemon-1536849_640.png" alt="pokeball">
+                <h1>Pokedex</h1>
+            </div>
+            <input id="pokemoSearchInput" oninput="processChanges()" placeholder="find your Pokemon" type="text">
         </div>
-        <input id="pokemoSearchInput" oninput="processChanges()" placeholder="find your Pokemon"  type="text">
+        <section id="buttonSection" class="standardContainer">
+            <button id="getLastButton" onclick="getLastPokeStack()" disabled>Letzte Pokemon Stapel</button>
+            <button id="nextButton" onclick="getNextPokeStack()">Nächste Pokemon Stapel</button>
+        </section>
     </header>
-    <section id="buttonSection">
-        <button id="getLastButton" onclick="getLastPokeStack()" disabled>Letzte Pokemon Stapel</button>
-        <button id="nextButton" onclick="getNextPokeStack()">Nächste Pokemon Stapel</button>
+    <section class="renderSection">
+        <div class="standardContainer renderContent display_none " id="loadingSpinner">
+            <img id="loadSpinner" class="loadingSpinner" src="./assets/img/pokemon-1536849_640.png" alt="">
+        </div>
     </section>
-    <section class="renderContent display_none" id="loadingSpinner">
-         <img id="loadSpinner" class="loadingSpinner" src="./assets/img/pokemon-1536849_640.png" alt="">
-    </section>
-    <section class="renderContent" id="renderContent">
+    <section class="renderSection">
+        <div class="standardContainer renderContent" id="renderContent">
 
+        </div>
     </section>
 
     <footer>

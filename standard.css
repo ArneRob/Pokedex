@@ -23,6 +23,11 @@
     }
 }
 
+.standardContainer {
+    max-width: 1920px;
+    width: 100%;
+}
+
 /* -----------------------------loadingSpinner------------------------------------------------------------- */
 
 .loadingSpinner {
@@ -45,9 +50,16 @@
 
 header {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #285ed9;
+}
+
+.headerDiv {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #285ed9;
 }
 
 header input {
@@ -82,7 +94,6 @@ header input {
 /* -------------------------------------------- renderContent------------------------------------------------------- */
 
 .renderContent {
-    background: linear-gradient(to bottom right, #6EE7B7, #A78BFA);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,6 +101,13 @@ header input {
     padding: 50px;
     gap: 30px;
     min-height: calc(100vh - 127px)
+}
+
+.renderSection {
+    background: linear-gradient(to bottom right, #6EE7B7, #A78BFA);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .singlePokedexCard {
@@ -101,7 +119,7 @@ header input {
     max-height: fit-content;
     cursor: pointer;
     transition: 0.3s;
-    filter: drop-shadow(10px 10px 5px  #3e807f);
+    filter: drop-shadow(10px 10px 5px #3e807f);
 }
 
 .singlePokedexCard:hover {
@@ -151,6 +169,7 @@ header input {
 
 #buttonSection {
     display: flex;
+    justify-content: flex-start;
     background-color: #285ed9;
     gap: 8px;
     padding-left: 20px;

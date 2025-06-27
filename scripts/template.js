@@ -97,3 +97,9 @@ function getPokeTypeTwoOverlayTemplate(pokeObjectInArray) {
               <p id="typ2-Overlay${pokeObjectInArray.id}">${pokeObjectInArray.types[1].type.name}</p>
             `
 }
+
+function getLoadingSpinnerTemplate() {
+    return `
+            <img id="loadSpinner" class="loadingSpinner" src="./assets/img/pokemon-1536849_640.png" alt="">   
+            `
+}

@@ -13,6 +13,21 @@
     display: none !important;
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loadingSpinner {
+    animation: spin 2s linear infinite;
+    width: 300px;
+}
+
 
 /* ----------------------------------------- header ---------------------------------------------------------------- */
 
@@ -68,6 +83,14 @@ header input {
     flex-direction: column;
     max-height: fit-content;
     cursor: pointer;
+    transition: 0.4s;
+}
+
+.singlePokedexCard:hover {
+    transform-style: preserve-3d;
+    transition: 0.4s;
+    transform:  scale(1.1);
+    filter: drop-shadow(10px 10px 5px #000000);
 }
 
 .pokemonImgClass {

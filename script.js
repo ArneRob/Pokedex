@@ -4,12 +4,14 @@ const INDEX_URL = "https://pokeapi.co/api/v2/pokedex/"
 const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
 
 function onload() {
+    showloadingSpinner();
     getPokeCard();
     fetchAllNames()
 }
 
 function reFresh() {
     window.location.reload()
+    document.pokemoSearchInput.focus();
 }
 
 async function fetchAllNames() {
@@ -39,9 +41,8 @@ function findPokemon() {
         renderFoundPokemon(foundPokemons);
     }
     if (pokemonToFind.length < 1) {
-         getPokeCard()
+        getPokeCard()
     }
-
 }
 
 async function renderFoundPokemon(foundPokemons) {
@@ -54,6 +55,8 @@ async function renderFoundPokemon(foundPokemons) {
         let SPECIFIC_POKE_URL = "https://pokeapi.co/api/v2/pokemon/" + foundPokemons[indexOfFound]
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         console.log(pokeObject);
+        console.log(foundPokemons);
+
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, pokeObject.name)
         getSinglePokeData(pokeObject, indexOfFound)
     }
@@ -63,6 +66,7 @@ async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
+    disableLoadingSpinner();
     console.log(responseToJson)
     document.getElementById('renderContent').innerHTML = "";
 
@@ -75,6 +79,16 @@ async function getPokeCard() {
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
     }
+}
+
+function showloadingSpinner() {
+    document.getElementById('overlay').classList.remove('display_none')
+    document.getElementById('overlay').innerHTML += getLoadingSpinnerTemplate();
+}
+
+function disableLoadingSpinner() {
+    document.getElementById('overlay').classList.add('display_none')
+    document.getElementById('overlay').innerHTML += "";
 }
 
 function capitalizeFirstLetter(pokeObject) {
@@ -133,7 +147,6 @@ async function getNextPokeStack() {
     let nextResponse = await fetch(next_URL_Array + ".json");
     let nextResponseToJson = await nextResponse.json();
     // console.log(nextResponseToJson)
-
     last_URL_Array = nextResponseToJson.previous
     next_URL_Array = nextResponseToJson.next
     document.getElementById('renderContent').innerHTML = "";
@@ -309,17 +322,3 @@ function getLastOverlayPokemon(pokeIDInArray) {
         openOverlayPokeCard(nextPokeID)
     }
 }
-
-
-// function grayOutArrowIfEndOfPokeStack(nextPokeID) {
-//     let arrowBackwards = document.getElementById('arrowBackwards')
-
-//     if (nextPokeID == 1) {
-//         arrowBackwards.style.filter = "brightness(40%)";
-//         arrowBackwards.classList.remove('arrowBackwardsHover')
-//     }
-//     if (nextPokeID > 1) {
-//         arrowBackwards.style.filter = "brightness(100%)";
-//         arrowBackwards.classList.add('arrowBackwardsHover')
-//     }
-// }

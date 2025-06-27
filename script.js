@@ -45,9 +45,20 @@ function findPokemon() {
     }
 }
 
+function debounce(func, timeout = 500){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
+const processChanges = debounce(() => findPokemon());
+
 async function renderFoundPokemon(foundPokemons) {
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
+    showloadingSpinner();
     console.log(foundPokemons);
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {
         console.log(foundPokemons[indexOfFound]);
@@ -60,6 +71,7 @@ async function renderFoundPokemon(foundPokemons) {
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, pokeObject.name)
         getSinglePokeData(pokeObject, indexOfFound)
     }
+    setTimeout(disableLoadingSpinner, 500);
 }
 
 async function getPokeCard() {
@@ -146,8 +158,8 @@ function setPokeImg(pokeImg, pokeObject) {
 async function getNextPokeStack() {
     let nextPokeStack = true;
     let lastPokeStack = false;
-    disableButtons(nextPokeStack, lastPokeStack)
     document.getElementById('renderContent').innerHTML = "";
+    disableButtons(nextPokeStack, lastPokeStack)
     showloadingSpinner();
     let nextResponse = await fetch(next_URL_Array + ".json");
     let nextResponseToJson = await nextResponse.json();

@@ -75,6 +75,10 @@ header input {
     font-size: 50px;
 }
 
+#pokemoSearchInput {
+    padding-left: 10px;
+}
+
 /* -------------------------------------------- renderContent------------------------------------------------------- */
 
 .renderContent {

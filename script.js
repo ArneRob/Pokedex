@@ -45,12 +45,12 @@ function findPokemon() {
     }
 }
 
-function debounce(func, timeout = 500){
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
+function debounce(func, timeout = 500) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
 }
 
 const processChanges = debounce(() => findPokemon());
@@ -165,7 +165,7 @@ async function getNextPokeStack() {
 
     last_URL_Array = nextResponseToJson.previous
     next_URL_Array = nextResponseToJson.next
-    
+
     for (let index = 0; index < nextResponseToJson.results.length; index++) {
         let pokemonName = nextResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
@@ -250,7 +250,7 @@ async function getLastPokeStack() {
     document.getElementById('renderContent').innerHTML = "";
 
     for (let index = 0; index < lastResponseToJson.results.length; index++) {
-        let pokemonName = lastResponseToJson.results[index].name;
+        // let pokemonName = lastResponseToJson.results[index].name;
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
@@ -314,12 +314,14 @@ function openOverlayPokeCard(pokeID) {
     let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/
     let overlayDiv = document.getElementById('overlay')
     let pokeIDInArray = pokeID;
+    console.log(pokeObjectInArray)
     let body = document.getElementById('body')
     body.style.overflow = "hidden";
     overlayDiv.classList.remove('display_none')
     let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray)
     overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
     // grayOutArrowIfEndOfPokeStack(pokeID)
+    setAbilitiesOfPokeCardInOverlay(pokeObjectInArray);
     setTypeOfPokemonInOverlay(pokeObjectInArray)
 }
 
@@ -327,6 +329,15 @@ function capitalizeFirstLetter(pokeObjectInArray) {
     return String(pokeObjectInArray.name).charAt(0).toUpperCase() + String(pokeObjectInArray.name).slice(1);
 }
 
+function setAbilitiesOfPokeCardInOverlay(pokeObjectInArray) {
+    let abilityRenderSpot = document.getElementById(`abilities${pokeObjectInArray.id}`)
+    let abilities = pokeObjectInArray.abilities
+    abilityRenderSpot.innerHTML = "";
+
+    for (let abilityIndex = 0; abilityIndex < abilities.length; abilityIndex++) {
+        abilityRenderSpot.innerHTML += pokeObjectInArray.abilities[abilityIndex].ability.name + ", "
+    }
+}
 
 function setTypeOfPokemonInOverlay(pokeObjectInArray) {
     let pokeTypes = pokeObjectInArray.types

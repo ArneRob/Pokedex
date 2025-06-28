@@ -73,7 +73,7 @@ function getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDIn
                             </tr>
                             <tr>
                                 <td>Abilities</td>
-                                <td></td>
+                                <td id="abilities${pokeObjectInArray.id}">sprung, sprung, sprung</td>
                             </tr>
                         </table>
                     </div>

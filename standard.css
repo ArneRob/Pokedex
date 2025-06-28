@@ -68,11 +68,24 @@ header {
     }
 }
 
+@media(max-width: 460px) {
+    .headerDiv {
+        gap: 8px;
+    }
+}
+
 header input {
     margin: 50px 35px;
     width: 250px;
     height: 30px;
     border-radius: 10px;
+}
+
+@media(max-width: 460px) {
+    header input {
+        margin: 40px 0px;
+        width: 150px;
+    }
 }
 
 .imgAndH1 {
@@ -83,6 +96,12 @@ header input {
     padding: 50px 35px;
     gap: 5px;
     cursor: pointer;
+}
+
+@media(max-width: 460px) {
+    .imgAndH1 {
+        padding: 0;
+    }
 }
 
 .imgAndH1 img {
@@ -267,6 +286,19 @@ button {
 @media(max-width: 510px) {
     button {
         font-size: 14px;
+    }
+}
+
+@media(max-width: 460px) {
+    button {
+        padding: 8px 7px;
+    }
+}
+
+@media(max-width: 380px) {
+    button {
+        font-size: 12px;
+        padding: 8px 7px;
     }
 }
 

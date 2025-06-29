@@ -1,0 +1,2 @@
+- letzte aktion: function setGenus/Species of Pokemon fehlercode:
+---->>> await is only valid in async functions and the top level bodies of modules

@@ -186,6 +186,7 @@ async function getNextPokeStack() {
 function disableButtons(nextPokeStack, lastPokeStack) {
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
+
     if (nextPokeStack) {
         changeAttributesOfNextButton(nextButton, lastButton)
         getLoadingSpinnerInButton(nextButton)
@@ -196,6 +197,9 @@ function disableButtons(nextPokeStack, lastPokeStack) {
     }
 }
 
+
+
+
 function enableButtons() {
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
@@ -203,6 +207,8 @@ function enableButtons() {
     lastButton.disabled = false
     resetButtonsAttributes(nextButton, lastButton)
 }
+
+
 
 function resetButtonsAttributes(nextButton, lastButton) {
     nextButton.style.transform = "translateY(0px)"
@@ -213,6 +219,8 @@ function resetButtonsAttributes(nextButton, lastButton) {
     nextButton.innerHTML = "Nächste Pokemon Stapel"
     lastButton.innerHTML = "Letzte Pokemon Stapel"
 }
+
+
 
 function getLoadingSpinnerInButton(rightButton) {
     let width = rightButton.clientWidth
@@ -236,6 +244,8 @@ function changeAttributesOfLastButton(nextButton, lastButton) {
     lastButton.style.transform = "translateY(4px)"
     lastButton.style.backgroundColor = "rgb(13, 136, 143)"
 }
+
+
 
 async function getLastPokeStack() {
     let lastResponse = await fetch(last_URL_Array + ".json");
@@ -321,6 +331,7 @@ function openOverlayPokeCard(pokeID) {
     let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray)
     overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
     // grayOutArrowIfEndOfPokeStack(pokeID)
+
     setAbilitiesOfPokeCardInOverlay(pokeObjectInArray);
     setTypeOfPokemonInOverlay(pokeObjectInArray)
 }
@@ -328,6 +339,20 @@ function openOverlayPokeCard(pokeID) {
 function capitalizeFirstLetter(pokeObjectInArray) {
     return String(pokeObjectInArray.name).charAt(0).toUpperCase() + String(pokeObjectInArray.name).slice(1);
 }
+
+// async function setSpeciesOfPokemon(pokeObjectInArray) {
+//     let pokeID = pokeObjectInArray.id
+//     const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
+
+//     let speciesResponse = await fetch(SPECIES_URL);
+//     let speciesResponseToJson = await speciesResponse.json();
+//     let species = speciesResponseToJson.genera[7].genus
+
+//     return species
+
+//      let species = await setSpeciesOfPokemon(pokeObjectInArray); --> soll in openOverlayFunction
+
+// }
 
 function setAbilitiesOfPokeCardInOverlay(pokeObjectInArray) {
     let abilityRenderSpot = document.getElementById(`abilities${pokeObjectInArray.id}`)
@@ -373,6 +398,10 @@ function addTypColorClassInOverlay(pokeObjectInArray, typeIndex) {
 }
 
 function getNextOverlayPokemon(pokeIDInArray) {
+    let nextOverlayPokemon = true;
+    let lastOverlayPokemon = false;
+
+    disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon)
 
     if (ObjectsOfAllPokemon.length > pokeIDInArray) {
         let nextPokeID = pokeIDInArray + 1
@@ -383,10 +412,15 @@ function getNextOverlayPokemon(pokeIDInArray) {
     } else {
         getNextPokeStack()
     }
+
+    setTimeout(enableOverlayButtons, 500)
 }
 
 function getLastOverlayPokemon(pokeIDInArray) {
+    let nextOverlayPokemon = false;
+    let lastOverlayPokemon = true;
 
+    disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon)
 
     if (1 < pokeIDInArray) {
         let nextPokeID = pokeIDInArray - 1
@@ -394,4 +428,56 @@ function getLastOverlayPokemon(pokeIDInArray) {
         overlayDiv.innerHTML = "";
         openOverlayPokeCard(nextPokeID)
     }
+
+    setTimeout(enableOverlayButtons, 500)
+}
+
+function disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon) {
+    let nextOverlayButton = document.getElementById('arrowForwardOverlay')
+    let lastOverlayButton = document.getElementById('arrowBackwardOverlay')
+
+    if (nextOverlayPokemon) {
+        changeAttributesOfNextOverlayButton(nextOverlayButton, lastOverlayButton)
+        getLoadingSpinnerInOverlayButton(nextOverlayButton)
+    }
+    if (lastOverlayPokemon) {
+        changeAttributesOfLastOverlayButton(nextOverlayButton, lastOverlayButton)
+        getLoadingSpinnerInOverlayButton(lastOverlayButton)
+    }
+}
+function enableOverlayButtons() {
+    let nextOverlayButton = document.getElementById('arrowForwardOverlay')
+    let lastOverlayButton = document.getElementById('arrowBackwardOverlay')
+    nextOverlayButton.disabled = false
+    lastOverlayButton.disabled = false
+
+    resetOverlayButtonsAttributes(nextOverlayButton, lastOverlayButton)
+}
+
+function changeAttributesOfNextOverlayButton(nextOverlayButton, lastOverlayButton) {
+    nextOverlayButton.disabled = true
+    lastOverlayButton.disabled = true
+}
+
+function changeAttributesOfLastOverlayButton(nextOverlayButton, lastOverlayButton) {
+    nextOverlayButton.disabled = true
+    lastOverlayButton.disabled = true
+}
+
+function resetOverlayButtonsAttributes(nextOverlayButton, lastOverlayButton) {
+    nextOverlayButton.src = "./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png";
+    lastOverlayButton.src = "./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png";
+
+    nextOverlayButton.classList.remove('loadingSpinnerInButton', 'disabled')
+    lastOverlayButton.classList.remove('loadingSpinnerInButton', 'disabled')
+}
+
+function getLoadingSpinnerInOverlayButton(rightButton) {
+    // let width = rightButton.clientWidth
+    // console.log(width);
+
+    // rightButton.style.width = `${width}` + "px"
+    rightButton.classList.add('loadingSpinnerInButton')
+    rightButton.classList.add('disabled')
+    rightButton.src = "./assets/img/pokemon-6046746_640.png";
 }

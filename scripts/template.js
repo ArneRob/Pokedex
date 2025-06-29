@@ -33,9 +33,9 @@ function getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDIn
     return `
             <div class="pokemonCard" id="pokemonCard${pokeObjectInArray.id}">
                 <div id="arrowForwardBackwardClose">
-                    <img onclick="getLastOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                    <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                    <img onclick="getNextOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
                 </div>
                 <div id="overlayPokeIntroductionParent">

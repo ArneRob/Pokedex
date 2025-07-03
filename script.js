@@ -11,8 +11,12 @@ function onload() {
 }
 
 function reFresh() {
+    let nextButton = document.getElementById('nextButton')
+    let lastButton = document.getElementById('getLastButton')
     window.location.reload()
     searchBar = false;
+    resetButtonsAttributes(nextButton, lastButton)
+    enableButtons();
     document.pokemoSearchInput.focus();
 }
 
@@ -37,6 +41,8 @@ function pushNamesToArray(fetchedPokeObjects) {
 
 function findPokemon() {
     let pokemonToFind = document.getElementById('pokemoSearchInput').value
+    let nextButton = document.getElementById('nextButton')
+    let lastButton = document.getElementById('getLastButton')
     if (pokemonToFind.length > 2) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(pokemonToFind))
         console.log(foundPokemons);
@@ -45,6 +51,8 @@ function findPokemon() {
     }
     if (pokemonToFind.length < 1) {
         searchBar = false;
+        resetButtonsAttributes(nextButton, lastButton)
+        enableButtons();
         getPokeCard()
     }
 }
@@ -63,7 +71,10 @@ async function renderFoundPokemon(foundPokemons) {
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
     foundPokemonsArray = [];
-   
+    let nextButton = document.getElementById('nextButton')
+    let lastButton = document.getElementById('getLastButton')
+    changeAttributesOfNextButton(nextButton, lastButton)
+    changeAttributesOfLastButton(nextButton, lastButton)
     showloadingSpinner();
     console.log(foundPokemons);
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {
@@ -245,6 +256,9 @@ function resetButtonsAttributes(nextButton, lastButton) {
 
     nextButton.style.width = ""
     lastButton.style.width = ""
+
+    nextButton.style.cursor = "pointer"
+    lastButton.style.cursor = "pointer"
 }
 
 
@@ -263,6 +277,7 @@ function changeAttributesOfNextButton(nextButton, lastButton) {
     lastButton.disabled = true
     nextButton.style.transform = "translateY(4px)"
     nextButton.style.backgroundColor = "rgb(13, 136, 143)"
+    nextButton.style.cursor = "not-allowed"
 }
 
 function changeAttributesOfLastButton(nextButton, lastButton) {
@@ -270,6 +285,7 @@ function changeAttributesOfLastButton(nextButton, lastButton) {
     lastButton.disabled = true
     lastButton.style.transform = "translateY(4px)"
     lastButton.style.backgroundColor = "rgb(13, 136, 143)"
+    lastButton.style.cursor = "not-allowed"
 }
 
 

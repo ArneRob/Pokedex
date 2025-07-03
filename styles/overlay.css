@@ -135,4 +135,9 @@
 #renderCategorieContent table td:first-child {
 
     font-weight: 600;
+    padding-right: 5px;
+}
+
+#renderCategorieContent table td:nth-child(2) {
+    width: 100%;
 }

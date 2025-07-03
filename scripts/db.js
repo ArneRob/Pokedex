@@ -5,6 +5,8 @@ let ObjectsOfAllPokemon = [];
 let fetchedNamesArray = []; 
 let fetchedPokemonsNAME_URL = [];
 
+let foundPokemonsArray = [];
+
 // let pokeTypesArray = { 
 //     bug: './assets/icons/bug.svg',
 //     dark: './assets/icons/dark.svg',

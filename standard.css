@@ -29,9 +29,22 @@
 }
 
 .disabled {
-  pointer-events: none;
+    pointer-events: none;
 }
 
+@media(max-width: 1000px) {
+    .example::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .example {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+}
 
 /* -----------------------------loadingSpinner------------------------------------------------------------- */
 
@@ -134,6 +147,16 @@ header input {
 
     .imgAndH1 h1 {
         font-size: 30px;
+    }
+}
+
+@media(max-width: 460px) {
+    .imgAndH1 img {
+        width: 34px;
+    }
+
+    .imgAndH1 h1 {
+        font-size: 24px;
     }
 }
 
@@ -304,6 +327,12 @@ button {
     button {
         font-size: 12px;
         padding: 8px 7px;
+    }
+}
+
+@media(max-width: 330px) {
+    button {
+        font-size: 11px;
     }
 }
 

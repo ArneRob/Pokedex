@@ -2,6 +2,7 @@
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=22&offset=0."
 const INDEX_URL = "https://pokeapi.co/api/v2/pokedex/"
 const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
+let searchBar = false;
 
 function onload() {
     showloadingSpinner();
@@ -11,6 +12,7 @@ function onload() {
 
 function reFresh() {
     window.location.reload()
+    searchBar = false;
     document.pokemoSearchInput.focus();
 }
 
@@ -38,9 +40,11 @@ function findPokemon() {
     if (pokemonToFind.length > 2) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(pokemonToFind))
         console.log(foundPokemons);
+        searchBar = true;
         renderFoundPokemon(foundPokemons);
     }
     if (pokemonToFind.length < 1) {
+        searchBar = false;
         getPokeCard()
     }
 }
@@ -58,21 +62,41 @@ const processChanges = debounce(() => findPokemon());
 async function renderFoundPokemon(foundPokemons) {
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
+    foundPokemonsArray = [];
+   
     showloadingSpinner();
     console.log(foundPokemons);
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {
         console.log(foundPokemons[indexOfFound]);
 
         let SPECIFIC_POKE_URL = "https://pokeapi.co/api/v2/pokemon/" + foundPokemons[indexOfFound]
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        console.log(pokeObject);
+        // ObjectsOfAllPokemon += pokeObject
+        console.log("pokeobjct", ObjectsOfAllPokemon);
         console.log(foundPokemons);
-
-        renderContent.innerHTML += getPokedexCardTemplate(pokeObject, pokeObject.name)
+        foundPokemonsArray.push(pokeObject)
+        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
+        // ObjectsOfAllPokemon.push(pokeObject)
+        renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName)
         getSinglePokeData(pokeObject, indexOfFound)
+        // onclickPokeCard(pokeObject);
     }
     setTimeout(disableLoadingSpinner, 500);
 }
+
+// function onclickPokeCard(pokeObject) {
+//     let singlePokedexCard = document.getElementById('singlePokedexCard')
+//     singlePokedexCard.type = "button"
+//     console.log((1));
+
+
+//     singlePokedexCard.addEventListener('click', function () {
+//         openOverlayPokeCard(pokeObject)
+//         console.log(pokeObject);
+
+//     })
+// }
 
 async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
@@ -86,7 +110,7 @@ async function getPokeCard() {
         let pokemonName = responseToJson.results[index].name;
         let SPECIFIC_POKE_URL = responseToJson.results[index].url
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        let capitalizedPokeName = capitalizeFirstLetter(pokeObject);
+        let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
@@ -104,8 +128,8 @@ function disableLoadingSpinner() {
     document.getElementById('renderContent').classList.remove('display_none')
 }
 
-function capitalizeFirstLetter(pokeObject) {
-    return String(pokeObject.name).charAt(0).toUpperCase() + String(pokeObject.name).slice(1);
+function capitalizeFirstLetter(pokeName) {
+    return String(pokeName).charAt(0).toUpperCase() + String(pokeName).slice(1);
 }
 
 function addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon) {
@@ -172,7 +196,7 @@ async function getNextPokeStack() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
-        let capitalizedPokeName = capitalizeFirstLetter(pokeObject);
+        let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
         getSinglePokeData(pokeObject, index);
 
@@ -218,6 +242,9 @@ function resetButtonsAttributes(nextButton, lastButton) {
 
     nextButton.innerHTML = "Nächste Pokemon Stapel"
     lastButton.innerHTML = "Letzte Pokemon Stapel"
+
+    nextButton.style.width = ""
+    lastButton.style.width = ""
 }
 
 
@@ -265,7 +292,7 @@ async function getLastPokeStack() {
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
-        let capitalizedPokeName = capitalizeFirstLetter(pokeObject);
+        let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
         getSinglePokeData(pokeObject, index);
 
@@ -320,25 +347,107 @@ function closeOverlay() {
     overlayDiv.classList.add('display_none')
 }
 
-function openOverlayPokeCard(pokeID) {
-    let pokeObjectInArray = ObjectsOfAllPokemon[pokeID - 1] /* pokeID - 1 gets the Array Number*/
+// async function fetchSingleOverlayPokemon(pokeIDInArray) {
+//     let singlePokemonResponse = await fetch(fetchedPokemonsNAME_URL[pokeIDInArray].url);
+//     let singlePokemonResponseToJson = await singlePokemonResponse.json();
+
+//     console.log(singlePokemonResponseToJson)
+// }
+
+function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
+
     let overlayDiv = document.getElementById('overlay')
-    let pokeIDInArray = pokeID;
-    console.log(pokeObjectInArray)
     let body = document.getElementById('body')
     body.style.overflow = "hidden";
     overlayDiv.classList.remove('display_none')
-    let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray)
-    overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
-    // grayOutArrowIfEndOfPokeStack(pokeID)
 
-    setAbilitiesOfPokeCardInOverlay(pokeObjectInArray);
-    setTypeOfPokemonInOverlay(pokeObjectInArray)
+    if (searchBar == false) {
+        renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
+    }
+    if (searchBar) {
+        renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
+    }
+
 }
 
-function capitalizeFirstLetter(pokeObjectInArray) {
-    return String(pokeObjectInArray.name).charAt(0).toUpperCase() + String(pokeObjectInArray.name).slice(1);
+function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) {
+    for (let ObjectsOfAllPokemonIndex = 0; ObjectsOfAllPokemonIndex < ObjectsOfAllPokemon.length; ObjectsOfAllPokemonIndex++) {
+        if (idOfPokemon == ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id) {
+            overlayDiv.innerHTML += getPokeOverlayTemplate(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex], capitalizedPokeName, ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id)
+            setAbilitiesOfPokeCardInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex]);
+            setTypeOfPokemonInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex])
+        }
+    }
 }
+
+function renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) {
+
+    let foundPokemonIndex = getIndexOfPokemon(idOfPokemon);
+
+    overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[foundPokemonIndex], capitalizedPokeName, foundPokemonIndex)
+    setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[foundPokemonIndex]);
+    setTypeOfPokemonInOverlay(foundPokemonsArray[foundPokemonIndex])
+}
+
+function getIndexOfPokemon(idOfPokemon) {
+    for (let index = 0; index < foundPokemonsArray.length; index++) {
+        if (idOfPokemon == foundPokemonsArray[index].id) {
+
+            let foundPokemonIndex = index
+            return foundPokemonIndex
+        }
+    }
+}
+
+function getNextSearchBarOverlayPokemon(foundPokemonIndex) {
+    let overlayDiv = document.getElementById('overlay')
+    let nextFoundPokemonIndex = foundPokemonIndex + 1
+    overlayDiv.innerHTML = "";
+    // overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
+    // setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[nextFoundPokemonIndex]);
+    // setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
+
+    if (foundPokemonIndex < foundPokemonsArray.length - 1) {
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
+        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
+        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[nextFoundPokemonIndex]);
+        setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
+    }
+    if (foundPokemonIndex >= foundPokemonsArray.length - 1) {
+        nextFoundPokemonIndex = 0
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
+        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
+        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[nextFoundPokemonIndex]);
+        setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
+    }
+}
+
+
+function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
+    let overlayDiv = document.getElementById('overlay')
+    let lastFoundPokemonIndex = foundPokemonIndex - 1
+
+    overlayDiv.innerHTML = "";
+    if (foundPokemonIndex > 0) {
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
+        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
+        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
+        setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
+    }
+    if (foundPokemonIndex <= 0) {
+        lastFoundPokemonIndex = foundPokemonsArray.length - 1
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
+        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
+        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
+        setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
+    }
+}
+
+
+
+// function capitalizeFirstLetter(pokeName) {
+//     return String(pokeName).charAt(0).toUpperCase() + String(pokeName).slice(1);
+// }
 
 // async function setSpeciesOfPokemon(pokeObjectInArray) {
 //     let pokeID = pokeObjectInArray.id

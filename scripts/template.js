@@ -1,6 +1,6 @@
 function getPokedexCardTemplate(pokeObject, capitalizedPokeName) {
     return `
-            <div onclick="openOverlayPokeCard(${pokeObject.id})" id="singlePokedexCard" class="singlePokedexCard">
+            <div onclick="openOverlayPokeCard(${pokeObject.id},${"'" + capitalizedPokeName + "'"})" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
                     <h3 id="pokeName">${capitalizedPokeName}</h3>
@@ -29,26 +29,26 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray) {
+function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray) {
     return `
-            <div class="pokemonCard" id="pokemonCard${pokeObjectInArray.id}">
+            <div class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div id="arrowForwardBackwardClose">
-                    <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                    <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
                 </div>
                 <div id="overlayPokeIntroductionParent">
                     <div id="overlayPokeIntroductionParentChild">
                         <h2>${capitalizedPokeName}</h2>
-                        <div class="renderTypesOverlay" id="pokeTypesOverlay${pokeObjectInArray.id}">
+                        <div class="renderTypesOverlay" id="pokeTypesOverlay${singlePokeObject.id}">
                     
                         </div>
                     </div>
-                    <h3>#${pokeObjectInArray.id}</h3>
+                    <h3>#${singlePokeObject.id}</h3>
                 </div>
-                <img class="overlayPokeImg" id="overlayPokeImg${pokeObjectInArray.id}"
-                    src="${pokeObjectInArray.sprites.other.home.front_default}"
+                <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
+                    src="${singlePokeObject.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
@@ -65,15 +65,15 @@ function getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDIn
                             </tr>
                             <tr>
                                 <td>Height</td>
-                                <td>${pokeObjectInArray.height/10}m</td>
+                                <td>${singlePokeObject.height / 10}m</td>
                             </tr>
                             <tr>
                                 <td>Weight</td>
-                                <td>${pokeObjectInArray.weight/10}kg</td>
+                                <td>${singlePokeObject.weight / 10}kg</td>
                             </tr>
                             <tr>
                                 <td>Abilities</td>
-                                <td id="abilities${pokeObjectInArray.id}">sprung, sprung, sprung</td>
+                                <td id="abilities${singlePokeObject.id}">sprung, sprung, sprung</td>
                             </tr>
                         </table>
                     </div>
@@ -101,5 +101,59 @@ function getPokeTypeTwoOverlayTemplate(pokeObjectInArray) {
 function getLoadingSpinnerForButtonTemplate() {
     return `
               <img id="loadSpinner" class="loadingSpinnerInButton" src="./assets/img/pokemon-6046746_640.png" alt="">
+            `
+}
+
+
+function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foundPokemonIndex) {
+    return `
+             <div class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
+                <div id="arrowForwardBackwardClose">
+                     <img id="arrowBackwardOverlay" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
+                     <img id="arrowForwardOverlay" onclick="getNextSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                      alt="Arrow Forward">
+                </div>
+                <div id="overlayPokeIntroductionParent">
+                    <div id="overlayPokeIntroductionParentChild">
+                        <h2>${capitalizedPokeName}</h2>
+                        <div class="renderTypesOverlay" id="pokeTypesOverlay${singlePokeObject.id}">
+                    
+                        </div>
+                    </div>
+                    <h3>#${singlePokeObject.id}</h3>
+                </div>
+                <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
+                    src="${singlePokeObject.sprites.other.home.front_default}"
+                    alt="Pokemonpicture">
+                <div id="cardCategorieSection">
+                    <div id="cardCategories">
+                        <h4>About</h4>
+                        <h4>Base Stats</h4>
+                        <h4>Evolution</h4>
+                        <h4>Moves</h4>
+                    </div>
+                    <div id="renderCategorieContent">
+                        <table>
+                            <tr>
+                                <td>Species</td>
+                                <td>seed</td>
+                            </tr>
+                            <tr>
+                                <td>Height</td>
+                                <td>${singlePokeObject.height / 10}m</td>
+                            </tr>
+                            <tr>
+                                <td>Weight</td>
+                                <td>${singlePokeObject.weight / 10}kg</td>
+                            </tr>
+                            <tr>
+                                <td>Abilities</td>
+                                <td id="abilities${singlePokeObject.id}">sprung, sprung, sprung</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             `
 }

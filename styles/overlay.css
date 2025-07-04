@@ -123,21 +123,44 @@
     border: solid 1px white;
 }
 
-#renderCategorieContent {
+.renderCategorieContent {
     margin-top: 10px;
     padding: 0 20px;
 }
 
-#renderCategorieContent table {
+.renderCategorieContent table {
     width: 100%;
 }
 
-#renderCategorieContent table td:first-child {
-
+.renderCategorieContent table tbody td:first-child {
     font-weight: 600;
     padding-right: 5px;
+    width: 70px;
 }
 
-#renderCategorieContent table td:nth-child(2) {
-    width: 100%;
+
+.statName {
+    font-weight: 600;
+    width: 100px;
+}
+
+.divRow {
+    display: flex;
+    align-items: center;
+}
+
+.baseStats {
+    width: 30px;
+}
+
+.progressBar {
+    margin-left: 10px;
+    width: 220px;
+    border-radius: 25px;
+    border: solid 1px black;
+}
+
+.progressColor {
+    height: 10px;
+    border-radius: 25px;
 }

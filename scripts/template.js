@@ -52,16 +52,17 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
-                        <h4>About</h4>
-                        <h4>Base Stats</h4>
+                        <h4 onclick="setCardCategoryContentOfAbout(${pokeIDInArray})">About</h4>
+                        <h4 onclick="setContentOfBaseStats(${pokeIDInArray})">Base Stats</h4>
                         <h4>Evolution</h4>
                         <h4>Moves</h4>
                     </div>
-                    <div id="renderCategorieContent">
+                    <div class="renderCategorieContent">
                         <table>
+                        <tbody  id="renderCategorieContent${pokeIDInArray}">
                             <tr>
                                 <td>Species</td>
-                                <td>seed</td>
+                                <td>lalala</td>
                             </tr>
                             <tr>
                                 <td>Height</td>
@@ -75,9 +76,68 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                                 <td>Abilities</td>
                                 <td id="abilities${singlePokeObject.id}">sprung, sprung, sprung</td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
+            </div>
+            `
+}
+
+function getAboutContentTemplate(singlePokeObject, species) {
+    return `
+            <table>
+                <tr>
+                    <td>Species</td>
+                    <td>${species}</td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td>${singlePokeObject.height / 10}m</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>${singlePokeObject.weight / 10}kg</td>
+                </tr>
+                <tr>
+                    <td>Abilities</td>
+                    <td id="abilities${singlePokeObject.id}">sprung, sprung, sprung</td>
+                </tr>
+            </table>
+            `
+}
+
+function getBaseStatsContentTemplate(pokeObjStats) {
+    return `
+            <div class="divRow">
+                <div class="statName">HP</div>
+                <div class="baseStats">${pokeObjStats[0].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div>
+            </div>
+            <div class="divRow">
+                <div class="statName">ATTACK</div>
+                <div class="baseStats">${pokeObjStats[1].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div>
+            </div>
+            <div class="divRow">
+                <div class="statName">DEFENSE</div>
+                <div class="baseStats">${pokeObjStats[2].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div> 
+            </div>
+            <div class="divRow">
+                <div class="statName">SPEED</div>
+                <div class="baseStats">${pokeObjStats[5].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div>
+            </div>
+            <div class="divRow">
+                <div class="statName">SP.ATTACK</div>
+                <div class="baseStats">${pokeObjStats[3].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div>
+            </div>
+            <div class="divRow">
+                <div class="statName">SP.DEFENSE</div>
+                <div class="baseStats">${pokeObjStats[4].base_stat}</div>
+                <div class="progressBar"><div class="grass progressColor"></div></div>
             </div>
             `
 }
@@ -133,7 +193,7 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                         <h4>Evolution</h4>
                         <h4>Moves</h4>
                     </div>
-                    <div id="renderCategorieContent">
+                    <div class="renderCategorieContent" id="renderCategorieContent">
                         <table>
                             <tr>
                                 <td>Species</td>

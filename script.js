@@ -360,7 +360,6 @@ function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
     let body = document.getElementById('body')
     body.style.overflow = "hidden";
     overlayDiv.classList.remove('display_none')
-    // let species = await setSpeciesOfPokemon(pokeObjectInArray);
 
     if (searchBar == false) {
         renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
@@ -373,13 +372,80 @@ function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
 function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon) {
     for (let ObjectsOfAllPokemonIndex = 0; ObjectsOfAllPokemonIndex < ObjectsOfAllPokemon.length; ObjectsOfAllPokemonIndex++) {
         if (idOfPokemon == ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id) {
-            let capitalizedPokeName = capitalizeFirstLetter(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].name)
-            overlayDiv.innerHTML += getPokeOverlayTemplate(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex], capitalizedPokeName, ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id)
-            setAbilitiesOfPokeCardInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex]);
-            setTypeOfPokemonInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex])
+            let pokeIDInArray = ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id
+            let pokeObjectInArray = ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex]
+
+            let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray.name)
+            overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
+            setCardCategoryContentOfAbout(pokeIDInArray)
+            // setContentOfAbout(pokeObjectInArray, pokeIDInArray)
+
         }
     }
 }
+
+async function setCardCategoryContentOfAbout(pokeIDInArray) {
+
+    let pokeObj = ObjectsOfAllPokemon[pokeIDInArray - 1]
+
+    await setSpeciesOfPokemon(pokeObj, pokeIDInArray)
+    setAbilitiesOfPokeCardInOverlay(pokeObj);
+    setTypeOfPokemonInOverlay(pokeObj)
+}
+
+function setContentOfAbout(species, pokeObjectInArray, pokeIDInArray) {
+    // let indexOfRightPokemon = pokeIDInArray - 1
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+    renderCategorieContent.innerHTML = "";
+    renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
+}
+
+function setContentOfBaseStats(pokeIDInArray) {
+    let indexOfRightPokemon = pokeIDInArray - 1
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+    let pokeObjStats = ObjectsOfAllPokemon[indexOfRightPokemon].stats
+    renderCategorieContent.innerHTML = "";
+    console.log(pokeObjStats);
+    renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
+    calcBaseStatColorBar()
+}
+
+function calcBaseStatColorBar() {
+    let baseStats = document.getElementsByClassName('baseStats')
+    let progressColor = document.getElementsByClassName('progressColor')
+
+    for (let index = 0; index < baseStats.length; index++) {
+        console.log(baseStats[index].innerHTML);
+        let baseStat = baseStats[index].innerHTML
+        let hundredPercent = 400
+
+        let percentValue = baseStat * 100 / hundredPercent
+        
+        console.log("percent: ", parseInt(percentValue));
+
+        progressColor[index].style.width = parseInt(percentValue) + "%"
+        
+    }
+}
+
+async function setSpeciesOfPokemon(pokeObjectInArray, pokeIDInArray) {
+    let pokeID = pokeObjectInArray.id
+    const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
+
+    let speciesResponse = await fetch(SPECIES_URL);
+    let speciesResponseToJson = await speciesResponse.json();
+    let species = speciesResponseToJson.genera[7].genus
+
+    console.log(species);
+    setContentOfAbout(species, pokeObjectInArray, pokeIDInArray)
+
+}
+
+// function renderCategorieContent(species, pokeIDInArray) {
+//     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+
+//     renderCategorieContent.innerHTML += species
+// }
 
 function renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) {
 
@@ -457,10 +523,12 @@ function setTypeOfPokemonInOverlay(pokeObjectInArray) {
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
         if (pokeTypes.length == 1) {
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
             addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
         }
         if (pokeTypes.length == 2) {
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeTwoOverlayTemplate(pokeObjectInArray);
             addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
@@ -561,17 +629,4 @@ function getLoadingSpinnerInOverlayButton(rightButton) {
 
 function stopEventBubbling(event) {
     event.stopPropagation()
-}
-
-
-async function setSpeciesOfPokemon(pokeObjectInArray) {
-    let pokeID = pokeObjectInArray.id
-    const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
-
-    let speciesResponse = await fetch(SPECIES_URL);
-    let speciesResponseToJson = await speciesResponse.json();
-    let species = speciesResponseToJson.genera[7].genus
-
-    return species
-
 }

@@ -31,7 +31,7 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
 
 function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray) {
     return `
-            <div class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
+            <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div id="arrowForwardBackwardClose">
                     <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
@@ -107,7 +107,7 @@ function getLoadingSpinnerForButtonTemplate() {
 
 function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foundPokemonIndex) {
     return `
-             <div class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
+             <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div id="arrowForwardBackwardClose">
                      <img id="arrowBackwardOverlay" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                      <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">

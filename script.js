@@ -87,7 +87,7 @@ async function renderFoundPokemon(foundPokemons) {
         console.log("pokeobjct", ObjectsOfAllPokemon);
         console.log(foundPokemons);
         foundPokemonsArray.push(pokeObject)
-        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
+        // addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
         // ObjectsOfAllPokemon.push(pokeObject)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName)
         getSinglePokeData(pokeObject, indexOfFound)
@@ -95,19 +95,6 @@ async function renderFoundPokemon(foundPokemons) {
     }
     setTimeout(disableLoadingSpinner, 500);
 }
-
-// function onclickPokeCard(pokeObject) {
-//     let singlePokedexCard = document.getElementById('singlePokedexCard')
-//     singlePokedexCard.type = "button"
-//     console.log((1));
-
-
-//     singlePokedexCard.addEventListener('click', function () {
-//         openOverlayPokeCard(pokeObject)
-//         console.log(pokeObject);
-
-//     })
-// }
 
 async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
@@ -187,7 +174,7 @@ function setPokeImg(pokeImg, pokeObject) {
     pokeImgDiv.src = pokeImg
 }
 
-async function getNextPokeStack() {
+async function getNextPokeStack(overlay, pokeIDInArray) {
     let nextPokeStack = true;
     let lastPokeStack = false;
 
@@ -214,6 +201,10 @@ async function getNextPokeStack() {
     }
     setTimeout(disableLoadingSpinner, 500);
     setTimeout(enableButtons, 500)
+    if (overlay) {
+        setTimeout(enableOverlayButtons, 500)
+        getNextOverlayPokemon(pokeIDInArray)
+    }
 }
 
 // --------------------------------GetNext/GetLast pokeStack Buttons------------------------------------------------
@@ -363,19 +354,13 @@ function closeOverlay() {
     overlayDiv.classList.add('display_none')
 }
 
-// async function fetchSingleOverlayPokemon(pokeIDInArray) {
-//     let singlePokemonResponse = await fetch(fetchedPokemonsNAME_URL[pokeIDInArray].url);
-//     let singlePokemonResponseToJson = await singlePokemonResponse.json();
-
-//     console.log(singlePokemonResponseToJson)
-// }
-
 function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
 
     let overlayDiv = document.getElementById('overlay')
     let body = document.getElementById('body')
     body.style.overflow = "hidden";
     overlayDiv.classList.remove('display_none')
+    // let species = await setSpeciesOfPokemon(pokeObjectInArray);
 
     if (searchBar == false) {
         renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
@@ -383,12 +368,12 @@ function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
     if (searchBar) {
         renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
     }
-
 }
 
-function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) {
+function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon) {
     for (let ObjectsOfAllPokemonIndex = 0; ObjectsOfAllPokemonIndex < ObjectsOfAllPokemon.length; ObjectsOfAllPokemonIndex++) {
         if (idOfPokemon == ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id) {
+            let capitalizedPokeName = capitalizeFirstLetter(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].name)
             overlayDiv.innerHTML += getPokeOverlayTemplate(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex], capitalizedPokeName, ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id)
             setAbilitiesOfPokeCardInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex]);
             setTypeOfPokemonInOverlay(ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex])
@@ -419,9 +404,6 @@ function getNextSearchBarOverlayPokemon(foundPokemonIndex) {
     let overlayDiv = document.getElementById('overlay')
     let nextFoundPokemonIndex = foundPokemonIndex + 1
     overlayDiv.innerHTML = "";
-    // overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
-    // setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[nextFoundPokemonIndex]);
-    // setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
 
     if (foundPokemonIndex < foundPokemonsArray.length - 1) {
         let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
@@ -459,26 +441,6 @@ function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
     }
 }
 
-
-
-// function capitalizeFirstLetter(pokeName) {
-//     return String(pokeName).charAt(0).toUpperCase() + String(pokeName).slice(1);
-// }
-
-// async function setSpeciesOfPokemon(pokeObjectInArray) {
-//     let pokeID = pokeObjectInArray.id
-//     const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
-
-//     let speciesResponse = await fetch(SPECIES_URL);
-//     let speciesResponseToJson = await speciesResponse.json();
-//     let species = speciesResponseToJson.genera[7].genus
-
-//     return species
-
-//      let species = await setSpeciesOfPokemon(pokeObjectInArray); --> soll in openOverlayFunction
-
-// }
-
 function setAbilitiesOfPokeCardInOverlay(pokeObjectInArray) {
     let abilityRenderSpot = document.getElementById(`abilities${pokeObjectInArray.id}`)
     let abilities = pokeObjectInArray.abilities
@@ -494,20 +456,14 @@ function setTypeOfPokemonInOverlay(pokeObjectInArray) {
 
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
-        // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
-
         if (pokeTypes.length == 1) {
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
-            // document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[typeIndex].type.name + ".svg"
             addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
         }
         if (pokeTypes.length == 2) {
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
-            // document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
             document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeTwoOverlayTemplate(pokeObjectInArray);
-            // document.getElementById(`typ2-Overlay${pokeObjectInArray.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
             addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
-            // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
             { break; }
         }
 
@@ -525,6 +481,7 @@ function addTypColorClassInOverlay(pokeObjectInArray, typeIndex) {
 function getNextOverlayPokemon(pokeIDInArray) {
     let nextOverlayPokemon = true;
     let lastOverlayPokemon = false;
+    let overlay = true
 
     disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon)
 
@@ -535,10 +492,9 @@ function getNextOverlayPokemon(pokeIDInArray) {
         overlayDiv.innerHTML = "";
         openOverlayPokeCard(nextPokeID)
     } else {
-        getNextPokeStack()
+        getNextPokeStack(overlay, pokeIDInArray)
     }
-
-    setTimeout(enableOverlayButtons, 500)
+    overlay = false;
 }
 
 function getLastOverlayPokemon(pokeIDInArray) {
@@ -598,11 +554,24 @@ function resetOverlayButtonsAttributes(nextOverlayButton, lastOverlayButton) {
 }
 
 function getLoadingSpinnerInOverlayButton(rightButton) {
-    // let width = rightButton.clientWidth
-    // console.log(width);
-
-    // rightButton.style.width = `${width}` + "px"
     rightButton.classList.add('loadingSpinnerInButton')
     rightButton.classList.add('disabled')
     rightButton.src = "./assets/img/pokemon-6046746_640.png";
+}
+
+function stopEventBubbling(event) {
+    event.stopPropagation()
+}
+
+
+async function setSpeciesOfPokemon(pokeObjectInArray) {
+    let pokeID = pokeObjectInArray.id
+    const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
+
+    let speciesResponse = await fetch(SPECIES_URL);
+    let speciesResponseToJson = await speciesResponse.json();
+    let species = speciesResponseToJson.genera[7].genus
+
+    return species
+
 }

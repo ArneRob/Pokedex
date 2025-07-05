@@ -36,19 +36,15 @@ function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
     let lastFoundPokemonIndex = foundPokemonIndex - 1
 
     overlayDiv.innerHTML = "";
-    if (foundPokemonIndex > 0) {
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
-        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
-        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
-        setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
-    }
+
     if (foundPokemonIndex <= 0) {
         lastFoundPokemonIndex = foundPokemonsArray.length - 1
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
-        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
-        setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
-        setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
     }
+    let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
+    overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
+    setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
+    setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
+
 }
 
 async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex) {
@@ -208,12 +204,6 @@ async function setSpeciesOfPokemon(pokeObjectInArray, pokeIDInArray) {
 
 }
 
-// function renderCategorieContent(species, pokeIDInArray) {
-//     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
-
-//     renderCategorieContent.innerHTML += species
-// }
-
 function getIndexOfPokemon(idOfPokemon) {
     for (let index = 0; index < foundPokemonsArray.length; index++) {
         if (idOfPokemon == foundPokemonsArray[index].id) {
@@ -239,19 +229,14 @@ function setTypeOfPokemonInOverlay(pokeObjectInArray) {
 
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
-        if (pokeTypes.length == 1) {
-            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
-            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
-            addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
-        }
-        if (pokeTypes.length == 2) {
-            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
-            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
-            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeTwoOverlayTemplate(pokeObjectInArray);
-            addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
-            { break; }
-        }
+        document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
+        document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
 
+        if (pokeTypes.length == 2) {
+            document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeTwoOverlayTemplate(pokeObjectInArray);
+        }
+        addTypColorClassInOverlay(pokeObjectInArray, typeIndex)
+        { break; }
     }
 }
 
@@ -316,12 +301,11 @@ function disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon) {
     let nextOverlayButton = document.getElementById('arrowForwardOverlay')
     let lastOverlayButton = document.getElementById('arrowBackwardOverlay')
 
+    changeAttributesOfOverlayButton(nextOverlayButton, lastOverlayButton)
     if (nextOverlayPokemon) {
-        changeAttributesOfOverlayButton(nextOverlayButton, lastOverlayButton)
         getLoadingSpinnerInOverlayButton(nextOverlayButton)
     }
     if (lastOverlayPokemon) {
-        changeAttributesOfOverlayButton(nextOverlayButton, lastOverlayButton)
         getLoadingSpinnerInOverlayButton(lastOverlayButton)
     }
 }

@@ -407,6 +407,7 @@ function setContentOfBaseStats(pokeIDInArray) {
     renderCategorieContent.innerHTML = "";
     console.log(pokeObjStats);
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
+    addTypColorClassInOverlayLoadingBar(indexOfRightPokemon)
     calcBaseStatColorBar()
 }
 
@@ -538,12 +539,26 @@ function setTypeOfPokemonInOverlay(pokeObjectInArray) {
     }
 }
 
+function addTypColorClassInOverlayLoadingBar(indexOfRightPokemon) {
+    let pokeObj = ObjectsOfAllPokemon[indexOfRightPokemon]
+    console.log(pokeObj);
+    
+    let typName = pokeObj.types[0].type.name
+    let progressBarColor = document.getElementsByClassName('progressColor')
+
+    for (let index = 0; index < progressBarColor.length; index++) {
+        progressBarColor[index].classList.add(`${typName}`)
+    }
+}
+
 function addTypColorClassInOverlay(pokeObjectInArray, typeIndex) {
     document.getElementById(`pokemonCard${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[typeIndex].type.name}`)
     document.getElementById(`typ1-Overlay${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[0].type.name}`)
     if (pokeObjectInArray.types.length > 1) {
         document.getElementById(`typ2-Overlay${pokeObjectInArray.id}`).classList.add(`${pokeObjectInArray.types[1].type.name}`)
     }
+
+    
 }
 
 function getNextOverlayPokemon(pokeIDInArray) {

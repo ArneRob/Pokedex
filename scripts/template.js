@@ -112,32 +112,32 @@ function getBaseStatsContentTemplate(pokeObjStats) {
             <div class="divRow">
                 <div class="statName">HP</div>
                 <div class="baseStats">${pokeObjStats[0].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div>
+                <div class="progressBar"><div class="progressColor"></div></div>
             </div>
             <div class="divRow">
                 <div class="statName">ATTACK</div>
                 <div class="baseStats">${pokeObjStats[1].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div>
+                <div class="progressBar"><div class="progressColor"></div></div>
             </div>
             <div class="divRow">
                 <div class="statName">DEFENSE</div>
                 <div class="baseStats">${pokeObjStats[2].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div> 
+                <div class="progressBar"><div class="progressColor"></div></div> 
             </div>
             <div class="divRow">
                 <div class="statName">SPEED</div>
                 <div class="baseStats">${pokeObjStats[5].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div>
+                <div class="progressBar"><div class="progressColor"></div></div>
             </div>
             <div class="divRow">
                 <div class="statName">SP.ATTACK</div>
                 <div class="baseStats">${pokeObjStats[3].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div>
+                <div class="progressBar"><div class="progressColor"></div></div>
             </div>
             <div class="divRow">
                 <div class="statName">SP.DEFENSE</div>
                 <div class="baseStats">${pokeObjStats[4].base_stat}</div>
-                <div class="progressBar"><div class="grass progressColor"></div></div>
+                <div class="progressBar"><div class="progressColor"></div></div>
             </div>
             `
 }

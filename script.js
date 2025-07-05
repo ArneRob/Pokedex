@@ -128,10 +128,8 @@ function capitalizeFirstLetter(pokeName) {
 function addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon) {
     const doesAlreadyExist = ObjectsOfAllPokemon.find((item) => item.id === pokeObject.id);
 
-
     // Ignore the process
     if (doesAlreadyExist) return ObjectsOfAllPokemon;
-
     // Or push the new value
     ObjectsOfAllPokemon.push(pokeObject);
 

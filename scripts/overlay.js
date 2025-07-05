@@ -13,28 +13,18 @@ function getNextSearchBarOverlayPokemon(foundPokemonIndex) {
     let nextFoundPokemonIndex = foundPokemonIndex + 1
     overlayDiv.innerHTML = "";
 
-    if (foundPokemonIndex < foundPokemonsArray.length - 1) {
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
-        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
-        // setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
-        // setSpeciesOfPokemonForSearchBar(foundPokemonsArray[nextFoundPokemonIndex], nextFoundPokemonIndex)
-        setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex)
-    }
     if (foundPokemonIndex >= foundPokemonsArray.length - 1) {
         nextFoundPokemonIndex = 0
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
-        overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
-        // setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[nextFoundPokemonIndex]);
-        setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex)
-        // setTypeOfPokemonInOverlay(foundPokemonsArray[nextFoundPokemonIndex])
-        // setSpeciesOfPokemonForSearchBar(foundPokemonsArray[nextFoundPokemonIndex], nextFoundPokemonIndex)
     }
+    let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
+    overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
+    setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex)
+
 }
 
 function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
     let overlayDiv = document.getElementById('overlay')
     let lastFoundPokemonIndex = foundPokemonIndex - 1
-
     overlayDiv.innerHTML = "";
 
     if (foundPokemonIndex <= 0) {

@@ -55,7 +55,6 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                         <h4 onclick="setCardCategoryContentOfAbout(${pokeIDInArray})">About</h4>
                         <h4 onclick="setContentOfBaseStats(${pokeIDInArray})">Base Stats</h4>
                         <h4>Evolution</h4>
-                        <h4>Moves</h4>
                     </div>
                     <div class="renderCategorieContent">
                         <table>
@@ -188,16 +187,16 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
-                        <h4>About</h4>
-                        <h4>Base Stats</h4>
+                        <h4 onclick="setCardCategoryContentOfAboutInSearchBar(${foundPokemonIndex})">About</h4>
+                        <h4 onclick="setContentOfBaseStatsInSearchBar(${foundPokemonIndex})">Base Stats</h4>
                         <h4>Evolution</h4>
-                        <h4>Moves</h4>
                     </div>
                     <div class="renderCategorieContent" id="renderCategorieContent">
                         <table>
+                           <tbody  id="renderCategorieContent${foundPokemonIndex}">
                             <tr>
                                 <td>Species</td>
-                                <td>seed</td>
+                                <td>Not Found....</td>
                             </tr>
                             <tr>
                                 <td>Height</td>
@@ -209,8 +208,9 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                             </tr>
                             <tr>
                                 <td>Abilities</td>
-                                <td id="abilities${singlePokeObject.id}">sprung, sprung, sprung</td>
+                                <td id="abilities${singlePokeObject.id}">Not Found....</td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -209,7 +209,7 @@ header input {
 }
 
 .pokemonImgClass {
-    width: 200px;
+    width: 300px;
 }
 
 @media(max-width: 510px) {

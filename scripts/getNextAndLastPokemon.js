@@ -36,11 +36,11 @@ function disableButtons(nextPokeStack, lastPokeStack) {
     let lastButton = document.getElementById('getLastButton')
 
     if (nextPokeStack) {
-        changeAttributesOfNextButton(nextButton, lastButton)
+        changeAttributesOfButton(nextButton, lastButton)
         getLoadingSpinnerInButton(nextButton)
     }
     if (lastPokeStack) {
-        changeAttributesOfLastButton(nextButton, lastButton)
+        changeAttributesOfButton(lastButton, nextButton)
         getLoadingSpinnerInButton(lastButton)
     }
 }
@@ -85,21 +85,29 @@ function getLoadingSpinnerInButton(rightButton) {
     rightButton.innerHTML += "Loading" + getLoadingSpinnerForButtonTemplate();
 }
 
-function changeAttributesOfNextButton(nextButton, lastButton) {
-    nextButton.disabled = true
-    lastButton.disabled = true
-    nextButton.style.transform = "translateY(4px)"
-    nextButton.style.backgroundColor = "rgb(13, 136, 143)"
-    nextButton.style.cursor = "not-allowed"
+function changeAttributesOfButton(klickedButton, otherButton) {
+    klickedButton.disabled = true
+    otherButton.disabled = true
+    klickedButton.style.transform = "translateY(4px)"
+    klickedButton.style.backgroundColor = "rgb(13, 136, 143)"
+    klickedButton.style.cursor = "not-allowed"
 }
 
-function changeAttributesOfLastButton(nextButton, lastButton) {
-    nextButton.disabled = true
-    lastButton.disabled = true
-    lastButton.style.transform = "translateY(4px)"
-    lastButton.style.backgroundColor = "rgb(13, 136, 143)"
-    lastButton.style.cursor = "not-allowed"
-}
+// function changeAttributesOfNextButton(nextButton, lastButton) {
+//     nextButton.disabled = true
+//     lastButton.disabled = true
+//     nextButton.style.transform = "translateY(4px)"
+//     nextButton.style.backgroundColor = "rgb(13, 136, 143)"
+//     nextButton.style.cursor = "not-allowed"
+// }
+
+// function changeAttributesOfLastButton(nextButton, lastButton) {
+//     nextButton.disabled = true
+//     lastButton.disabled = true
+//     lastButton.style.transform = "translateY(4px)"
+//     lastButton.style.backgroundColor = "rgb(13, 136, 143)"
+//     lastButton.style.cursor = "not-allowed"
+// }
 
 
 

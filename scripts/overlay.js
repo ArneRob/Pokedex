@@ -32,8 +32,7 @@ function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
     }
     let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
-    setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[lastFoundPokemonIndex]);
-    setTypeOfPokemonInOverlay(foundPokemonsArray[lastFoundPokemonIndex])
+    setCardCategoryContentOfAboutInSearchBar(lastFoundPokemonIndex)
 
 }
 
@@ -48,7 +47,6 @@ async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex) {
 }
 
 function setContentOfAboutSearchBar(species, pokeObjectInArray, pokeIDInArray) {
-    // let indexOfRightPokemon = pokeIDInArray - 1
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)

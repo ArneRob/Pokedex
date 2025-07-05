@@ -73,8 +73,8 @@ async function renderFoundPokemon(foundPokemons) {
     foundPokemonsArray = [];
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
-    changeAttributesOfNextButton(nextButton, lastButton)
-    changeAttributesOfLastButton(nextButton, lastButton)
+    changeAttributesOfButton(nextButton, lastButton)
+    changeAttributesOfButton(lastButton, nextButton)
     loadingSpinnerOnOff();
     console.log(foundPokemons);
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {

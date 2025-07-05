@@ -123,8 +123,6 @@ function setTypeOfPokemon(pokeObject) {
     let pokeTypes = pokeObject.types
     // console.log("poketype", pokeTypes);
 
-    for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
-
         document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
         document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
 
@@ -133,14 +131,12 @@ function setTypeOfPokemon(pokeObject) {
             document.getElementById(`typ2-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
 
         }
-        addTypColorClass(pokeObject, typeIndex)
-        { break; }
-    }
+        addTypColorClass(pokeObject)
 }
 
 
-function addTypColorClass(pokeObject, typeIndex) {
-    document.getElementById(`pokemonImg${pokeObject.id}`).classList.add(`${pokeObject.types[typeIndex].type.name}`)
+function addTypColorClass(pokeObject) {
+    document.getElementById(`pokemonImg${pokeObject.id}`).classList.add(`${pokeObject.types[0].type.name}`)
     document.getElementById(`typ1-${pokeObject.id}`).classList.add(`${pokeObject.types[0].type.name}`)
     if (pokeObject.types.length > 1) {
         document.getElementById(`typ2-${pokeObject.id}`).classList.add(`${pokeObject.types[1].type.name}`)

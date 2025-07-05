@@ -93,24 +93,6 @@ function changeAttributesOfButton(klickedButton, otherButton) {
     klickedButton.style.cursor = "not-allowed"
 }
 
-// function changeAttributesOfNextButton(nextButton, lastButton) {
-//     nextButton.disabled = true
-//     lastButton.disabled = true
-//     nextButton.style.transform = "translateY(4px)"
-//     nextButton.style.backgroundColor = "rgb(13, 136, 143)"
-//     nextButton.style.cursor = "not-allowed"
-// }
-
-// function changeAttributesOfLastButton(nextButton, lastButton) {
-//     nextButton.disabled = true
-//     lastButton.disabled = true
-//     lastButton.style.transform = "translateY(4px)"
-//     lastButton.style.backgroundColor = "rgb(13, 136, 143)"
-//     lastButton.style.cursor = "not-allowed"
-// }
-
-
-
 async function getLastPokeStack() {
     let lastResponse = await fetch(last_URL_Array + ".json");
     let lastResponseToJson = await lastResponse.json();
@@ -143,23 +125,16 @@ function setTypeOfPokemon(pokeObject) {
 
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
 
-        // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
+        document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
+        document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
 
-        if (pokeTypes.length == 1) {
-            document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
-            document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[typeIndex].type.name + ".svg"
-            addTypColorClass(pokeObject, typeIndex)
-        }
         if (pokeTypes.length == 2) {
-            document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
-            document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
             document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeTwoIMGTemplate(pokeObject);
             document.getElementById(`typ2-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[1].type.name + ".svg"
-            addTypColorClass(pokeObject, typeIndex)
-            // setColorTypeOfPokemon(pokeTypes, pokeObject, typeIndex)
-            { break; }
-        }
 
+        }
+        addTypColorClass(pokeObject, typeIndex)
+        { break; }
     }
 }
 

@@ -48,7 +48,7 @@ async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex) {
 
 function setContentOfAboutSearchBar(species, pokeObjectInArray, pokeIDInArray) {
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
-
+    renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
 }
@@ -82,6 +82,7 @@ function setContentOfBaseStatsInSearchBar(foundPokemonIndex) {
     let renderCategorieContent = document.getElementById(`renderCategorieContent${foundPokemonIndex}`)
     let pokeObjStats = foundPokemonsArray[foundPokemonIndex].stats
     renderCategorieContent.innerHTML = "";
+    renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
     addTypColorClassInOverlaySearchBar(foundPokemonIndex)
     calcBaseStatColorBar()

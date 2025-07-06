@@ -117,15 +117,15 @@ function capitalizeFirstLetter(pokeName) {
     return String(pokeName).charAt(0).toUpperCase() + String(pokeName).slice(1);
 }
 
-function addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon) {
-    const doesAlreadyExist = ObjectsOfAllPokemon.find((item) => item.id === pokeObject.id);
+function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
+    const doesAlreadyExist = arrayOfAllPokemon.find((item) => item.id === pokeObject.id);
 
     // Ignore the process
-    if (doesAlreadyExist) return ObjectsOfAllPokemon;
+    if (doesAlreadyExist) return arrayOfAllPokemon;
     // Or push the new value
-    ObjectsOfAllPokemon.push(pokeObject);
+    arrayOfAllPokemon.push(pokeObject);
 
-    return ObjectsOfAllPokemon;
+    return arrayOfAllPokemon;
 }
 
 function getSinglePokeData(pokeObject, index) {

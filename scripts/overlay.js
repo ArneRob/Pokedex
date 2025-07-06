@@ -48,6 +48,7 @@ async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex) {
 
 function setContentOfAboutSearchBar(species, pokeObjectInArray, pokeIDInArray) {
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
 }
@@ -61,6 +62,8 @@ async function setSpeciesOfPokemonForSearchBar(pokeObjectInArray, pokeIDInArray)
         if (speciesResponse.status == 200) {
             let speciesResponse = await fetch(SPECIES_URL);
             let speciesResponseToJson = await speciesResponse.json();
+            evolutionChainLink = speciesResponseToJson.evolution_chain.url
+            console.log(evolutionChainLink);
             if (speciesResponseToJson.genera[7]) {
                 let species = speciesResponseToJson.genera[7].genus
                 setContentOfAboutSearchBar(species, pokeObjectInArray, pokeIDInArray)
@@ -146,6 +149,7 @@ async function setCardCategoryContentOfAbout(pokeIDInArray) {
 function setContentOfAbout(species, pokeObjectInArray, pokeIDInArray) {
     // let indexOfRightPokemon = pokeIDInArray - 1
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+    renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
 }
@@ -154,6 +158,7 @@ function setContentOfBaseStats(pokeIDInArray) {
     let indexOfRightPokemon = pokeIDInArray - 1
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
     let pokeObjStats = ObjectsOfAllPokemon[indexOfRightPokemon].stats
+    renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML = "";
     console.log(pokeObjStats);
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
@@ -185,9 +190,10 @@ async function setSpeciesOfPokemon(pokeObjectInArray, pokeIDInArray) {
 
     let speciesResponse = await fetch(SPECIES_URL);
     let speciesResponseToJson = await speciesResponse.json();
+    console.log(speciesResponseToJson);
     let species = speciesResponseToJson.genera[7].genus
-
-    console.log(species);
+    evolutionChainLink = speciesResponseToJson.evolution_chain.url
+    console.log(evolutionChainLink);
     setContentOfAbout(species, pokeObjectInArray, pokeIDInArray)
 
 }

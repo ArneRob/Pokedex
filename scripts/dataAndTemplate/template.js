@@ -54,7 +54,7 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                     <div id="cardCategories">
                         <h4 onclick="setCardCategoryContentOfAbout(${pokeIDInArray})">About</h4>
                         <h4 onclick="setContentOfBaseStats(${pokeIDInArray})">Base Stats</h4>
-                        <h4>Evolution</h4>
+                        <h4 onclick="setEvolutionChainData(${pokeIDInArray})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent">
                         <table>
@@ -189,7 +189,7 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                     <div id="cardCategories">
                         <h4 onclick="setCardCategoryContentOfAboutInSearchBar(${foundPokemonIndex})">About</h4>
                         <h4 onclick="setContentOfBaseStatsInSearchBar(${foundPokemonIndex})">Base Stats</h4>
-                        <h4>Evolution</h4>
+                        <h4 onclick="setEvolutionChainData(${foundPokemonIndex})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent" id="renderCategorieContent">
                         <table>
@@ -215,5 +215,11 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                     </div>
                 </div>
             </div>
+            `
+}
+
+function getEvolutionChainTemplate(src) {
+    return `
+            <img src="${src}" alt="">
             `
 }

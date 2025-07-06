@@ -6,6 +6,8 @@ let fetchedNamesArray = [];
 let fetchedPokemonsNAME_URL = [];
 
 let foundPokemonsArray = [];
+let evolutionChainLink = [];
+let evoNamesArray = [];
 
 // let pokeTypesArray = { 
 //     bug: './assets/icons/bug.svg',

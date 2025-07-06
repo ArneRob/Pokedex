@@ -26,8 +26,6 @@ async function fetchAllNamesAndURL() {
     let fetchedPokeObjects = pokeNameResponseToJSON.results
     fetchedPokemonsNAME_URL = pokeNameResponseToJSON.results
     pushNamesToArray(fetchedPokeObjects)
-    console.log(fetchedPokemonsNAME_URL);
-
 }
 
 function pushNamesToArray(fetchedPokeObjects) {
@@ -36,7 +34,6 @@ function pushNamesToArray(fetchedPokeObjects) {
 
         fetchedNamesArray.push(pokeNameToSave)
     }
-    console.log(fetchedNamesArray)
 }
 
 function findPokemon() {
@@ -45,7 +42,6 @@ function findPokemon() {
     let lastButton = document.getElementById('getLastButton')
     if (pokemonToFind.length > 2) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(pokemonToFind))
-        console.log(foundPokemons);
         searchBar = true;
         renderFoundPokemon(foundPokemons);
     }
@@ -69,29 +65,25 @@ const processChanges = debounce(() => findPokemon());
 
 async function renderFoundPokemon(foundPokemons) {
     let renderContent = document.getElementById('renderContent')
-    renderContent.innerHTML = "";
-    foundPokemonsArray = [];
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
+    renderContent.innerHTML = "";
+    foundPokemonsArray = [];
+
     changeAttributesOfButton(nextButton, lastButton)
     changeAttributesOfButton(lastButton, nextButton)
     loadingSpinnerOnOff();
-    console.log(foundPokemons);
+
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {
         console.log(foundPokemons[indexOfFound]);
 
         let SPECIFIC_POKE_URL = "https://pokeapi.co/api/v2/pokemon/" + foundPokemons[indexOfFound]
         let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        // ObjectsOfAllPokemon += pokeObject
-        console.log("pokeobjct", ObjectsOfAllPokemon);
-        console.log(foundPokemons);
+
         foundPokemonsArray.push(pokeObject)
-        // addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
-        // ObjectsOfAllPokemon.push(pokeObject)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName)
         getSinglePokeData(pokeObject, indexOfFound)
-        // onclickPokeCard(pokeObject);
     }
     setTimeout(loadingSpinnerOnOff, 500);
 }

@@ -14,12 +14,11 @@
     align-items: center;
 }
 
-
-
 .pokemonCard {
     background-color: rgb(73, 208, 176);
     width: 400px;
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,4 +166,14 @@
 .progressColor {
     height: 10px;
     border-radius: 25px;
+}
+
+.evolutionImgs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+tbody img {
+    width: 100px;
 }

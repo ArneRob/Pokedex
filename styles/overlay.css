@@ -23,17 +23,18 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    top: -5%;
 }
 
 @media(max-width: 480px) {
     .pokemonCard {
-        width: 350px;
+        transform: scale(0.9);
     }
 }
 
 @media(max-width: 400px) {
     .pokemonCard {
-        width: 300px;
+        transform: scale(0.8);
     }
 }
 
@@ -55,6 +56,12 @@
     border: solid 2px rgb(231, 204, 83);
 }
 
+@media(max-width: 1000px) {
+    #arrowForwardBackwardClose img:hover {
+        border: solid 2px rgba(231, 204, 83, 0);
+    }
+}
+
 #cardCategorieSection {
     background-color: white;
     border-radius: 20px;
@@ -67,7 +74,13 @@
 
 @media(max-width: 480px) {
     #cardCategorieSection {
-        top: 370px;
+        top: 430px;
+    }
+}
+
+@media(max-width: 370px) {
+    #cardCategorieSection {
+        top: 420px;
     }
 }
 
@@ -89,9 +102,9 @@
     z-index: 2;
 }
 
-@media(max-width: 480px) {
+@media(max-width: 370px) {
     .overlayPokeImg {
-        width: 250px;
+        width: 280px;
     }
 }
 
@@ -141,24 +154,23 @@
     width: 70px;
 }
 
-
 .statName {
     font-weight: 600;
-    width: 100px;
+    width: 40%;
 }
 
 .divRow {
     display: flex;
     align-items: center;
+    gap: 2%;
 }
 
 .baseStats {
-    width: 30px;
+    width: 10%;
 }
 
 .progressBar {
-    margin-left: 10px;
-    width: 220px;
+    width: 55%;
     border-radius: 25px;
     border: solid 1px black;
 }
@@ -172,6 +184,19 @@
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+@media(max-width: 380px) {
+    .evolutionImgs img {
+        width: 80px;
+    }
+}
+
+@media(max-width: 330px) {
+    .evolutionImgs img {
+        width: 75px;
+        gap: 10px;
+    }
 }
 
 tbody img {

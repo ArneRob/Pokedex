@@ -208,6 +208,13 @@ header input {
     filter: drop-shadow(13px 13px 5px #3e807f);
 }
 
+@media(max-width: 1000px) {
+    .singlePokedexCard:hover {
+        transform: scale(1);
+        filter: drop-shadow(10px 10px 5px #3e807f);
+    }
+}
+
 .pokemonImgClass {
     width: 300px;
 }

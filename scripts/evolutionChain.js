@@ -52,22 +52,27 @@ async function changeInnerHTMLEvoChain(pokeID) {
             let nameToFetch = checkIfNameExist(pokeEvoName, array)
             if (nameToFetch) {
                 console.log("nametofetch; ", nameToFetch);
-                fetchedPokeObj = await fetchSinglePokemon(nameToFetch)
+                fetchedPokeObj = await fetchSinglePokemon(nameToFetch, foundPokemonsArray)
             }
         } else {
             array = ObjectsOfAllPokemon
+            let nameToFetch = checkIfNameExist(pokeEvoName, array)
+            if (nameToFetch) {
+                console.log("nametofetch; ", nameToFetch);
+                fetchedPokeObj = await fetchSinglePokemon(nameToFetch, ObjectsOfAllPokemon, pokeID)
+                array = changeAbleObjectOfAllPokemon
+            }
         }
         console.log(foundPokemonsArray);
         // foundPokemonsArray.push(fetchedPokeObj)
-        loopThroughArrayPokemon(pokeEvoName, imgRenderSpot, array)
+        loopThroughPokemonsArray(pokeEvoName, imgRenderSpot, array)
 
     }
 }
 
-function loopThroughArrayPokemon(pokeEvoName, imgRenderSpot, array) {
+function loopThroughPokemonsArray(pokeEvoName, imgRenderSpot, array) {
     for (let index = 0; index < array.length; index++) {
         if (pokeEvoName == array[index].name) {
-            // checkIfNameExist(pokeEvoName, array)
             let src = srcRequest(array[index])
             imgRenderSpot.innerHTML += getEvolutionChainTemplate(src)
         }
@@ -78,7 +83,6 @@ function checkIfNameExist(pokeName, arrayOfAllPokemon) {
     const doesAlreadyExist = arrayOfAllPokemon.find((item) => item.name === pokeName);
 
     if (doesAlreadyExist == undefined) {
-        console.log("non existing", pokeName);
         return pokeName;
     }
 }
@@ -92,15 +96,24 @@ function srcRequest(obj) {
     } return src
 }
 
-// addToArrayIfNotExist(pokeObject, arrayOfAllPokemon)
+async function fetchSinglePokemon(pokeName, array, pokeID) {
 
-async function fetchSinglePokemon(pokeName) {
     const singlePokemonURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
 
     let singlePokeResponse = await fetch(singlePokemonURL);
     let singlePokeResponseToJSON = await singlePokeResponse.json();
 
-    // return singlepokeResponseToJSON
-    foundPokemonsArray.push(singlePokeResponseToJSON)
+    if (array.length > 20) {
+        createManipulatableObject(pokeID, array, singlePokeResponseToJSON)
+    }
+    if (array.length < 20) {
+        foundPokemonsArray.push(singlePokeResponseToJSON)
+    }
 
+}
+
+function createManipulatableObject(pokeID, array, singlePokeResponseToJSON) {
+    let indexPosition = pokeID - 1
+    Object.assign(changeAbleObjectOfAllPokemon, ObjectsOfAllPokemon)
+    changeAbleObjectOfAllPokemon.splice(indexPosition, 0, singlePokeResponseToJSON)
 }

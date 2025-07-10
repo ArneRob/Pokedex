@@ -5,7 +5,6 @@ const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
 let searchBar = false;
 
 function onload() {
-    loadingSpinnerOnOff();
     getPokeCard();
     fetchAllNamesAndURL()
 }
@@ -45,7 +44,7 @@ function findPokemon() {
         searchBar = true;
         renderFoundPokemon(foundPokemons);
     }
-    if (pokemonToFind.length < 1) {
+    if (pokemonToFind.length < 2) {
         searchBar = false;
         resetButtonsAttributes(nextButton, lastButton)
         enableButtons();
@@ -92,6 +91,7 @@ async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
+    loadingSpinnerOnOff();
 
     console.log(responseToJson)
     document.getElementById('renderContent').innerHTML = "";

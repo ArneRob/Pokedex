@@ -4,7 +4,7 @@ function renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPoke
     let foundPokemonIndex = getIndexOfPokemon(idOfPokemon);
 
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[foundPokemonIndex], capitalizedPokeName, foundPokemonIndex)
-    setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex)
+    setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex, 1)
 
 }
 
@@ -18,7 +18,7 @@ function getNextSearchBarOverlayPokemon(foundPokemonIndex) {
     }
     let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
-    setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex)
+    setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex, 1)
 
 }
 
@@ -32,25 +32,28 @@ function getLastSearchBarOverlayPokemon(foundPokemonIndex) {
     }
     let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[lastFoundPokemonIndex].name)
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[lastFoundPokemonIndex], capitalizedPokeName, lastFoundPokemonIndex)
-    setCardCategoryContentOfAboutInSearchBar(lastFoundPokemonIndex)
+    setCardCategoryContentOfAboutInSearchBar(lastFoundPokemonIndex, 1)
 
 }
 
-async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex) {
-
+async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex, contentStatus) {
+    setActiveClassState(foundPokemonIndex, contentStatus)
     let pokeObj = foundPokemonsArray[foundPokemonIndex]
     console.log(foundPokemonsArray[foundPokemonIndex]);
 
     await setSpeciesOfPokemonForSearchBar(pokeObj, foundPokemonIndex)
     setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[foundPokemonIndex]);
     setTypeOfPokemonInOverlay(foundPokemonsArray[foundPokemonIndex])
+    setActiveClassState(foundPokemonIndex, contentStatus)
 }
 
 function setContentOfAboutSearchBar(species, pokeObjectInArray, pokeIDInArray) {
+    // setActiveClassState(pokeIDInArray, 1)
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
     renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
+    // setActiveClassState(pokeIDInArray, 1)
 }
 
 async function setSpeciesOfPokemonForSearchBar(pokeObjectInArray, pokeIDInArray) {
@@ -77,8 +80,8 @@ async function setSpeciesOfPokemonForSearchBar(pokeObjectInArray, pokeIDInArray)
     }
 }
 
-function setContentOfBaseStatsInSearchBar(foundPokemonIndex) {
-
+function setContentOfBaseStatsInSearchBar(foundPokemonIndex, contentStatus) {
+    setActiveClassState(foundPokemonIndex, contentStatus)
     let renderCategorieContent = document.getElementById(`renderCategorieContent${foundPokemonIndex}`)
     let pokeObjStats = foundPokemonsArray[foundPokemonIndex].stats
     renderCategorieContent.innerHTML = "";
@@ -86,6 +89,7 @@ function setContentOfBaseStatsInSearchBar(foundPokemonIndex) {
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
     addTypColorClassInOverlaySearchBar(foundPokemonIndex)
     calcBaseStatColorBar()
+    setActiveClassState(foundPokemonIndex, contentStatus)
 }
 
 function addTypColorClassInOverlaySearchBar(indexOfRightPokemon) {
@@ -108,6 +112,28 @@ function closeOverlay() {
     overlayDiv.classList.add('display_none')
 }
 
+function setActiveClassState(foundPokemonIndex, contentStatus) {
+    let cardCategoryContentOfAbout = document.getElementById(`setCardCategoryContentOfAbout${foundPokemonIndex}`)
+    let contentOfBaseStats = document.getElementById(`setContentOfBaseStats${foundPokemonIndex}`)
+    let evolutionChainData = document.getElementById(`setEvolutionChainData${foundPokemonIndex}`)
+    toggleAttributesOfButtonToDisabled(cardCategoryContentOfAbout, contentOfBaseStats, evolutionChainData)
+    if (contentStatus == 1) {
+        activeCategory(cardCategoryContentOfAbout, contentOfBaseStats, evolutionChainData)
+    }
+    if (contentStatus == 2) {
+        activeCategory(contentOfBaseStats, cardCategoryContentOfAbout, evolutionChainData)
+    }
+    if (contentStatus == 3) {
+        activeCategory(evolutionChainData, cardCategoryContentOfAbout, contentOfBaseStats)
+    }
+}
+
+function activeCategory(active, notActive1, notActive2) {
+    active.classList.add('isActive')
+    notActive1.classList.remove('isActive')
+    notActive2.classList.remove('isActive')
+}
+
 function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
 
     let overlayDiv = document.getElementById('overlay')
@@ -128,26 +154,29 @@ function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon) {
         if (idOfPokemon == ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id) {
             let pokeIDInArray = ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex].id
             let pokeObjectInArray = ObjectsOfAllPokemon[ObjectsOfAllPokemonIndex]
-
+            overlayDiv.innerHTML = "";
             let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray.name)
             overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray)
-            setCardCategoryContentOfAbout(pokeIDInArray)
+            setCardCategoryContentOfAbout(pokeIDInArray, 1)
             // setContentOfAbout(pokeObjectInArray, pokeIDInArray)
 
         }
     }
 }
 
-async function setCardCategoryContentOfAbout(pokeIDInArray) {
+async function setCardCategoryContentOfAbout(pokeIDInArray, contentStatus) {
 
+    setActiveClassState(pokeIDInArray, contentStatus)
     let pokeObj = ObjectsOfAllPokemon[pokeIDInArray - 1]
 
     await setSpeciesOfPokemon(pokeObj, pokeIDInArray)
     setAbilitiesOfPokeCardInOverlay(pokeObj);
     setTypeOfPokemonInOverlay(pokeObj)
+    setActiveClassState(pokeIDInArray, contentStatus)
 }
 
 function setContentOfAbout(species, pokeObjectInArray, pokeIDInArray) {
+
     // let indexOfRightPokemon = pokeIDInArray - 1
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
     renderCategorieContent.classList.remove('evolutionImgs')
@@ -155,7 +184,10 @@ function setContentOfAbout(species, pokeObjectInArray, pokeIDInArray) {
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
 }
 
-function setContentOfBaseStats(pokeIDInArray) {
+function setContentOfBaseStats(pokeIDInArray, contentStatus) {
+
+
+    setActiveClassState(pokeIDInArray, contentStatus)
     let indexOfRightPokemon = pokeIDInArray - 1
     let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
     let pokeObjStats = ObjectsOfAllPokemon[indexOfRightPokemon].stats
@@ -165,6 +197,7 @@ function setContentOfBaseStats(pokeIDInArray) {
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
     addTypColorClassInOverlayLoadingBar(indexOfRightPokemon)
     calcBaseStatColorBar()
+    setActiveClassState(pokeIDInArray, contentStatus)
 }
 
 function calcBaseStatColorBar() {
@@ -261,14 +294,12 @@ function getNextOverlayPokemon(pokeIDInArray) {
     let nextOverlayPokemon = true;
     let lastOverlayPokemon = false;
     let overlay = true
+    let overlayDiv = document.getElementById('overlay')
 
     disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon)
 
     if (ObjectsOfAllPokemon.length > pokeIDInArray) {
         let nextPokeID = pokeIDInArray + 1
-        let overlayDiv = document.getElementById('overlay')
-
-        overlayDiv.innerHTML = "";
         openOverlayPokeCard(nextPokeID)
     } else {
         getNextPokeStack(overlay, pokeIDInArray)
@@ -296,7 +327,7 @@ function disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon) {
     let nextOverlayButton = document.getElementById('arrowForwardOverlay')
     let lastOverlayButton = document.getElementById('arrowBackwardOverlay')
 
-    changeAttributesOfOverlayButton(nextOverlayButton, lastOverlayButton)
+    toggleAttributesOfButtonToDisabled(nextOverlayButton, lastOverlayButton)
     if (nextOverlayPokemon) {
         getLoadingSpinnerInOverlayButton(nextOverlayButton)
     }
@@ -313,11 +344,15 @@ function enableOverlayButtons() {
     resetOverlayButtonsAttributes(nextOverlayButton, lastOverlayButton)
 }
 
-function changeAttributesOfOverlayButton(nextOverlayButton, lastOverlayButton) {
+function toggleAttributesOfButtonToDisabled(nextOverlayButton, lastOverlayButton, extraButton) {
     nextOverlayButton.disabled = true
     lastOverlayButton.disabled = true
-    nextOverlayButton.classList.add('disabled')
-    lastOverlayButton.classList.add('disabled')
+    nextOverlayButton.classList.toggle('disabled')
+    lastOverlayButton.classList.toggle('disabled')
+    if (extraButton) {
+        extraButton.disabled = true
+        extraButton.classList.toggle('disabled')
+    }
 }
 
 function resetOverlayButtonsAttributes(nextOverlayButton, lastOverlayButton) {

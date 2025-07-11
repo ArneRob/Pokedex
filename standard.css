@@ -13,14 +13,9 @@
     display: none !important;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+.isActive {
+    border-bottom: 3px solid #A78BFA !important;
+    border-radius: 3px !important;
 }
 
 .standardContainer {
@@ -43,6 +38,16 @@
         /* IE and Edge */
         scrollbar-width: none;
         /* Firefox */
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
 

@@ -52,9 +52,9 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
-                        <h4 onclick="setCardCategoryContentOfAbout(${pokeIDInArray})">About</h4>
-                        <h4 onclick="setContentOfBaseStats(${pokeIDInArray})">Base Stats</h4>
-                        <h4 onclick="setEvolutionChainData(${pokeIDInArray})">Evolution</h4>
+                        <h4 id="setCardCategoryContentOfAbout${pokeIDInArray}" onclick="setCardCategoryContentOfAbout(${pokeIDInArray}, ${1})">About</h4>
+                        <h4 id="setContentOfBaseStats${pokeIDInArray}" onclick="setContentOfBaseStats(${pokeIDInArray}, ${2})">Base Stats</h4>
+                        <h4 id="setEvolutionChainData${pokeIDInArray}" onclick="setEvolutionChainData(${pokeIDInArray}, ${3})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent">
                         <table>
@@ -187,9 +187,9 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
-                        <h4 onclick="setCardCategoryContentOfAboutInSearchBar(${foundPokemonIndex})">About</h4>
-                        <h4 onclick="setContentOfBaseStatsInSearchBar(${foundPokemonIndex})">Base Stats</h4>
-                        <h4 onclick="setEvolutionChainData(${foundPokemonIndex})">Evolution</h4>
+                        <h4 id="setCardCategoryContentOfAbout${foundPokemonIndex}" onclick="setCardCategoryContentOfAboutInSearchBar(${foundPokemonIndex}, ${1})">About</h4>
+                        <h4 id="setContentOfBaseStats${foundPokemonIndex}" onclick="setContentOfBaseStatsInSearchBar(${foundPokemonIndex}, ${2})">Base Stats</h4>
+                        <h4 id="setEvolutionChainData${foundPokemonIndex}" onclick="setEvolutionChainData(${foundPokemonIndex}, ${3})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent" id="renderCategorieContent">
                         <table>

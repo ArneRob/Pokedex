@@ -1,19 +1,16 @@
 const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/"
 
-async function setEvolutionChainData(pokeID) {
-    // loadingSpinnerOnOff
-    let evoObj = await fetchEvolutionChainData()
+async function setEvolutionChainData(pokeID, contentStatus) {
+    setActiveClassState(pokeID, contentStatus)
+    let evoObj = await fetchEvolutionChainData(pokeID, contentStatus)
     getNamesOfPokemons(evoObj)
     changeInnerHTMLEvoChain(pokeID)
-    // loadingSpinnerOnOff
-    console.log(evoObj);
-
 }
 
-async function fetchEvolutionChainData() {
+async function fetchEvolutionChainData(pokeID, contentStatus) {
     let pokeEvolutionResponse = await fetch(evolutionChainLink);
     let pokeEvolutionResponseToJSON = await pokeEvolutionResponse.json();
-
+    setTimeout(setActiveClassState(pokeID, contentStatus), 3000)
     return pokeEvolutionResponseToJSON
 }
 
@@ -22,8 +19,6 @@ function getNamesOfPokemons(evoObj) {
 
     let firstEvo = evoObj.chain.species.name
     evoNamesArray.push(firstEvo)
-    console.log((evoObj));
-
 
     if (evoObj.chain.evolves_to[0]) {
         secondEvo = evoObj.chain.evolves_to[0].species.name
@@ -34,7 +29,6 @@ function getNamesOfPokemons(evoObj) {
             evoNamesArray.push(thirdEvo)
         }
     }
-    console.log(evoNamesArray)
 }
 
 async function changeInnerHTMLEvoChain(pokeID) {
@@ -49,25 +43,30 @@ async function changeInnerHTMLEvoChain(pokeID) {
 
         if (foundPokemonsArray.length > 1) {
             array = foundPokemonsArray
-            let nameToFetch = checkIfNameExist(pokeEvoName, array)
+            let nameToFetch = checkIfNameExist(pokeEvoName, foundPokemonsArray)
             if (nameToFetch) {
-                console.log("nametofetch; ", nameToFetch);
                 fetchedPokeObj = await fetchSinglePokemon(nameToFetch, foundPokemonsArray)
             }
         } else {
-            array = ObjectsOfAllPokemon
-            let nameToFetch = checkIfNameExist(pokeEvoName, array)
+            createManipulatableObject()
+            let nameToFetch = checkIfNameExist(pokeEvoName, ObjectsOfAllPokemon)
             if (nameToFetch) {
-                console.log("nametofetch; ", nameToFetch);
                 fetchedPokeObj = await fetchSinglePokemon(nameToFetch, ObjectsOfAllPokemon, pokeID)
-                array = changeAbleObjectOfAllPokemon
-            }
+
+            } array = changeAbleObjectOfAllPokemon
+
         }
-        console.log(foundPokemonsArray);
-        // foundPokemonsArray.push(fetchedPokeObj)
         loopThroughPokemonsArray(pokeEvoName, imgRenderSpot, array)
 
     }
+}
+
+function addEvoChainSearchBar() {
+
+}
+
+function addEvoChainNormal() {
+
 }
 
 function loopThroughPokemonsArray(pokeEvoName, imgRenderSpot, array) {
@@ -98,22 +97,25 @@ function srcRequest(obj) {
 
 async function fetchSinglePokemon(pokeName, array, pokeID) {
 
-    const singlePokemonURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
 
-    let singlePokeResponse = await fetch(singlePokemonURL);
-    let singlePokeResponseToJSON = await singlePokeResponse.json();
+    try {
+        const singlePokemonURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
+        let singlePokeResponse = await fetch(singlePokemonURL);
+        let singlePokeResponseToJSON = await singlePokeResponse.json();
 
-    if (array.length > 20) {
-        createManipulatableObject(pokeID, array, singlePokeResponseToJSON)
-    }
-    if (array.length < 20) {
-        foundPokemonsArray.push(singlePokeResponseToJSON)
+        if (array.length > 20) {
+            let indexPosition = pokeID - 1
+            changeAbleObjectOfAllPokemon.splice(indexPosition, 0, singlePokeResponseToJSON)
+        }
+        if (array.length < 20) {
+            foundPokemonsArray.push(singlePokeResponseToJSON)
+        }
+    } catch (error) {
+
     }
 
 }
 
-function createManipulatableObject(pokeID, array, singlePokeResponseToJSON) {
-    let indexPosition = pokeID - 1
+function createManipulatableObject() {
     Object.assign(changeAbleObjectOfAllPokemon, ObjectsOfAllPokemon)
-    changeAbleObjectOfAllPokemon.splice(indexPosition, 0, singlePokeResponseToJSON)
 }

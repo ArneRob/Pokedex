@@ -29,7 +29,7 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray) {
+function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray, ObjectsOfAllPokemonIndex) {
     return `
             <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div id="arrowForwardBackwardClose">

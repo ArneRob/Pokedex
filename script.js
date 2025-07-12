@@ -113,10 +113,6 @@ function loadingSpinnerOnOff() {
     document.getElementById('renderContent').classList.toggle('display_none')
 }
 
-function capitalizeFirstLetter(pokeName) {
-    return String(pokeName).charAt(0).toUpperCase() + String(pokeName).slice(1);
-}
-
 function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
     const doesAlreadyExist = arrayOfAllPokemon.find((item) => item.id === pokeObject.id);
 

@@ -17,9 +17,9 @@ function getNextSearchBarOverlayPokemon(foundPokemonIndex) {
     }
     let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[nextFoundPokemonIndex].name)
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[nextFoundPokemonIndex], capitalizedPokeName, nextFoundPokemonIndex)
-    let nextPokeCard = document.getElementById(`pokemonCard${foundPokemonsArray[foundPokemonIndex + 1].id}`)
+    let nextPokeCard = document.getElementById(`pokemonCard${foundPokemonsArray[nextFoundPokemonIndex].id}`)
     nextPokeCard.classList.add('display_none')
-    setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex, 1, foundPokemonsArray[foundPokemonIndex + 1].id)
+    setCardCategoryContentOfAboutInSearchBar(nextFoundPokemonIndex, 1, foundPokemonsArray[nextFoundPokemonIndex].id)
 
 }
 
@@ -44,7 +44,7 @@ async function setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex, conte
     await setSpeciesOfPokemonForSearchBar(pokeObj, foundPokemonIndex)
     setAbilitiesOfPokeCardInOverlay(foundPokemonsArray[foundPokemonIndex]);
     setTypeOfPokemonInOverlay(foundPokemonsArray[foundPokemonIndex])
-    pushInWhenLoaded(pokeIdInArray)
+    pushInWhenLoaded(foundPokemonIndex, foundPokemonsArray)
     setActiveClassState(foundPokemonIndex, contentStatus)
 }
 

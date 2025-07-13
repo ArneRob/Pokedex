@@ -7,21 +7,20 @@ function renderNormalOverlayPokeCard(overlayDiv, idOfPokemon) {
 
             let capitalizedPokeName = capitalizeFirstLetter(pokeObjectInArray.name)
             overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, pokeIDInArray, objectsOfAllPokemonIndex)
-            displayNone("pokemonCard", pokeIDInArray) // objectsOfAllPokemonIndex + display_none verändern
-            setCardCategoryContentOfAbout(objectsOfAllPokemonIndex, 1) // objectsOfAllPokemonIndex #
+            displayNone("pokemonCard", pokeIDInArray)
+            setCardCategoryContentOfAbout(objectsOfAllPokemonIndex, 1)
         }
     }
 }
 
-async function setCardCategoryContentOfAbout(objectsOfAllPokemonIndex, contentStatus) { //pokeIDInArray --> objectsOfAllPokemonIndex #
-    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // pokeIDInArray --> objectsOfAllPokemonIndex #
-    let pokeObj = objectsOfAllPokemon[objectsOfAllPokemonIndex] // pokeIDInArray --> objectsOfAllPokemonIndex #
-
-    await setSpeciesOfPokemon(pokeObj, objectsOfAllPokemonIndex) // pokeIDInArray --> objectsOfAllPokemonIndex + setSpecies verändern #
+async function setCardCategoryContentOfAbout(objectsOfAllPokemonIndex, contentStatus) {
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
+    let pokeObj = objectsOfAllPokemon[objectsOfAllPokemonIndex]
+    await setSpeciesOfPokemon(pokeObj, objectsOfAllPokemonIndex)
     setAbilitiesOfPokeCardInOverlay(pokeObj);
     setTypeOfPokemonInOverlay(pokeObj)
-    pushInWhenLoaded(objectsOfAllPokemonIndex) // pokeIDInArray --> objectsOfAllPokemonIndex #
-    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // pokeIDInArray --> objectsOfAllPokemonIndex  #
+    pushInWhenLoaded(objectsOfAllPokemonIndex, objectsOfAllPokemon)
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
 }
 
 function findPositionOfPokemon(array, pokeIDInArray) {
@@ -36,32 +35,40 @@ function findPositionOfPokemon(array, pokeIDInArray) {
     }
 }
 
-function pushInWhenLoaded(objectsOfAllPokemonIndex) { // pokeIDInArray --> objectsOfAllPokemonIndex #
+function pushInWhenLoaded(pokemonIndex, array) {
 
-    let nextID = objectsOfAllPokemon[objectsOfAllPokemonIndex].id
-    let lastIndex = objectsOfAllPokemonIndex - 1
-    let nextpokeCard = document.getElementById(`pokemonCard${nextID}`) //pokeIDInArray --> objectsOfAllPokemonIndex #
-     // pokeIDInArray --> objectsOfAllPokemonIndex #
+    let nextID = array[pokemonIndex].id
+    let lastIndex = pokemonIndex - 1
+    // let nextIndex = pokemonIndex + 1
+    let nextpokeCard = document.getElementById(`pokemonCard${nextID}`)
 
     if (lastIndex >= 0) {
-        let lastPokeCard = document.getElementById(`pokemonCard${objectsOfAllPokemon[lastIndex].id}`)
-        lastPokeCard.remove()
+        let lastPokeCard = document.getElementById(`pokemonCard${array[lastIndex].id}`)
+        if (lastPokeCard) {
+            lastPokeCard.remove()
+        }
+    }
+    if (lastIndex == -1) {
+        lastIndex = array.length - 1
+        let lastPokeCard = pokeCard = document.getElementById(`pokemonCard${array[lastIndex].id}`)
+        if (lastPokeCard) {
+            lastPokeCard.remove()
+        }
     }
     nextpokeCard.classList.remove('display_none')
 }
 
-function setContentOfBaseStats(objectsOfAllPokemonIndex, contentStatus) { //pokeIDInArray --> ObjectsOfAllPokemonIndex #
-    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // pokeIDInArray --> ObjectsOfAllPokemonIndex #
-    // let indexOfRightPokemon = pokeIDInArray - 1 // löschen #
-    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`) // pokeIDInArray --> ObjectsOfAllPokemonIndex #
-    let pokeObjStats = objectsOfAllPokemon[objectsOfAllPokemonIndex].stats // indexOfRightPokemon --> ObjectsOfAllPokemonIndex #
+function setContentOfBaseStats(objectsOfAllPokemonIndex, contentStatus) {
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
 
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
+    let pokeObjStats = objectsOfAllPokemon[objectsOfAllPokemonIndex].stats
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
-    addTypColorClassInOverlayProgressBar(objectsOfAllPokemonIndex, objectsOfAllPokemon) // pokeIDInArray --> ObjectsOfAllPokemonIndex + addtypColor verändern #
+    addTypColorClassInOverlayProgressBar(objectsOfAllPokemonIndex, objectsOfAllPokemon)
     calcBaseStatColorBar()
-    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // pokeIDInArray --> ObjectsOfAllPokemonIndex #
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
 }
 
 function calcBaseStatColorBar() {
@@ -82,7 +89,7 @@ function calcBaseStatColorBar() {
     }
 }
 
-async function setSpeciesOfPokemon(pokeObjectInArray, objectsOfAllPokemonIndex) { // pokeIDInArray --> objectsOfAllPokemonIndex
+async function setSpeciesOfPokemon(pokeObjectInArray, objectsOfAllPokemonIndex) {
     let pokeID = pokeObjectInArray.id
     const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
 
@@ -90,7 +97,7 @@ async function setSpeciesOfPokemon(pokeObjectInArray, objectsOfAllPokemonIndex) 
     let speciesResponseToJson = await speciesResponse.json();
     let species = speciesResponseToJson.genera[7].genus
     evolutionChainLink = speciesResponseToJson.evolution_chain.url
-    setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex) // pokeIDInArray --> objectsOfAllPokemonIndex + setContentOfAbout verändern
+    setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex)
 
 }
 

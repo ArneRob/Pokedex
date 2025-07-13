@@ -116,14 +116,14 @@ header input {
     justify-content: center;
     align-items: center;
     color: white;
-    padding: 50px 35px;
+    margin: 50px 35px;
     gap: 5px;
     cursor: pointer;
 }
 
 @media(max-width: 460px) {
     .imgAndH1 {
-        padding: 0;
+        margin: 0;
     }
 }
 

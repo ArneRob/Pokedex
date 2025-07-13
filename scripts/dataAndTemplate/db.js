@@ -1,7 +1,7 @@
 let next_URL_Array = [];
 let last_URL_Array = [];
 
-let ObjectsOfAllPokemon = [];
+let objectsOfAllPokemon = [];
 let fetchedNamesArray = [];
 let fetchedPokemonsNAME_URL = [];
 

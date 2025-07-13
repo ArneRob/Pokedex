@@ -97,15 +97,15 @@ function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
     }
 }
 
-function setContentOfAbout(species, pokeObjectInArray, pokeIDInArray) {
-    let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+function setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex) { // pokeIDInArray --> objectsOfAllPokemonIndex #
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`) //pokeIDInArray --> objectsOfAllPokemonIndex #
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)
 }
 
-function deleteEvoChainImgs(pokeIDInArray) {
-    let renderCategorieContent = document.getElementById(`renderCategorieContent${pokeIDInArray}`)
+function deleteEvoChainImgs(objectsOfAllPokemonIndex) {
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.classList.remove('evolutionImgs')
 }

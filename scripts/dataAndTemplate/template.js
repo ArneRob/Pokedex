@@ -29,13 +29,16 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray, ObjectsOfAllPokemonIndex) {
+// h4 pokeid mit ObjectsOfAllPokemonIndex austauschen 
+// alle onlcicks danach auch 
+
+function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray, objectsOfAllPokemonIndex) {
     return `
             <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div id="arrowForwardBackwardClose">
                     <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"}, ${objectsOfAllPokemonIndex})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
                 </div>
                 <div id="overlayPokeIntroductionParent">
@@ -52,13 +55,13 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                     alt="Pokemonpicture">
                 <div id="cardCategorieSection">
                     <div id="cardCategories">
-                        <h4 id="setCardCategoryContentOfAbout${pokeIDInArray}" onclick="setCardCategoryContentOfAbout(${pokeIDInArray}, ${1})">About</h4>
-                        <h4 id="setContentOfBaseStats${pokeIDInArray}" onclick="setContentOfBaseStats(${pokeIDInArray}, ${2})">Base Stats</h4>
-                        <h4 id="setEvolutionChainData${pokeIDInArray}" onclick="setEvolutionChainData(${pokeIDInArray}, ${3})">Evolution</h4>
+                        <h4 id="setCardCategoryContentOfAbout${objectsOfAllPokemonIndex}" onclick="setCardCategoryContentOfAbout(${objectsOfAllPokemonIndex}, ${1})">About</h4>
+                        <h4 id="setContentOfBaseStats${objectsOfAllPokemonIndex}" onclick="setContentOfBaseStats(${objectsOfAllPokemonIndex}, ${2})">Base Stats</h4>
+                        <h4 id="setEvolutionChainData${objectsOfAllPokemonIndex}" onclick="setEvolutionChainData(${objectsOfAllPokemonIndex}, ${3})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent">
                         <table>
-                        <tbody  id="renderCategorieContent${pokeIDInArray}">
+                        <tbody  id="renderCategorieContent${objectsOfAllPokemonIndex}">
                             <tr>
                                 <td>Species</td>
                                 <td>lalala</td>

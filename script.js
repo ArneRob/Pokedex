@@ -102,7 +102,7 @@ async function getPokeCard() {
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
-        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
+        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
     }
     setTimeout(loadingSpinnerOnOff, 500);

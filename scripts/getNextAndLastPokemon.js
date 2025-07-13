@@ -17,7 +17,7 @@ async function getNextPokeStack(overlay, pokeIDInArray) {
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
+        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
         getSinglePokeData(pokeObject, index);
@@ -110,7 +110,7 @@ async function getLastPokeStack() {
         let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        addToArrayIfNotExist(pokeObject, ObjectsOfAllPokemon)
+        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName);
         getSinglePokeData(pokeObject, index);

@@ -1,16 +1,16 @@
 const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/"
 
-async function setEvolutionChainData(pokeID, contentStatus) {
-    setActiveClassState(pokeID, contentStatus)
-    let evoObj = await fetchEvolutionChainData(pokeID, contentStatus)
+async function setEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // objectsOfAllPokemonIndex 
+    let evoObj = await fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) 
     getNamesOfPokemons(evoObj)
-    changeInnerHTMLEvoChain(pokeID)
+    changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) // objectsOfAllPokemonIndex  hinzufügen
 }
 
-async function fetchEvolutionChainData(pokeID, contentStatus) {
+async function fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
     let pokeEvolutionResponse = await fetch(evolutionChainLink);
     let pokeEvolutionResponseToJSON = await pokeEvolutionResponse.json();
-    setTimeout(setActiveClassState(pokeID, contentStatus), 3000)
+    setTimeout(setActiveClassState(objectsOfAllPokemonIndex, contentStatus), 3000)
     return pokeEvolutionResponseToJSON
 }
 
@@ -31,10 +31,11 @@ function getNamesOfPokemons(evoObj) {
     }
 }
 
-async function changeInnerHTMLEvoChain(pokeID) {
-    let imgRenderSpot = document.getElementById(`renderCategorieContent${pokeID}`)
+async function changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) { // objectsOfAllPokemonIndex
+    let imgRenderSpot = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`) // objectsOfAllPokemonIndex
     imgRenderSpot.innerHTML = "";
     imgRenderSpot.classList.add('evolutionImgs')
+    let pokeObject = objectsOfAllPokemon[objectsOfAllPokemonIndex]
     let array;
     let fetchedPokeObj;
 
@@ -49,9 +50,9 @@ async function changeInnerHTMLEvoChain(pokeID) {
             }
         } else {
             createManipulatableObject()
-            let nameToFetch = checkIfNameExist(pokeEvoName, ObjectsOfAllPokemon)
+            let nameToFetch = checkIfNameExist(pokeEvoName, objectsOfAllPokemon)
             if (nameToFetch) {
-                fetchedPokeObj = await fetchSinglePokemon(nameToFetch, ObjectsOfAllPokemon, pokeID)
+                fetchedPokeObj = await fetchSinglePokemon(nameToFetch, objectsOfAllPokemon, pokeObject.id)
 
             } array = changeAbleObjectOfAllPokemon
 
@@ -117,5 +118,5 @@ async function fetchSinglePokemon(pokeName, array, pokeID) {
 }
 
 function createManipulatableObject() {
-    Object.assign(changeAbleObjectOfAllPokemon, ObjectsOfAllPokemon)
+    Object.assign(changeAbleObjectOfAllPokemon, objectsOfAllPokemon)
 }

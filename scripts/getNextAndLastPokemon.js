@@ -27,7 +27,7 @@ async function getNextPokeStack(overlay, pokeIDInArray) {
     setTimeout(enableButtons, 500)
     if (overlay) {
         setTimeout(enableOverlayButtons, 500)
-        getNextOverlayPokemon(pokeIDInArray)
+        // getNextOverlayPokemon(pokeIDInArray)
     }
 }
 

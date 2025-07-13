@@ -1,7 +1,7 @@
 
-function renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) {
+function renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) { // index übergebn und id löschen
 
-    let foundPokemonIndex = getIndexOfPokemon(idOfPokemon);
+    let foundPokemonIndex = getIndexOfPokemon(idOfPokemon); // löschen 
 
     overlayDiv.innerHTML += getSearchBarOverlayTemplate(foundPokemonsArray[foundPokemonIndex], capitalizedPokeName, foundPokemonIndex)
     setCardCategoryContentOfAboutInSearchBar(foundPokemonIndex, 1)

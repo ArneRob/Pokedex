@@ -82,7 +82,7 @@ function setActiveClassState(foundPokemonIndex, contentStatus) {
     }
 }
 
-function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
+function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) { // index übergebn und id löschen
 
     let overlayDiv = document.getElementById('overlay')
     let body = document.getElementById('body')
@@ -90,10 +90,10 @@ function openOverlayPokeCard(idOfPokemon, capitalizedPokeName) {
     overlayDiv.classList.remove('display_none')
 
     if (searchBar == false) {
-        renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
+        renderNormalOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) // index übergebn und id löschen
     }
     if (searchBar) {
-        renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName)
+        renderSearchBarOverlayPokeCard(overlayDiv, idOfPokemon, capitalizedPokeName) // index übergebn und id löschen
     }
 }
 

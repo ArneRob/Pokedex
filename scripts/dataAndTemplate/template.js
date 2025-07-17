@@ -1,6 +1,6 @@
-function getPokedexCardTemplate(pokeObject, capitalizedPokeName) {
+function getPokedexCardTemplate(pokeObject, capitalizedPokeName, index) {
     return `
-            <div onclick="openOverlayPokeCard(${pokeObject.id},${"'" + capitalizedPokeName + "'"})" id="singlePokedexCard" class="singlePokedexCard">
+            <div onclick="openOverlayPokeCard(${index})" id="singlePokedexCard" class="singlePokedexCard">
                 <div class="pokeCardHead">
                     <h3 id="number">#${pokeObject.id}</h3>
                     <h3 id="pokeName">${capitalizedPokeName}</h3>
@@ -29,20 +29,17 @@ function getPokeTypeTwoIMGTemplate(pokeObject) {
             `
 }
 
-// h4 pokeid mit ObjectsOfAllPokemonIndex austauschen 
-// alle onlcicks danach auch 
-
-function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInArray, objectsOfAllPokemonIndex) {
+function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, objectsOfAllPokemonIndex) {
     return `
             <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
-                <div id="arrowForwardBackwardClose">
-                    <img id="arrowBackwardOverlay" onclick="getLastOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                <div class="arrowForwardBackwardClose">
+                    <img id="arrowBackwardOverlay${objectsOfAllPokemonIndex}" onclick="getLastOverlayPokemon(${objectsOfAllPokemonIndex})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                    <img id="arrowForwardOverlay" onclick="getNextOverlayPokemon(${pokeIDInArray}, ${"'" + capitalizedPokeName + "'"}, ${objectsOfAllPokemonIndex})" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                    <img id="arrowForwardOverlay${objectsOfAllPokemonIndex}" onclick="renderNextOverlayPokemon(${objectsOfAllPokemonIndex}, 'objectsOfAllPokemon')" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
                 </div>
-                <div id="overlayPokeIntroductionParent">
-                    <div id="overlayPokeIntroductionParentChild">
+                <div class="overlayPokeIntroductionParent">
+                    <div class="overlayPokeIntroductionChild">
                         <h2>${capitalizedPokeName}</h2>
                         <div class="renderTypesOverlay" id="pokeTypesOverlay${singlePokeObject.id}">
                     
@@ -53,10 +50,10 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, pokeIDInA
                 <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
                     src="${singlePokeObject.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
-                <div id="cardCategorieSection">
-                    <div id="cardCategories">
-                        <h4 id="setCardCategoryContentOfAbout${objectsOfAllPokemonIndex}" onclick="setCardCategoryContentOfAbout(${objectsOfAllPokemonIndex}, ${1})">About</h4>
-                        <h4 id="setContentOfBaseStats${objectsOfAllPokemonIndex}" onclick="setContentOfBaseStats(${objectsOfAllPokemonIndex}, ${2})">Base Stats</h4>
+                <div class="cardCategorieSection">
+                    <div class="cardCategories">
+                        <h4 id="setCardCategoryContentOfAbout${objectsOfAllPokemonIndex}" onclick="setCardCategoryContentOfAbout(${objectsOfAllPokemonIndex}, ${1}, 'objectsOfAllPokemon')">About</h4>
+                        <h4 id="setContentOfBaseStats${objectsOfAllPokemonIndex}" onclick="setContentOfBaseStats(${objectsOfAllPokemonIndex}, ${2}, 'objectsOfAllPokemon')">Base Stats</h4>
                         <h4 id="setEvolutionChainData${objectsOfAllPokemonIndex}" onclick="setEvolutionChainData(${objectsOfAllPokemonIndex}, ${3})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent">
@@ -170,14 +167,14 @@ function getLoadingSpinnerForButtonTemplate() {
 function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foundPokemonIndex) {
     return `
              <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
-                <div id="arrowForwardBackwardClose">
+                <div class="arrowForwardBackwardClose">
                      <img id="arrowBackwardOverlay" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                      <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                     <img id="arrowForwardOverlay" onclick="getNextSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                     <img id="arrowForwardOverlay" onclick="getNextSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"}, 'foundPokemonsArray' )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                       alt="Arrow Forward">
                 </div>
-                <div id="overlayPokeIntroductionParent">
-                    <div id="overlayPokeIntroductionParentChild">
+                <div class="overlayPokeIntroductionParent">
+                    <div class="overlayPokeIntroductionChild">
                         <h2>${capitalizedPokeName}</h2>
                         <div class="renderTypesOverlay" id="pokeTypesOverlay${singlePokeObject.id}">
                     
@@ -188,10 +185,10 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                 <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
                     src="${singlePokeObject.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
-                <div id="cardCategorieSection">
-                    <div id="cardCategories">
-                        <h4 id="setCardCategoryContentOfAbout${foundPokemonIndex}" onclick="setCardCategoryContentOfAboutInSearchBar(${foundPokemonIndex}, ${1})">About</h4>
-                        <h4 id="setContentOfBaseStats${foundPokemonIndex}" onclick="setContentOfBaseStatsInSearchBar(${foundPokemonIndex}, ${2})">Base Stats</h4>
+                <div class="cardCategorieSection">
+                    <div class="cardCategories">
+                        <h4 id="setCardCategoryContentOfAbout${foundPokemonIndex}" onclick="setCardCategoryContentOfAbout(${foundPokemonIndex}, ${1}, 'foundPokemonsArray')">About</h4>
+                        <h4 id="setContentOfBaseStats${foundPokemonIndex}" onclick="setContentOfBaseStats(${foundPokemonIndex}, ${2}, 'foundPokemonsArray')">Base Stats</h4>
                         <h4 id="setEvolutionChainData${foundPokemonIndex}" onclick="setEvolutionChainData(${foundPokemonIndex}, ${3})">Evolution</h4>
                     </div>
                     <div class="renderCategorieContent" id="renderCategorieContent">

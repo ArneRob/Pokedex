@@ -1,12 +1,5 @@
 const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/"
 
-async function setEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
-    setActiveClassState(objectsOfAllPokemonIndex, contentStatus) // objectsOfAllPokemonIndex 
-    let evoObj = await fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) 
-    getNamesOfPokemons(evoObj)
-    changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) // objectsOfAllPokemonIndex  hinzufügen
-}
-
 async function fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
     let pokeEvolutionResponse = await fetch(evolutionChainLink);
     let pokeEvolutionResponseToJSON = await pokeEvolutionResponse.json();

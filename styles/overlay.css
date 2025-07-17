@@ -38,7 +38,7 @@
     }
 }
 
-#arrowForwardBackwardClose {
+.arrowForwardBackwardClose {
     display: flex;
     flex-direction: row;
     padding: 30px;
@@ -46,23 +46,23 @@
     width: 100%;
 }
 
-#arrowForwardBackwardClose img {
+.arrowForwardBackwardClose img {
     border: solid 2px rgba(0, 0, 0, 0);
     width: 32px;
 }
 
-#arrowForwardBackwardClose img:hover {
+.arrowForwardBackwardClose img:hover {
     border-radius: 50%;
     border: solid 2px rgb(231, 204, 83);
 }
 
 @media(max-width: 1000px) {
-    #arrowForwardBackwardClose img:hover {
+    .arrowForwardBackwardClose img:hover {
         border: solid 2px rgba(231, 204, 83, 0);
     }
 }
 
-#cardCategorieSection {
+.cardCategorieSection {
     background-color: white;
     border-radius: 20px;
     padding: 40px 0px;
@@ -73,37 +73,37 @@
 }
 
 @media(max-width: 480px) {
-    #cardCategorieSection {
+    .cardCategorieSection {
         top: 430px;
     }
 }
 
 @media(max-width: 370px) {
-    #cardCategorieSection {
+    .cardCategorieSection {
         top: 420px;
     }
 }
 
-#cardCategories {
+.cardCategories {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 0px 20px;
 }
 
-#cardCategories h4 {
+.cardCategories h4 {
     font-size: 18px;
     border-bottom: 3px solid white;
     border-radius: 2px;
 }
 
-#cardCategories h4:hover {
+.cardCategories h4:hover {
     border-bottom: 3px solid black;
     border-radius: 3px;
 }
 
 @media (max-width: 1000px) {
-    #cardCategories h4:hover {
+    .cardCategories h4:hover {
         border-bottom: 3px solid white;
         border-radius: 3px;
     }
@@ -122,7 +122,7 @@
     }
 }
 
-#overlayPokeIntroductionParent {
+.overlayPokeIntroductionParent {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -130,11 +130,11 @@
     padding: 0 30px;
 }
 
-#overlayPokeIntroductionParent {
+.overlayPokeIntroductionParent {
     color: white;
 }
 
-#overlayPokeIntroductionParent h2 {
+.overlayPokeIntroductionParent h2 {
     text-align: center;
     font-size: 25px;
     margin-bottom: 5px;

@@ -168,9 +168,9 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
     return `
              <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div class="arrowForwardBackwardClose">
-                     <img id="arrowBackwardOverlay" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                     <img id="arrowBackwardOverlay${foundPokemonIndex}" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                      <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
-                     <img id="arrowForwardOverlay" onclick="getNextSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"}, 'foundPokemonsArray' )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
+                     <img id="arrowForwardOverlay${foundPokemonIndex}" onclick="renderNextOverlayPokemon(${foundPokemonIndex}, 'foundPokemonsArray' )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                       alt="Arrow Forward">
                 </div>
                 <div class="overlayPokeIntroductionParent">

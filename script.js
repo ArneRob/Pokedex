@@ -84,7 +84,7 @@ async function renderFoundPokemon(foundPokemons) {
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, indexOfFound)
         getSinglePokeData(pokeObject, indexOfFound)
     }
-    setTimeout(loadingSpinnerOnOff, 500);
+    setTimeout(loadingSpinnerOnOff, 50);
 }
 
 async function getPokeCard() {
@@ -105,7 +105,7 @@ async function getPokeCard() {
         addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
         getSinglePokeData(pokeObject, index);
     }
-    setTimeout(loadingSpinnerOnOff, 500);
+    setTimeout(loadingSpinnerOnOff, 50);
 }
 
 function loadingSpinnerOnOff() {
@@ -150,11 +150,11 @@ async function getNextPokeStack(overlay, pokeIDInArray) {
         getSinglePokeData(pokeObject, index);
 
     }
-    setTimeout(loadingSpinnerOnOff, 500);
-    setTimeout(enableButtons, 500)
+    setTimeout(loadingSpinnerOnOff, 50);
+    setTimeout(enableButtons, 50)
     if (overlay) {
         let overlayDiv = document.getElementById('overlay')
-        setTimeout(enableOverlayButtons(objectsOfAllPokemon.length - 1), 500)
+        setTimeout(enableOverlayButtons(objectsOfAllPokemon.length - 1), 50)
         overlayDiv.innerHTML = "";
         openOverlayPokeCard(0)
     }

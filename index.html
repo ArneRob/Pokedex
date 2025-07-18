@@ -8,9 +8,7 @@
     <script src="./scripts/dataAndTemplate/template.js" defer> </script>
     <script src="./script.js" defer> </script>
     <script src="./scripts/utilsOverlay.js" defer> </script>
-    <script src="./scripts/normalOverlay.js" defer> </script>
     <script src="./scripts/evolutionChain.js" defer> </script>
-    <script src="./scripts/searchBarOverlay.js" defer> </script>
     <script src="./scripts/utilsMain.js" defer> </script>
     <link rel="stylesheet" href="./standard.css">
     <link rel="stylesheet" href="./styles/typeColor.css">
@@ -37,8 +35,8 @@
             <input id="pokemoSearchInput" oninput="processChanges()" placeholder="find your Pokemon" type="text">
         </div>
         <section id="buttonSection" class="standardContainer">
-            <button id="getLastButton" onclick="getLastPokeStack()" disabled>Letzte Pokemon Stapel</button>
-            <button id="nextButton" onclick="getNextPokeStack()">Nächste Pokemon Stapel</button>
+            <button id="getLastButton" onclick="getLastPokeStack()" disabled>Previous stack of Pokémon</button>
+            <button id="nextButton" onclick="getNextPokeStack()">Next stack of Pokémon</button>
         </section>
     </header>
     <section class="renderSection">

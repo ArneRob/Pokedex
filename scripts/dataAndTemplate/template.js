@@ -33,7 +33,7 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, objectsOf
     return `
             <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div class="arrowForwardBackwardClose">
-                    <img id="arrowBackwardOverlay${objectsOfAllPokemonIndex}" onclick="getLastOverlayPokemon(${objectsOfAllPokemonIndex})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                    <img id="arrowBackwardOverlay${objectsOfAllPokemonIndex}" onclick=" renderLastPokemon(${objectsOfAllPokemonIndex})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                     <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
                     <img id="arrowForwardOverlay${objectsOfAllPokemonIndex}" onclick="renderNextOverlayPokemon(${objectsOfAllPokemonIndex}, 'objectsOfAllPokemon')" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                         alt="Arrow Forward">
@@ -168,7 +168,7 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
     return `
              <div onclick="stopEventBubbling(event)" class="pokemonCard" id="pokemonCard${singlePokeObject.id}">
                 <div class="arrowForwardBackwardClose">
-                     <img id="arrowBackwardOverlay${foundPokemonIndex}" onclick="getLastSearchBarOverlayPokemon(${foundPokemonIndex}, ${"'" + capitalizedPokeName + "'"} )" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
+                     <img id="arrowBackwardOverlay${foundPokemonIndex}" onclick="renderLastPokemon(${foundPokemonIndex})" src="./assets/img/arrow_back_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Arrow Backward">
                      <img onclick="closeOverlay()" src="./assets/img/close_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="Close">
                      <img id="arrowForwardOverlay${foundPokemonIndex}" onclick="renderNextOverlayPokemon(${foundPokemonIndex}, 'foundPokemonsArray' )" src="./assets/img/arrow_forward_25dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png"
                       alt="Arrow Forward">

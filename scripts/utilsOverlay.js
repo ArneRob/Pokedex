@@ -6,13 +6,26 @@ function openOverlayPokeCard(index) {
     overlayDiv.classList.remove('display_none')
 
     if (searchBar == false) {
-        let capitalizedPokeName = capitalizeFirstLetter(objectsOfAllPokemon[index].name)
-        renderNormalOverlayPokeCard(overlayDiv, index, capitalizedPokeName)
+        renderOverlayPokeCard(overlayDiv, index, objectsOfAllPokemon)
     }
     if (searchBar) {
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemonsArray[index].name)
-        renderSearchBarOverlayPokeCard(overlayDiv, index, capitalizedPokeName) 
+        renderOverlayPokeCard(overlayDiv, index, foundPokemonsArray)
     }
+}
+
+function renderOverlayPokeCard(overlayDiv, index, array) {
+    let pokeIDInArray = array[index].id
+    let pokeObjectInArray = array[index]
+    let capitalizedPokeName = capitalizeFirstLetter(array[index].name)
+
+    if (searchBar == false) {
+        overlayDiv.innerHTML += getPokeOverlayTemplate(pokeObjectInArray, capitalizedPokeName, index)
+    }
+    if (searchBar) {
+        overlayDiv.innerHTML += getSearchBarOverlayTemplate(pokeObjectInArray, capitalizedPokeName, index)
+    }
+    displayNone("pokemonCard", pokeIDInArray)
+    setCardCategoryContentOfAbout(index, 1, array)
 }
 
 function closeOverlay() {
@@ -39,6 +52,24 @@ function renderNextOverlayPokemon(index, array) {
         nextIndex = 0
     }
     openOverlayPokeCard(nextIndex)
+}
+
+function renderLastPokemon(index) {
+    let lastPokemonIndex = index - 1
+    let nextOverlayPokemon = false;
+    let lastOverlayPokemon = true;
+
+    disableOverlayButtons(nextOverlayPokemon, lastOverlayPokemon, index)
+
+    if (lastPokemonIndex <= 0) {
+        if (searchBar) {
+            lastPokemonIndex = foundPokemonsArray.length - 1
+        } else {
+            lastPokemonIndex = objectsOfAllPokemon.length - 1
+        }
+
+    }
+    openOverlayPokeCard(lastPokemonIndex)
 }
 
 function addTypColorClassInOverlayProgressBar(indexOfRightPokemon, array) {
@@ -160,27 +191,15 @@ function setActiveClassState(foundPokemonIndex, contentStatus) {
 function pushInWhenLoaded(pokemonIndex, array) {
 
     let nextID = array[pokemonIndex].id
-    let lastIndex = pokemonIndex - 1
     let nextpokeCard = document.getElementById(`pokemonCard${nextID}`)
+    const overlayDiv = document.getElementById("overlay");
 
-    if (lastIndex >= 0) {
-        let lastPokeCard = document.getElementById(`pokemonCard${array[lastIndex].id}`)
-        if (lastPokeCard) {
-            lastPokeCard.remove()
-        }
-    }
-    if (lastIndex == -1) {
-        lastIndex = array.length - 1
-        let lastPokeCard = pokeCard = document.getElementById(`pokemonCard${array[lastIndex].id}`)
-        if (lastPokeCard) {
-            lastPokeCard.remove()
-        }
-    }
+    overlayDiv.replaceChild(nextpokeCard, overlayDiv.childNodes[1]);
     nextpokeCard.classList.remove('display_none')
 }
 
-function setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex) { // pokeIDInArray --> objectsOfAllPokemonIndex #
-    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`) //pokeIDInArray --> objectsOfAllPokemonIndex #
+function setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex) {
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML += getAboutContentTemplate(pokeObjectInArray, species)

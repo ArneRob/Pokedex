@@ -91,7 +91,6 @@ function srcRequest(obj) {
 
 async function fetchSinglePokemon(pokeName, array, pokeID) {
 
-
     try {
         const singlePokemonURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
         let singlePokeResponse = await fetch(singlePokemonURL);
@@ -107,7 +106,6 @@ async function fetchSinglePokemon(pokeName, array, pokeID) {
     } catch (error) {
 
     }
-
 }
 
 function createManipulatableObject() {

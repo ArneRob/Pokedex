@@ -48,8 +48,8 @@ function resetButtonsAttributes(nextButton, lastButton) {
     lastButton.style.backgroundColor = "rgb(4, 169, 109)"
     nextButton.style.backgroundColor = "rgb(4, 169, 109)"
 
-    nextButton.innerHTML = "Nächste Pokemon Stapel"
-    lastButton.innerHTML = "Letzte Pokemon Stapel"
+    nextButton.innerHTML = "Next stack of Pokémon"
+    lastButton.innerHTML = "Previous stack of Pokémon"
 
     nextButton.style.width = ""
     lastButton.style.width = ""

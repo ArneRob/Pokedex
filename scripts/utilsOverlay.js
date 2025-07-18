@@ -110,7 +110,6 @@ function setTypeOfPokemonInOverlay(pokeObjectInArray) {
     let pokeTypes = pokeObjectInArray.types
 
     for (let typeIndex = 0; typeIndex < pokeTypes.length; typeIndex++) {
-
         document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML = "";
         document.getElementById(`pokeTypesOverlay${pokeObjectInArray.id}`).innerHTML += getPokeTypeOneOverlayTemplate(pokeObjectInArray);
 
@@ -154,22 +153,33 @@ async function setSpeciesOfPokemon(pokeObjectInArray, index) {
     const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
 
     if (SPECIES_URL) {
-        let speciesResponse = await fetch(SPECIES_URL);
+        let speciesResponse = await getSpecies(SPECIES_URL);
         if (speciesResponse.status == 200) {
-            let speciesResponse = await fetch(SPECIES_URL);
             let speciesResponseToJson = await speciesResponse.json();
             evolutionChainLink = speciesResponseToJson.evolution_chain.url
-            if (speciesResponseToJson.genera[7]) {
-                let species = speciesResponseToJson.genera[7].genus
-                setContentOfAbout(species, pokeObjectInArray, index)
-            } else {
-                let speciesAlternatve = speciesResponseToJson.genera[5].genus
-                setContentOfAbout(speciesAlternatve, pokeObjectInArray, index)
-            }
+            findGenus(speciesResponseToJson, pokeObjectInArray, index)
         } else {
-            setContentOfAbout("Not Found sry...", pokeObjectInArray, index)
+            setContentOfAbout("Not found sry...", pokeObjectInArray, index)
         }
     }
+}
+
+function findGenus(speciesResponseToJson, pokeObjectInArray, index) {
+    if (speciesResponseToJson.genera[7]) {
+        let species = speciesResponseToJson.genera[7].genus
+        setContentOfAbout(species, pokeObjectInArray, index)
+    } else if (speciesResponseToJson.genera[5].genus) {
+        let speciesAlternatve = speciesResponseToJson.genera[5].genus
+        setContentOfAbout(speciesAlternatve, pokeObjectInArray, index)
+    } else if (speciesResponseToJson.genera[3].genus) {
+        let speciesAlternatve = speciesResponseToJson.genera[3].genus
+        setContentOfAbout(speciesAlternatve, pokeObjectInArray, index)
+    }
+}
+
+async function getSpecies(SPECIES_URL) {
+    let response = fetch(SPECIES_URL);
+    return response
 }
 
 function setActiveClassState(foundPokemonIndex, contentStatus) {
@@ -189,7 +199,6 @@ function setActiveClassState(foundPokemonIndex, contentStatus) {
 }
 
 function pushInWhenLoaded(pokemonIndex, array) {
-
     let nextID = array[pokemonIndex].id
     let nextpokeCard = document.getElementById(`pokemonCard${nextID}`)
     const overlayDiv = document.getElementById("overlay");
@@ -206,23 +215,25 @@ function setContentOfAbout(species, pokeObjectInArray, objectsOfAllPokemonIndex)
 }
 
 function setContentOfBaseStats(index, contentStatus, array) {
-
     if (array == 'objectsOfAllPokemon') {
         array = objectsOfAllPokemon
     }
     if (array == 'foundPokemonsArray') {
         array = foundPokemonsArray
     }
-
     setActiveClassState(index, contentStatus)
+    clearAndChangeHTML(index, array)
+    addTypColorClassInOverlayProgressBar(index, array)
+    calcBaseStatColorBar()
+    setActiveClassState(index, contentStatus)
+}
+
+function clearAndChangeHTML(index, array) {
     let renderCategorieContent = document.getElementById(`renderCategorieContent${index}`)
     let pokeObjStats = array[index].stats
     renderCategorieContent.innerHTML = "";
     renderCategorieContent.classList.remove('evolutionImgs')
     renderCategorieContent.innerHTML += getBaseStatsContentTemplate(pokeObjStats)
-    addTypColorClassInOverlayProgressBar(index, array)
-    calcBaseStatColorBar()
-    setActiveClassState(index, contentStatus)
 }
 
 async function setEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
@@ -243,16 +254,10 @@ function calcBaseStatColorBar() {
     let progressColor = document.getElementsByClassName('progressColor')
 
     for (let index = 0; index < baseStats.length; index++) {
-        console.log(baseStats[index].innerHTML);
         let baseStat = baseStats[index].innerHTML
         let hundredPercent = 300
-
         let percentValue = baseStat * 100 / hundredPercent
-
-        console.log("percent: ", parseInt(percentValue));
-
         progressColor[index].style.width = parseInt(percentValue) + "%"
-
     }
 }
 

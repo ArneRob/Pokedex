@@ -124,21 +124,21 @@ function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
     return arrayOfAllPokemon;
 }
 
-async function getNextPokeStack(overlay, pokeIDInArray) {
+async function renderNextPokeStack() {
     let nextPokeStack = true;
     let lastPokeStack = false;
-
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
     disableButtons(nextPokeStack, lastPokeStack)
     loadingSpinnerOnOff();
+    let nextResponseToJson = await getNextPokeStack()
+    arrayPreperation(nextResponseToJson)
+    await changeInnerHTMLRenderContent(nextResponseToJson)
+    setTimeout(loadingSpinnerOnOff, 50);
+    setTimeout(enableButtons, 50)
+}
 
-    let nextResponse = await fetch(next_URL_Array + ".json");
-    let nextResponseToJson = await nextResponse.json();
-
-    last_URL_Array = nextResponseToJson.previous
-    next_URL_Array = nextResponseToJson.next
-    objectsOfAllPokemon = [];
+async function changeInnerHTMLRenderContent(nextResponseToJson) {
     for (let index = 0; index < nextResponseToJson.results.length; index++) {
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
@@ -148,16 +148,19 @@ async function getNextPokeStack(overlay, pokeIDInArray) {
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
+    }
+}
 
-    }
-    setTimeout(loadingSpinnerOnOff, 50);
-    setTimeout(enableButtons, 50)
-    if (overlay) {
-        let overlayDiv = document.getElementById('overlay')
-        setTimeout(enableOverlayButtons(objectsOfAllPokemon.length - 1), 50)
-        overlayDiv.innerHTML = "";
-        openOverlayPokeCard(0)
-    }
+function arrayPreperation(nextResponseToJson) {
+    last_URL_Array = nextResponseToJson.previous
+    next_URL_Array = nextResponseToJson.next
+    objectsOfAllPokemon = [];
+}
+
+async function getNextPokeStack() {
+    let nextResponse = await fetch(next_URL_Array + ".json");
+    let nextResponseToJson = await nextResponse.json();
+    return nextResponseToJson
 }
 
 async function getLastPokeStack() {

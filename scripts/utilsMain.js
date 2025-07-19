@@ -1,6 +1,6 @@
 function setTypeOfPokemon(pokeObject) {
     let pokeTypes = pokeObject.types
-    
+
     document.getElementById(`pokeTypes${pokeObject.id}`).innerHTML += getPokeTypeOneIMGTemplate(pokeObject);
     document.getElementById(`typ1-${pokeObject.id}`).src = "./assets/icons/" + pokeTypes[0].type.name + ".svg"
 
@@ -20,15 +20,14 @@ function addTypColorClass(pokeObject) {
     }
 }
 
-function disableButtons(nextPokeStack, lastPokeStack) {
+function disableButtons(nextPokeStack) {
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
 
     if (nextPokeStack) {
         changeAttributesOfButton(nextButton, lastButton)
         getLoadingSpinnerInButton(nextButton)
-    }
-    if (lastPokeStack) {
+    } else {
         changeAttributesOfButton(lastButton, nextButton)
         getLoadingSpinnerInButton(lastButton)
     }
@@ -60,7 +59,6 @@ function resetButtonsAttributes(nextButton, lastButton) {
 
 function getLoadingSpinnerInButton(rightButton) {
     let width = rightButton.clientWidth
-    console.log(width);
     rightButton.innerHTML = "";
 
     rightButton.style.width = `${width}` + "px"

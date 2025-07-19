@@ -92,8 +92,6 @@ async function getPokeCard() {
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
     loadingSpinnerOnOff();
-
-    console.log(responseToJson)
     document.getElementById('renderContent').innerHTML = "";
 
     for (let index = 0; index < responseToJson.results.length; index++) {
@@ -124,14 +122,18 @@ function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
     return arrayOfAllPokemon;
 }
 
-async function renderNextPokeStack() {
-    let nextPokeStack = true;
-    let lastPokeStack = false;
+async function renderPokeStack(nextPokeStack) {
+    let URL
+    if (nextPokeStack) {
+        URL = next_URL_Array
+    } else {
+        URL = last_URL_Array
+    }
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
-    disableButtons(nextPokeStack, lastPokeStack)
+    disableButtons(nextPokeStack)
     loadingSpinnerOnOff();
-    let nextResponseToJson = await getNextPokeStack()
+    let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
     arrayPreperation(nextResponseToJson)
     await changeInnerHTMLRenderContent(nextResponseToJson)
     setTimeout(loadingSpinnerOnOff, 50);
@@ -143,8 +145,6 @@ async function changeInnerHTMLRenderContent(nextResponseToJson) {
         let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
 
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
-
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
@@ -157,38 +157,23 @@ function arrayPreperation(nextResponseToJson) {
     objectsOfAllPokemon = [];
 }
 
-async function getNextPokeStack() {
-    let nextResponse = await fetch(next_URL_Array + ".json");
+async function getNextOrPreviousPokeStack(URL) {
+    let nextResponse = await fetch(URL + ".json");
     let nextResponseToJson = await nextResponse.json();
     return nextResponseToJson
 }
 
-async function getLastPokeStack() {
-    let lastResponse = await fetch(last_URL_Array + ".json");
-    let lastResponseToJson = await lastResponse.json();
-    let nextPokeStack = false;
-    let lastPokeStack = true;
-    disableButtons(nextPokeStack, lastPokeStack)
-    loadingSpinnerOnOff();
-    // console.log(lastResponseToJson.previous)
-    last_URL_Array = lastResponseToJson.previous
-    next_URL_Array = lastResponseToJson.next
-    document.getElementById('renderContent').innerHTML = "";
-    objectsOfAllPokemon = [];
-    for (let index = 0; index < lastResponseToJson.results.length; index++) {
-        // let pokemonName = lastResponseToJson.results[index].name;
-        let SPECIFIC_POKE_URL = lastResponseToJson.results[index].url
-
-        let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
-        let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
-        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
-        getSinglePokeData(pokeObject, index);
-
-    }
-    setTimeout(loadingSpinnerOnOff, 50);
-    setTimeout(enableButtons, 50)
-}
+// async function getLastPokeStack(nextPokeStack) {
+//     let renderContent = document.getElementById('renderContent')
+//     renderContent.innerHTML = "";
+//     disableButtons(nextPokeStack)
+//     loadingSpinnerOnOff();
+//     let lastResponseToJson = await getNextOrPreviousPokeStack(last_URL_Array)
+//     arrayPreperation(lastResponseToJson)
+//     await changeInnerHTMLRenderContent(lastResponseToJson)
+//     setTimeout(loadingSpinnerOnOff, 50);
+//     setTimeout(enableButtons, 50)
+// }
 
 function getSinglePokeData(pokeObject, index) {
     let pokeImg = pokeObject.sprites.other.home.front_default

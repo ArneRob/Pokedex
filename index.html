@@ -35,8 +35,8 @@
             <input id="pokemoSearchInput" oninput="processChanges()" placeholder="find your Pokemon" type="text">
         </div>
         <section id="buttonSection" class="standardContainer">
-            <button id="getLastButton" onclick="getLastPokeStack()" disabled>Previous stack of Pokémon</button>
-            <button id="nextButton" onclick="renderNextPokeStack()">Next stack of Pokémon</button>
+            <button id="getLastButton" onclick="renderPokeStack(false)" disabled>Previous stack of Pokémon</button>
+            <button id="nextButton" onclick="renderPokeStack(true)">Next stack of Pokémon</button>
         </section>
     </header>
     <section class="renderSection">

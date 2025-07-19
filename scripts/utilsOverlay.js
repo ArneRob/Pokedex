@@ -168,10 +168,10 @@ function findGenus(speciesResponseToJson, pokeObjectInArray, index) {
     if (speciesResponseToJson.genera[7]) {
         let species = speciesResponseToJson.genera[7].genus
         setContentOfAbout(species, pokeObjectInArray, index)
-    } else if (speciesResponseToJson.genera[5].genus) {
+    } else if (speciesResponseToJson.genera[5]) {
         let speciesAlternatve = speciesResponseToJson.genera[5].genus
         setContentOfAbout(speciesAlternatve, pokeObjectInArray, index)
-    } else if (speciesResponseToJson.genera[3].genus) {
+    } else if (speciesResponseToJson.genera[3]) {
         let speciesAlternatve = speciesResponseToJson.genera[3].genus
         setContentOfAbout(speciesAlternatve, pokeObjectInArray, index)
     }

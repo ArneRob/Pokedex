@@ -120,20 +120,25 @@ async function renderPokeStack(nextPokeStack, URL) {
     } else {
         URL = last_URL_Array
     }
-    let renderContent = document.getElementById('renderContent')
-    renderContent.innerHTML = "";
-    disableButtons(nextPokeStack)
-    loadingSpinnerOnOff();
-    let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
-    arrayPreperation(nextResponseToJson)
-    await changeInnerHTMLRenderContent(nextResponseToJson.results)
-    setTimeout(loadingSpinnerOnOff, 50);
-    setTimeout(enableButtons, 50)
+    await updateUI(nextPokeStack, URL)
+}
+
+async function updateUI(nextPokeStack, URL) {
+    if (URL) {
+        disableButtons(nextPokeStack)
+        loadingSpinnerOnOff();
+        let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
+        arrayPreperation(nextResponseToJson)
+        await changeInnerHTMLRenderContent(nextResponseToJson.results)
+        setTimeout(loadingSpinnerOnOff, 50);
+        setTimeout(enableButtons, 50)
+    }
 }
 
 async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
+    let renderContent = document.getElementById('renderContent')
+    renderContent.innerHTML = "";
     for (let index = 0; index < nextResponseToJsonArray.length; index++) {
-        let renderContent = document.getElementById('renderContent')
         let SPECIFIC_POKE_URL = nextResponseToJsonArray[index].url
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);

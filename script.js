@@ -12,11 +12,23 @@ function onload() {
 function reFresh() {
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
-    window.location.reload()
+    resetAllArrays()
     searchBar = false;
+    onload();
     resetButtonsAttributes(nextButton, lastButton)
     enableButtons();
-    document.pokemoSearchInput.focus();
+}
+
+function resetAllArrays() {
+    objectsOfAllPokemon = [];
+    next_URL_Array = [];
+    last_URL_Array = [];
+    fetchedNamesArray = [];
+    fetchedPokemonsNAME_URL = [];
+    foundPokemonsArray = [];
+    evolutionChainLink = [];
+    evoNamesArray = [];
+    changeAbleObjectOfAllPokemon = [];
 }
 
 async function fetchAllNamesAndURL() {
@@ -37,18 +49,13 @@ function pushNamesToArray(fetchedPokeObjects) {
 
 function findPokemon() {
     let pokemonToFind = document.getElementById('pokemoSearchInput').value
-    let nextButton = document.getElementById('nextButton')
-    let lastButton = document.getElementById('getLastButton')
     if (pokemonToFind.length > 2) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(pokemonToFind))
         searchBar = true;
         renderFoundPokemon(foundPokemons);
     }
     if (pokemonToFind.length < 2) {
-        searchBar = false;
-        resetButtonsAttributes(nextButton, lastButton)
-        enableButtons();
-        getPokeCard()
+        reFresh()
     }
 }
 

@@ -72,19 +72,20 @@ async function renderFoundPokemon(foundPokemons) {
     changeAttributesOfButton(nextButton, lastButton)
     changeAttributesOfButton(lastButton, nextButton)
     loadingSpinnerOnOff();
+    await changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons)
+    setTimeout(loadingSpinnerOnOff, 50);
+}
 
+async function changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons) {
     for (let indexOfFound = 0; indexOfFound < foundPokemons.length; indexOfFound++) {
-        console.log(foundPokemons[indexOfFound]);
-
         let SPECIFIC_POKE_URL = "https://pokeapi.co/api/v2/pokemon/" + foundPokemons[indexOfFound]
-        let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
+        let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
 
         foundPokemonsArray.push(pokeObject)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, indexOfFound)
         getSinglePokeData(pokeObject, indexOfFound)
     }
-    setTimeout(loadingSpinnerOnOff, 50);
 }
 
 async function getPokeCard() {
@@ -93,16 +94,7 @@ async function getPokeCard() {
     next_URL_Array += responseToJson.next
     loadingSpinnerOnOff();
     document.getElementById('renderContent').innerHTML = "";
-
-    for (let index = 0; index < responseToJson.results.length; index++) {
-        // let pokemonName = responseToJson.results[index].name;
-        let SPECIFIC_POKE_URL = responseToJson.results[index].url
-        let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
-        let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
-        document.getElementById('renderContent').innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index); // index übergebn
-        addToArrayIfNotExist(pokeObject, objectsOfAllPokemon)
-        getSinglePokeData(pokeObject, index);
-    }
+    await changeInnerHTMLRenderContent(responseToJson.results)
     setTimeout(loadingSpinnerOnOff, 50);
 }
 
@@ -122,8 +114,7 @@ function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
     return arrayOfAllPokemon;
 }
 
-async function renderPokeStack(nextPokeStack) {
-    let URL
+async function renderPokeStack(nextPokeStack, URL) {
     if (nextPokeStack) {
         URL = next_URL_Array
     } else {
@@ -135,17 +126,19 @@ async function renderPokeStack(nextPokeStack) {
     loadingSpinnerOnOff();
     let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
     arrayPreperation(nextResponseToJson)
-    await changeInnerHTMLRenderContent(nextResponseToJson)
+    await changeInnerHTMLRenderContent(nextResponseToJson.results)
     setTimeout(loadingSpinnerOnOff, 50);
     setTimeout(enableButtons, 50)
 }
 
-async function changeInnerHTMLRenderContent(nextResponseToJson) {
-    for (let index = 0; index < nextResponseToJson.results.length; index++) {
-        let SPECIFIC_POKE_URL = nextResponseToJson.results[index].url
-
+async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
+    for (let index = 0; index < nextResponseToJsonArray.length; index++) {
+        let renderContent = document.getElementById('renderContent')
+        let SPECIFIC_POKE_URL = nextResponseToJsonArray[index].url
         let pokeObject = await getSinglePokeObject(SPECIFIC_POKE_URL);
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
+
+        objectsOfAllPokemon.push(pokeObject)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
     }
@@ -163,18 +156,6 @@ async function getNextOrPreviousPokeStack(URL) {
     return nextResponseToJson
 }
 
-// async function getLastPokeStack(nextPokeStack) {
-//     let renderContent = document.getElementById('renderContent')
-//     renderContent.innerHTML = "";
-//     disableButtons(nextPokeStack)
-//     loadingSpinnerOnOff();
-//     let lastResponseToJson = await getNextOrPreviousPokeStack(last_URL_Array)
-//     arrayPreperation(lastResponseToJson)
-//     await changeInnerHTMLRenderContent(lastResponseToJson)
-//     setTimeout(loadingSpinnerOnOff, 50);
-//     setTimeout(enableButtons, 50)
-// }
-
 function getSinglePokeData(pokeObject, index) {
     let pokeImg = pokeObject.sprites.other.home.front_default
     let secondPokeImg = pokeObject.sprites.front_default
@@ -183,7 +164,6 @@ function getSinglePokeData(pokeObject, index) {
     } else {
         setPokeImg(secondPokeImg, pokeObject)
     }
-
     setTypeOfPokemon(pokeObject, index);
 
 }

@@ -27,10 +27,8 @@ async function changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) {
     setupEvoChainRenderSpot(objectsOfAllPokemonIndex)
     let pokeObject = objectsOfAllPokemon[objectsOfAllPokemonIndex]
     let array;
-
     for (let indexOfEvoNames = 0; indexOfEvoNames < evoNamesArray.length; indexOfEvoNames++) {
         let pokeEvoName = evoNamesArray[indexOfEvoNames]
-
         if (foundPokemonsArray.length > 1) {
             array = foundPokemonsArray
             await checkNameAndFetchData(pokeEvoName, foundPokemonsArray, pokeObject.id)
@@ -38,8 +36,7 @@ async function changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) {
             createManipulatableObject()
             await checkNameAndFetchData(pokeEvoName, objectsOfAllPokemon, pokeObject)
             array = changeAbleObjectOfAllPokemon
-        }
-        changeInnerHTML(pokeEvoName, array, objectsOfAllPokemonIndex)
+        } changeInnerHTML(pokeEvoName, array, objectsOfAllPokemonIndex)
     }
 }
 
@@ -88,7 +85,6 @@ async function fetchSinglePokemon(pokeName, array, pokeID) {
         const singlePokemonURL = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
         let singlePokeResponse = await fetch(singlePokemonURL);
         let singlePokeResponseToJSON = await singlePokeResponse.json();
-
         if (array.length > 20) {
             let indexPosition = pokeID - 1
             changeAbleObjectOfAllPokemon.splice(indexPosition, 0, singlePokeResponseToJSON)

@@ -9,3 +9,5 @@ let foundPokemonsArray = [];
 let evolutionChainLink = [];
 let evoNamesArray = [];
 let changeAbleObjectOfAllPokemon = [];
+
+let URL = [0];

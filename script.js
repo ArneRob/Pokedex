@@ -12,6 +12,7 @@ function onload() {
 function reFresh() {
     let nextButton = document.getElementById('nextButton')
     let lastButton = document.getElementById('getLastButton')
+    document.getElementById('pokemoSearchInput').value = "";
     resetAllArrays()
     searchBar = false;
     onload();
@@ -29,6 +30,7 @@ function resetAllArrays() {
     evolutionChainLink = [];
     evoNamesArray = [];
     changeAbleObjectOfAllPokemon = [];
+    URL = [];
 }
 
 async function fetchAllNamesAndURL() {
@@ -121,17 +123,19 @@ function addToArrayIfNotExist(pokeObject, arrayOfAllPokemon) {
     return arrayOfAllPokemon;
 }
 
-async function renderPokeStack(nextPokeStack, URL) {
+async function renderPokeStack(nextPokeStack) {
     if (nextPokeStack) {
         URL = next_URL_Array
     } else {
         URL = last_URL_Array
+    } if (URL == null) {
+        URL = 0
     }
     await updateUI(nextPokeStack, URL)
 }
 
 async function updateUI(nextPokeStack, URL) {
-    if (URL) {
+    if (URL.length >= 2) {
         disableButtons(nextPokeStack)
         loadingSpinnerOnOff();
         let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
@@ -171,13 +175,18 @@ async function getNextOrPreviousPokeStack(URL) {
 function getSinglePokeData(pokeObject, index) {
     let pokeImg = pokeObject.sprites.other.home.front_default
     let secondPokeImg = pokeObject.sprites.front_default
+    let thirdPokeImg = pokeObject.sprites.other["official-artwork"].front_default
+    let fourthPokeImg = "./assets/img/pokemon-go-1574003_640.png"
     if (pokeImg) {
         setPokeImg(pokeImg, pokeObject)
-    } else {
+    } else if (secondPokeImg) {
         setPokeImg(secondPokeImg, pokeObject)
+    } else if (thirdPokeImg) {
+        setPokeImg(thirdPokeImg, pokeObject)
+    } else if (fourthPokeImg) {
+        setPokeImg(fourthPokeImg, pokeObject)
     }
     setTypeOfPokemon(pokeObject, index);
-
 }
 
 async function getSinglePokeObject(SPECIFIC_POKE_URL) {

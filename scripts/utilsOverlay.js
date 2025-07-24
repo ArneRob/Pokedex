@@ -150,6 +150,7 @@ async function setCardCategoryContentOfAbout(index, contentStatus, array) {
 
 async function setSpeciesOfPokemon(pokeObjectInArray, index) {
     let pokeID = pokeObjectInArray.id
+    evolutionChainLink = [];
     const SPECIES_URL = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}/`
 
     if (SPECIES_URL) {
@@ -238,9 +239,25 @@ function clearAndChangeHTML(index, array) {
 
 async function setEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
     setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
-    let evoObj = await fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus)
-    getNamesOfPokemons(evoObj)
-    changeInnerHTMLEvoChain(objectsOfAllPokemonIndex)
+    try {
+        let evoObj = await fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus)
+        getNamesOfPokemons(evoObj)
+        changeInnerHTMLEvoChain(objectsOfAllPokemonIndex)
+    } catch (error) {
+        setEvoErrorImg(objectsOfAllPokemonIndex)
+    }
+    setActiveClassState(objectsOfAllPokemonIndex, contentStatus)
+}
+
+function setEvoErrorImg(objectsOfAllPokemonIndex) {
+    setupEvoChainRenderSpot(objectsOfAllPokemonIndex)
+    renderErrorImg(objectsOfAllPokemonIndex)
+}
+
+function renderErrorImg(objectsOfAllPokemonIndex) {
+    let renderCategorieContent = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
+    let src = "./assets/img/pokemon-go-1574003_640.png"
+    renderCategorieContent.innerHTML += getEvolutionChainTemplate(src)
 }
 
 function deleteEvoChainImgs(objectsOfAllPokemonIndex) {

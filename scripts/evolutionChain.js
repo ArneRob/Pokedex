@@ -3,7 +3,7 @@ const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/"
 async function fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
     let pokeEvolutionResponse = await fetch(evolutionChainLink);
     let pokeEvolutionResponseToJSON = await pokeEvolutionResponse.json();
-    setTimeout(setActiveClassState(objectsOfAllPokemonIndex, contentStatus), 3000)
+    // setTimeout(setActiveClassState(objectsOfAllPokemonIndex, contentStatus), 3000)
     return pokeEvolutionResponseToJSON
 }
 

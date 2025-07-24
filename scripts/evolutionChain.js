@@ -41,6 +41,7 @@ async function changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) {
 }
 
 function setupEvoChainRenderSpot(objectsOfAllPokemonIndex) {
+    changeAbleObjectOfAllPokemon = []
     let imgRenderSpot = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
     imgRenderSpot.innerHTML = "";
     imgRenderSpot.classList.add('evolutionImgs')

@@ -72,3 +72,14 @@ function changeAttributesOfButton(klickedButton, otherButton) {
     klickedButton.style.backgroundColor = "rgb(13, 136, 143)"
     klickedButton.style.cursor = "not-allowed"
 }
+
+function loadingCircle() {
+    const radius = 80;
+    const circumference = 2 * Math.PI * radius;
+    
+    const percentageShare = circumference / objectsOfAllPokemon.length - 15
+    console.log(percentageShare);
+
+    let progressCircle = document.getElementById('progressCircle')
+    progressCircle.style.strokeDashoffset = percentageShare
+}

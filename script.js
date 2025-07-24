@@ -155,6 +155,7 @@ async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
 
         objectsOfAllPokemon.push(pokeObject)
+        loadingCircle(index)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
     }

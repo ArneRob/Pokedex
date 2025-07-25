@@ -21,28 +21,9 @@
     <link rel="icon" type="image/x-icon" href="./assets/img/pokemon-1536849_640.png">
     <title>Pokedex</title>
 </head>
-<svg width="220" height="220" viewBox="0 0 200 200">
-    <circle cx="100" cy="100" r="80" stroke="#ddd" stroke-width="15" fill="white" />
-    <circle 
-        id="progressCircle" 
-        cx="100" 
-        cy="100" 
-        r="80" 
-        stroke="#4caf50" 
-        stroke-width="15" 
-        fill="none"
-        stroke-linecap="round" 
-        stroke-dasharray="502.65" 
-        stroke-dashoffset="502.65" 
-        transform="rotate(-90 100 100)" />
 
-    <image 
-        height="145" 
-        width="145" 
-        x="28" 
-        y="28" 
-        href="./assets/img/pokemon-1536849_640.png" />
-</svg>
+
+<!-- <img id="loadSpinner" class="loadingSpinnerInButton" src="./assets/img/pokemon-6046746_640.png" alt=""> -->
 
 <body id="body" onload="onload()">
     <div onclick="closeOverlay()" class="display_none" id="overlay">
@@ -62,9 +43,18 @@
         </section>
     </header>
     <section class="renderSection">
+
         <div class="standardContainer renderContent display_none " id="loadingSpinner">
-            <img id="loadSpinner" class="loadingSpinner" src="./assets/img/pokemon-1536849_640.png" alt="">
+            <svg width="250" height="250" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="80" stroke="#ddd" stroke-width="15" fill="white" />
+                <circle id="progressCircle" cx="100" cy="100" r="80" stroke="#39c465" stroke-width="15" fill="none"
+                    stroke-linecap="round" stroke-dasharray="502.65" stroke-dashoffset="502.65"
+                    transform="rotate(-90 100 100)" />
+                <image id="loadSpinner" class="loadingSpinnerMain" height="145" width="145" x="28" y="28"
+                    href="./assets/img/pokemon-1536849_640.png" />
+            </svg>
         </div>
+
     </section>
     <section class="renderSection">
         <div class="standardContainer renderContent" id="renderContent">

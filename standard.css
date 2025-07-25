@@ -59,6 +59,12 @@
     height: 200px;
 }
 
+.loadingSpinnerMain {
+    animation: spin 2s infinite;
+    transform-origin: 50% 50%;
+    animation-timing-function: linear;
+}
+
 .grey {
     background-color: #1d3642 !important;
 }

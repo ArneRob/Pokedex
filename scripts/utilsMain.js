@@ -73,13 +73,15 @@ function changeAttributesOfButton(klickedButton, otherButton) {
     klickedButton.style.cursor = "not-allowed"
 }
 
-function loadingCircle() {
+function loadingCircle(array) {
     const radius = 80;
     const circumference = 2 * Math.PI * radius;
-    
-    const percentageShare = circumference / objectsOfAllPokemon.length - 15
-    console.log(percentageShare);
-
+    const percentageShare = circumference / array.length
     let progressCircle = document.getElementById('progressCircle')
-    progressCircle.style.strokeDashoffset = percentageShare
+    progressCircle.style.strokeDashoffset = percentageShare - 15
+}
+
+function resetLoadingCircle() {
+    let progressCircle = document.getElementById('progressCircle')
+    progressCircle.style.strokeDashoffset = "502.65"
 }

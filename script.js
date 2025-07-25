@@ -92,6 +92,7 @@ async function changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons) {
         let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
 
         foundPokemonsArray.push(pokeObject)
+        loadingCircle(foundPokemonsArray)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, indexOfFound)
         getSinglePokeData(pokeObject, indexOfFound)
     }
@@ -104,7 +105,8 @@ async function getPokeCard() {
     loadingSpinnerOnOff();
     document.getElementById('renderContent').innerHTML = "";
     await changeInnerHTMLRenderContent(responseToJson.results)
-    setTimeout(loadingSpinnerOnOff, 50);
+    setTimeout(resetLoadingCircle, 50);
+    setTimeout(loadingSpinnerOnOff, 100);
 }
 
 function loadingSpinnerOnOff() {
@@ -141,6 +143,7 @@ async function updateUI(nextPokeStack, URL) {
         let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
         arrayPreperation(nextResponseToJson)
         await changeInnerHTMLRenderContent(nextResponseToJson.results)
+        setTimeout(resetLoadingCircle, 50);
         setTimeout(loadingSpinnerOnOff, 50);
         setTimeout(enableButtons, 50)
     }
@@ -155,7 +158,7 @@ async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
 
         objectsOfAllPokemon.push(pokeObject)
-        loadingCircle(index)
+        loadingCircle(objectsOfAllPokemon)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
     }

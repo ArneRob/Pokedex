@@ -51,13 +51,13 @@ function pushNamesToArray(fetchedPokeObjects) {
 
 function findPokemon() {
     let pokemonToFind = document.getElementById('pokemoSearchInput').value
+    let toLowerCaseValue = pokemonToFind.toLowerCase();
+
     if (pokemonToFind.length > 2) {
-        let foundPokemons = fetchedNamesArray.filter(name => name.includes(pokemonToFind))
+        let foundPokemons = fetchedNamesArray.filter(name => name.includes(toLowerCaseValue))
+       
         searchBar = true;
         renderFoundPokemon(foundPokemons);
-    }
-    if (pokemonToFind.length < 2) {
-        reFresh()
     }
 }
 
@@ -69,7 +69,7 @@ function debounce(func, timeout = 500) {
     };
 }
 
-const processChanges = debounce(() => findPokemon());
+let processChanges = debounce(() => findPokemon());
 
 async function renderFoundPokemon(foundPokemons) {
     let renderContent = document.getElementById('renderContent')

@@ -79,6 +79,9 @@ function loadingCircle(array) {
     const percentageShare = circumference / array.length
     let progressCircle = document.getElementById('progressCircle')
     progressCircle.style.strokeDashoffset = percentageShare - 15
+
+    console.log(percentageShare);
+    
 }
 
 function resetLoadingCircle() {

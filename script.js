@@ -12,6 +12,7 @@ function onload() {
 
 function renderBigStack() {
     resetAllArrays()
+    fetchAllNamesAndURL()
     let BIG_URL = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=0."
     getPokeCard(BIG_URL);
 }

@@ -5,7 +5,7 @@ const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
 let searchBar = false;
 
 function onload() {
-    getPokeCard();
+    getPokeCard(BASE_URL);
     fetchAllNamesAndURL()
 }
 
@@ -55,7 +55,7 @@ function findPokemon() {
 
     if (pokemonToFind.length > 2) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(toLowerCaseValue))
-       
+
         searchBar = true;
         renderFoundPokemon(foundPokemons);
     }
@@ -77,12 +77,13 @@ async function renderFoundPokemon(foundPokemons) {
     let lastButton = document.getElementById('getLastButton')
     renderContent.innerHTML = "";
     foundPokemonsArray = [];
-
+    disableSearchbar()
     changeAttributesOfButton(nextButton, lastButton)
     changeAttributesOfButton(lastButton, nextButton)
     loadingSpinnerOnOff();
     await changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons)
     setTimeout(loadingSpinnerOnOff, 50);
+    disableSearchbar()
 }
 
 async function changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons) {
@@ -92,7 +93,7 @@ async function changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons) {
         let capitalizedPokeName = capitalizeFirstLetter(foundPokemons[indexOfFound])
 
         foundPokemonsArray.push(pokeObject)
-        loadingCircle(foundPokemonsArray)
+        loadingCircle(foundPokemonsArray, foundPokemons.length)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, indexOfFound)
         getSinglePokeData(pokeObject, indexOfFound)
     }
@@ -102,11 +103,13 @@ async function getPokeCard() {
     let response = await fetch(BASE_URL + ".json");
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
+    disableSearchbar()
     loadingSpinnerOnOff();
     document.getElementById('renderContent').innerHTML = "";
     await changeInnerHTMLRenderContent(responseToJson.results)
     setTimeout(resetLoadingCircle, 50);
     setTimeout(loadingSpinnerOnOff, 100);
+    disableSearchbar()
 }
 
 function loadingSpinnerOnOff() {
@@ -138,6 +141,7 @@ async function renderPokeStack(nextPokeStack) {
 
 async function updateUI(nextPokeStack, URL) {
     if (URL.length >= 2) {
+        disableSearchbar()
         disableButtons(nextPokeStack)
         loadingSpinnerOnOff();
         let nextResponseToJson = await getNextOrPreviousPokeStack(URL)
@@ -146,6 +150,7 @@ async function updateUI(nextPokeStack, URL) {
         setTimeout(resetLoadingCircle, 50);
         setTimeout(loadingSpinnerOnOff, 50);
         setTimeout(enableButtons, 50)
+        disableSearchbar()
     }
 }
 
@@ -158,7 +163,7 @@ async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
         let capitalizedPokeName = capitalizeFirstLetter(pokeObject.name);
 
         objectsOfAllPokemon.push(pokeObject)
-        loadingCircle(objectsOfAllPokemon)
+        loadingCircle(objectsOfAllPokemon, nextResponseToJsonArray.length)
         renderContent.innerHTML += getPokedexCardTemplate(pokeObject, capitalizedPokeName, index);
         getSinglePokeData(pokeObject, index);
     }

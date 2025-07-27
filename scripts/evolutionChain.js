@@ -3,7 +3,6 @@ const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/"
 async function fetchEvolutionChainData(objectsOfAllPokemonIndex, contentStatus) {
     let pokeEvolutionResponse = await fetch(evolutionChainLink);
     let pokeEvolutionResponseToJSON = await pokeEvolutionResponse.json();
-    // setTimeout(setActiveClassState(objectsOfAllPokemonIndex, contentStatus), 3000)
     return pokeEvolutionResponseToJSON
 }
 
@@ -43,8 +42,13 @@ async function changeInnerHTMLEvoChain(objectsOfAllPokemonIndex) {
 function setupEvoChainRenderSpot(objectsOfAllPokemonIndex) {
     changeAbleObjectOfAllPokemon = []
     let imgRenderSpot = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
-    imgRenderSpot.innerHTML = "";
+    deleteInnerHTML(objectsOfAllPokemonIndex)
     imgRenderSpot.classList.add('evolutionImgs')
+}
+
+function deleteInnerHTML(objectsOfAllPokemonIndex) {
+    let imgRenderSpot = document.getElementById(`renderCategorieContent${objectsOfAllPokemonIndex}`)
+    imgRenderSpot.innerHTML = "";
 }
 
 async function checkNameAndFetchData(pokeEvoName, objectsOfAllPokemon, pokeObject) {
@@ -76,8 +80,11 @@ function srcRequest(obj) {
     if (obj.sprites.other.home.front_default) {
         src = obj.sprites.other.home.front_default
     }
-    else {
+    else if (obj.sprites.front_default) {
         src = obj.sprites.front_default
+    }
+    else if (obj.sprites.other["official-artwork"].front_default) {
+        src = obj.sprites.other.other["official-artwork"].front_default
     } return src
 }
 

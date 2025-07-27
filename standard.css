@@ -125,6 +125,17 @@ header input {
     margin: 50px 35px;
     gap: 5px;
     cursor: pointer;
+    box-shadow: 4px 4px #4350a4;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #2657c9;
+}
+
+.imgAndH1:hover {
+    box-shadow: 1px 1px #4350a4;
+    position: relative;
+    top: 2px;
+    left: 2px;
 }
 
 @media(max-width: 460px) {

@@ -73,18 +73,25 @@ function changeAttributesOfButton(klickedButton, otherButton) {
     klickedButton.style.cursor = "not-allowed"
 }
 
-function loadingCircle(array) {
+function loadingCircle(array, length) {
     const radius = 80;
     const circumference = 2 * Math.PI * radius;
-    const percentageShare = circumference / array.length
+    let percentageShare = circumference / length
+    let valueForSubtraction = percentageShare * array.length
+    let numberToInsert = circumference - valueForSubtraction 
     let progressCircle = document.getElementById('progressCircle')
-    progressCircle.style.strokeDashoffset = percentageShare - 15
-
-    console.log(percentageShare);
+    progressCircle.style.strokeDashoffset = numberToInsert
+    console.log(numberToInsert);
     
 }
 
 function resetLoadingCircle() {
     let progressCircle = document.getElementById('progressCircle')
     progressCircle.style.strokeDashoffset = "502.65"
+}
+
+function disableSearchbar() {
+    let searchBar = document.getElementById('pokemoSearchInput')
+    searchBar.disabled = !searchBar.disabled
+    searchBar.focus()
 }

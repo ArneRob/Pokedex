@@ -1,12 +1,19 @@
 
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=22&offset=0."
+
 const INDEX_URL = "https://pokeapi.co/api/v2/pokedex/"
 const ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0."
 let searchBar = false;
 
 function onload() {
+    const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=22&offset=0."
     getPokeCard(BASE_URL);
     fetchAllNamesAndURL()
+}
+
+function renderBigStack() {
+    resetAllArrays()
+    let BIG_URL = "https://pokeapi.co/api/v2/pokemon?limit=200&offset=0."
+    getPokeCard(BIG_URL);
 }
 
 function reFresh() {
@@ -99,8 +106,8 @@ async function changeInnerHTMLRenderContentOfFoundPokemon(foundPokemons) {
     }
 }
 
-async function getPokeCard() {
-    let response = await fetch(BASE_URL + ".json");
+async function getPokeCard(URL) {
+    let response = await fetch(URL + ".json");
     responseToJson = await response.json();
     next_URL_Array += responseToJson.next
     disableSearchbar()

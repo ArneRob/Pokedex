@@ -80,7 +80,9 @@ function loadingCircle(array, length) {
     let valueForSubtraction = percentageShare * array.length
     let numberToInsert = circumference - valueForSubtraction 
     let progressCircle = document.getElementById('progressCircle')
-    progressCircle.style.strokeDashoffset = numberToInsert
+    if (numberToInsert > 0) {
+        progressCircle.style.strokeDashoffset = numberToInsert
+    }
     console.log(numberToInsert);
     
 }

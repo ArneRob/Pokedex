@@ -65,8 +65,18 @@ function findPokemon() {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(toLowerCaseValue))
 
         searchBar = true;
-        renderFoundPokemon(foundPokemons);
+        if (foundPokemons.length > 0) {
+            renderFoundPokemon(foundPokemons);
+        } else {
+            renderPokemonNoTFound();
+        }
     }
+}
+
+function renderPokemonNoTFound() {
+    let renderSpot = document.getElementById('renderContent')
+    renderSpot.innerHTML = "";
+    renderSpot.innerHTML += getNothingFoundTemplate()
 }
 
 function debounce(func, timeout = 500) {

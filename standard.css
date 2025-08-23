@@ -296,6 +296,23 @@ header input {
     padding: 5px;
 }
 
+.pokemonNotFoundDiv {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pokemonNotFoundDiv h2 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.pokemonNotFoundDiv img {
+    width: 80%;
+}
+
 /* -------------------------------------------button section -------------------------- */
 
 #buttonSection {

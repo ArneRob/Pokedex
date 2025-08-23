@@ -23,6 +23,7 @@ function renderOverlayPokeCard(overlayDiv, index, array) {
     }
     if (searchBar) {
         overlayDiv.innerHTML += getSearchBarOverlayTemplate(pokeObjectInArray, capitalizedPokeName, index)
+        setSrcOfImg(pokeObjectInArray)
     }
     displayNone("pokemonCard", pokeIDInArray)
     setCardCategoryContentOfAbout(index, 1, array)
@@ -146,22 +147,6 @@ async function setCardCategoryContentOfAbout(index, contentStatus, array) {
     setTypeOfPokemonInOverlay(pokeObj)
     pushInWhenLoaded(index, array)
     setActiveClassState(index, contentStatus)
-}
-
-function setSrcOfOverlayImg(pokeObject){
-    let pokeImg = pokeObject.sprites.other.home.front_default
-    let secondPokeImg = pokeObject.sprites.front_default
-    let thirdPokeImg = pokeObject.sprites.other["official-artwork"].front_default
-    let fourthPokeImg = "./assets/img/pokemon-go-1574003_640.png"
-    if (pokeImg) {
-        setPokeImg(pokeImg, pokeObject)
-    } else if (secondPokeImg) {
-        setPokeImg(secondPokeImg, pokeObject)
-    } else if (thirdPokeImg) {
-        setPokeImg(thirdPokeImg, pokeObject)
-    } else if (fourthPokeImg) {
-        setPokeImg(fourthPokeImg, pokeObject)
-    }
 }
 
 async function setSpeciesOfPokemon(pokeObjectInArray, index) {

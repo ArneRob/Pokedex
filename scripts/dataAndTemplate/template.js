@@ -47,7 +47,7 @@ function getPokeOverlayTemplate(singlePokeObject, capitalizedPokeName, objectsOf
                     </div>
                     <h3>#${singlePokeObject.id}</h3>
                 </div>
-                <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
+                <img class="overlayPokeImg" id="pokemonImg${singlePokeObject.id}"
                     src="${singlePokeObject.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
                 <div class="cardCategorieSection">
@@ -182,7 +182,7 @@ function getSearchBarOverlayTemplate(singlePokeObject, capitalizedPokeName, foun
                     </div>
                     <h3>#${singlePokeObject.id}</h3>
                 </div>
-                <img class="overlayPokeImg" id="overlayPokeImg${singlePokeObject.id}"
+                <img class="overlayPokeImg" id="pokemonImg${singlePokeObject.id}"
                     src="${singlePokeObject.sprites.other.home.front_default}"
                     alt="Pokemonpicture">
                 <div class="cardCategorieSection">

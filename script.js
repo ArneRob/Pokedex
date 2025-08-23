@@ -200,19 +200,7 @@ async function getNextOrPreviousPokeStack(URL) {
 }
 
 function getSinglePokeData(pokeObject, index) {
-    let pokeImg = pokeObject.sprites.other.home.front_default
-    let secondPokeImg = pokeObject.sprites.front_default
-    let thirdPokeImg = pokeObject.sprites.other["official-artwork"].front_default
-    let fourthPokeImg = "./assets/img/pokemon-go-1574003_640.png"
-    if (pokeImg) {
-        setPokeImg(pokeImg, pokeObject)
-    } else if (secondPokeImg) {
-        setPokeImg(secondPokeImg, pokeObject)
-    } else if (thirdPokeImg) {
-        setPokeImg(thirdPokeImg, pokeObject)
-    } else if (fourthPokeImg) {
-        setPokeImg(fourthPokeImg, pokeObject)
-    }
+    setSrcOfOverlayImg(pokeObject)
     setTypeOfPokemon(pokeObject, index);
 }
 

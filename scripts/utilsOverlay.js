@@ -128,7 +128,10 @@ function setAbilitiesOfPokeCardInOverlay(pokeObjectInArray) {
     abilityRenderSpot.innerHTML = "";
 
     for (let abilityIndex = 0; abilityIndex < abilities.length; abilityIndex++) {
-        abilityRenderSpot.innerHTML += pokeObjectInArray.abilities[abilityIndex].ability.name + ", "
+        if (abilityIndex > 0) {
+            abilityRenderSpot.innerHTML += ", "
+        }
+        abilityRenderSpot.innerHTML += pokeObjectInArray.abilities[abilityIndex].ability.name 
     }
 }
 

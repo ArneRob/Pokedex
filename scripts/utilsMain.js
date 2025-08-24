@@ -83,8 +83,6 @@ function loadingCircle(array, length) {
     if (numberToInsert > 0) {
         progressCircle.style.strokeDashoffset = numberToInsert
     }
-    console.log(numberToInsert);
-    
 }
 
 function resetLoadingCircle() {

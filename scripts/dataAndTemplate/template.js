@@ -227,7 +227,7 @@ function getEvolutionChainTemplate(src) {
 function getNothingFoundTemplate() {
     return `
             <div class="pokemonNotFoundDiv">
-            <h2>Hey, sorry, your Pokémon name was not found. Maybe you made a typo, or is the language you’re searching correct?</h2>
+            <h2>Hey, sorry, your Pokémon name was not found. Maybe you made a typo, or is the language you’re searching correct? (english)</h2>
             <img src="./assets/img/pokemon-go-1574003_640.png" alt="Warningsign">
             </div>
            `

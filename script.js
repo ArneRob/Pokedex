@@ -61,7 +61,7 @@ function findPokemon() {
     let pokemonToFind = document.getElementById('pokemoSearchInput').value
     let toLowerCaseValue = pokemonToFind.toLowerCase();
 
-    if (pokemonToFind.length > 2) {
+    if (pokemonToFind.length > 2 && isNaN(pokemonToFind)) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(toLowerCaseValue))
 
         searchBar = true;
@@ -70,7 +70,18 @@ function findPokemon() {
         } else {
             renderPokemonNoTFound();
         }
+    } else if (pokemonToFind.length > 0 && !isNaN(pokemonToFind)) {
+        findPokemonWithIndexAndFetch(pokemonToFind)
+    } else {
+        renderPokemonNoTFound();
     }
+}
+
+async function findPokemonWithIndexAndFetch(pokemonToFind) {
+    let parsedNumber = parseInt(pokemonToFind)
+    let indexNumber = parsedNumber - 1
+    let foundPokemons = [fetchedNamesArray[indexNumber]]
+    renderFoundPokemon(foundPokemons)
 }
 
 function renderPokemonNoTFound() {
@@ -79,7 +90,7 @@ function renderPokemonNoTFound() {
     renderSpot.innerHTML += getNothingFoundTemplate()
 }
 
-function debounce(func, timeout = 500) {
+function debounce(func, timeout = 1000) {
     let timer;
     return (...args) => {
         clearTimeout(timer);

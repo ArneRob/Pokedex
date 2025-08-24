@@ -310,7 +310,8 @@ header input {
 }
 
 .pokemonNotFoundDiv img {
-    width: 80%;
+    width: 60%;
+    max-width: 650px;
 }
 
 /* -------------------------------------------button section -------------------------- */

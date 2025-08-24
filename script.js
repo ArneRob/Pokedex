@@ -70,9 +70,9 @@ function findPokemon() {
         } else {
             renderPokemonNoTFound();
         }
-    } else if (pokemonToFind.length > 0 && !isNaN(pokemonToFind)) {
+    } else if (pokemonToFind.length > 0 && !isNaN(pokemonToFind) && pokemonToFind <= fetchedNamesArray.length) {
         findPokemonWithIndexAndFetch(pokemonToFind)
-    } else {
+    } else if (pokemonToFind > 1) {
         renderPokemonNoTFound();
     }
 }
@@ -81,6 +81,7 @@ async function findPokemonWithIndexAndFetch(pokemonToFind) {
     let parsedNumber = parseInt(pokemonToFind)
     let indexNumber = parsedNumber - 1
     let foundPokemons = [fetchedNamesArray[indexNumber]]
+    searchBar = true;
     renderFoundPokemon(foundPokemons)
 }
 

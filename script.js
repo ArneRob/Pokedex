@@ -18,14 +18,15 @@ function renderBigStack() {
 }
 
 function reFresh() {
-    let nextButton = document.getElementById('nextButton')
-    let lastButton = document.getElementById('getLastButton')
-    document.getElementById('pokemoSearchInput').value = "";
-    resetAllArrays()
-    searchBar = false;
-    onload();
-    resetButtonsAttributes(nextButton, lastButton)
-    enableButtons();
+    location.reload();
+    // let nextButton = document.getElementById('nextButton')
+    // let lastButton = document.getElementById('getLastButton')
+    // document.getElementById('pokemoSearchInput').value = "";
+    // resetAllArrays()
+    // searchBar = false;
+    // onload();
+    // resetButtonsAttributes(nextButton, lastButton)
+    // enableButtons();
 }
 
 function resetAllArrays() {
@@ -63,7 +64,6 @@ function findPokemon() {
 
     if (pokemonToFind.length > 2 && isNaN(pokemonToFind)) {
         let foundPokemons = fetchedNamesArray.filter(name => name.includes(toLowerCaseValue))
-
         searchBar = true;
         if (foundPokemons.length > 0) {
             renderFoundPokemon(foundPokemons);
@@ -185,6 +185,7 @@ async function updateUI(nextPokeStack, URL) {
 }
 
 async function changeInnerHTMLRenderContent(nextResponseToJsonArray) {
+    
     let renderContent = document.getElementById('renderContent')
     renderContent.innerHTML = "";
     for (let index = 0; index < nextResponseToJsonArray.length; index++) {

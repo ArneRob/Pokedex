@@ -112,8 +112,14 @@ header input {
 
 @media(max-width: 460px) {
     header input {
-        margin: 40px 0px;
+        margin: 25px 0px;
         width: 150px;
+    }
+}
+
+@media(max-width: 440px) {
+    header input {
+        width: 130px;
     }
 }
 
@@ -136,6 +142,12 @@ header input {
     position: relative;
     top: 2px;
     left: 2px;
+}
+
+@media(max-width: 700px) {
+    .imgAndH1 {
+        margin: 30px 35px;
+    }
 }
 
 @media(max-width: 460px) {
@@ -321,13 +333,14 @@ header input {
     justify-content: flex-start;
     background-color: #285ed9;
     gap: 8px;
-    padding-left: 20px;
+    padding: 10px;
+    margin: 10px;
 }
 
-@media(max-width: 630px) {
+@media(max-width: 700px) {
     #buttonSection {
+        flex-wrap: wrap;
         justify-content: center;
-        padding: 0;
     }
 }
 
@@ -348,13 +361,14 @@ button {
     border: none;
     border-radius: 10px;
     box-shadow: 0 5px #999;
-    margin: 20px 0;
+    margin: 2px;
     transition: 0.2s;
 }
 
-@media(max-width: 630px) {
+@media(max-width: 700px) {
     button {
         font-size: 17px;
+        /* margin: 14px 0; */
     }
 }
 

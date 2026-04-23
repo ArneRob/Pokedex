@@ -9,6 +9,16 @@
     font-family: "Open Sans", sans-serif
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: grey;
+    text-decoration: none;
+}
+
 .display_none {
     display: none !important;
 }

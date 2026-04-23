@@ -382,6 +382,9 @@ button {
     button {
         padding: 8px 7px;
     }
+    #buttonSection button {
+        font-size: 12px;
+    }
 }
 
 @media(max-width: 380px) {
